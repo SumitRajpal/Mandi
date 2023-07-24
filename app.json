@@ -1,4 +1,8 @@
 {
   "name": "mandi",
-  "displayName": "mandi"
+  "displayName": "mandi",
+  "version": {
+    "android": "10001",
+    "ios": "10001"
+  }
 }
