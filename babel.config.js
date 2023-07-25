@@ -9,6 +9,10 @@ module.exports = {
             rootPathSuffix: './src',
             rootPathPrefix: '@/',
           },
+          {
+            rootPathSuffix: './src/screens/Splash/',
+            rootPathPrefix: '@splash/',
+          },
         ],
       },
     ],
