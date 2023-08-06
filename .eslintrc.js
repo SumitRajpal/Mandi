@@ -1,8 +1,16 @@
 module.exports = {
   root: true,
-  extends: ['@react-native-community', 'prettier'],
+  env: {
+    browser: true,
+    es2021: true,
+    "react-native/react-native": true
+  },
+  extends: ['@react-native-community',
+  'eslint:recommended',
+    'prettier',
+    "plugin:react-hooks/recommended"],
   rules: {
     // ...
-    'prettier/prettier': ['error', {singleQuote: true}],
+    'prettier/prettier': ['error', { singleQuote: false }],
   },
 };

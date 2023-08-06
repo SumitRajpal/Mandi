@@ -1,10 +1,11 @@
 {
+  
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
     "allowJs": true,
     "baseUrl": "./",
     "paths": {
-      "@src/*": ["./src/*"]
+      "src/*": ["./src/*"]
     },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -21,12 +22,10 @@
     "module": "esnext",
     "importHelpers": true,
     "lib": [
-      "dom",
-      "es2015",
-      "es6"
+      "es6", "dom", "esnext"
     ],
   },
-  "include": ["src/**/*", "./App.tsx"],
+  "include": ["./src/**/*", "./App.tsx", "react-native.config.js"],
   "exclude": [
     "node_modules",
     "babel.config.js",
