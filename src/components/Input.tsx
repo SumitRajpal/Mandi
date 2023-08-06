@@ -23,13 +23,13 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1.0,
-    fontFamily: FONT_NAME.BOLD,
+    fontFamily: FONT_NAME.HEAVY,
     fontSize: 14,
     color: COLORS.text_black,
   }
   , input_type_1: {
     flex: 1.0,
-    fontFamily: FONT_NAME.REGULAR,
+    fontFamily: FONT_NAME.MEDIUM,
     fontSize: 18,
     color: COLORS.black
   },
@@ -117,7 +117,7 @@ const Label = (props: any) => {
     <Text
       style={styles.commonTitle}
       size={FONT_SIZE.medium}
-      weight={FONT_WEIGHT.bold}
+      weight={FONT_WEIGHT.heavy}
       isPoppins
     >
       {title}

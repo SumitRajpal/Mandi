@@ -48,7 +48,7 @@ function App(): JSX.Element {
                       headerShown: false,
                       gestureEnabled: false
                     }}
-                    initialRouteName={SCREENS.Otp.identifier}
+                    initialRouteName={SCREENS.Login.identifier}
                   >
                     {_.toArray(SCREENS).map((item:any) => 
                       item.component ? (

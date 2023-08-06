@@ -1,8 +1,13 @@
 const FONT_WEIGHT = {
-  regular: 400,
-  medium: 500,
-  semibold: 600,
-  bold: 800
+  thin:100,
+  light:200,
+  roman:300,
+  medium: 400,
+  regular2: 500,
+  regular3: 600,
+  heavy: 700,
+  black:800,
+  black2:900
 };
 
 const FONT_SIZE = {
@@ -11,28 +16,22 @@ const FONT_SIZE = {
   medium: 14,
   large: 16,
   extra_large: 18,
+  xx_large: 20,
+  xxx_large: 22,
+  xxxx_large: 24,
   header: 28
 };
 
 const FONT_NAME = {
-  BOLD: "OpenSans-Bold",
-  CON_BOLD: "OpenSans_Condensed-Bold",
-  CON_EXTRA_BOLD: "OpenSans_Condensed-ExtraBold",
-  CON_LIGHT: "OpenSans_Condensed-Light",
-  CON_MEDIUM: "OpenSans_Condensed-Medium",
-  CON_REGULAR: "OpenSans_Condensed-Regular",
-  CON_SEMIBOLD: "OpenSans_Condensed-SemiBold",
-  EXTRABOLD: "OpenSans-ExtraBold",
-  LIGHT: "OpenSans-Light",
-  MEDIUM: "OpenSans-Medium",
-  REGULAR: "OpenSans-Regular",
-  SEMIBOLD: "OpenSans-SemiBold",
-  SEMI_CON_BOLD: "OpenSans_SemiCondensed-Bold",
-  SEMI_CON_EXTRABOLD: "OpenSans_SemiCondensed-ExtraBold",
-  SEMI_CON_LIGHT: "OpenSans_SemiCondensed-Light",
-  SEMI_CON_REGULAR: "OpenSans_SemiCondensed-Regular",
-  SEMI_CON_MEDIUM: "OpenSans_SemiCondensed-Medium",
-  SEMI_CON_SEMIBOLD: "OpenSans_SemiCondensed-SemiBold"
+  BLACK:"BT-Black",
+  BLACK2:"BT-Black2",
+  HEAVY:"BT-Heavy",
+  LIGHT:"BT-Light",
+  MEDIUM:"BT-Medium",
+  REGULAR2:"BT-Regular2",
+  REGULAR3:"BT-Regular3",
+  ROMAN:"BT-Roman",
+  THIN:"BT-Thin"
 };
 const COLORS = {
   primaryGreen: 'rgb(50, 134, 22)',
@@ -44,7 +43,7 @@ const COLORS = {
   secondaryBlue:'rgb(233, 249, 249)',
   primaryWhite:'rgb(250, 250, 250)',
   secondaryWhite:'rgb(254, 254, 254)',
-  transparent: 'rgba(0, 0, 0, 0.9)',
+  transparent: 'rgba(0, 0, 0, 0.1)',
   sky: "rgba(0,191,184,1)",
   sky_blue: "rgb(153,212,244)",
   sky_light: "rgba(0,191,184,0.5)",

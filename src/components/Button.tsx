@@ -94,7 +94,7 @@ const Label = (props:ILABEL) => {
       style={[styles.center]}
       size={FONT_SIZE.extra_large}
       isPoppins={true}
-      weight={FONT_WEIGHT.bold}
+      weight={FONT_WEIGHT.medium}
       color={COLORS.white}
     >
       {title}
@@ -108,7 +108,7 @@ const LabelSky = (props:ILABEL) => {
     <Text
       style={[styles.center]}
       size={FONT_SIZE.medium}
-      weight={FONT_WEIGHT.bold}
+      weight={FONT_WEIGHT.medium}
       color={COLORS.sky}
     >
       {title}

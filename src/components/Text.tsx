@@ -25,12 +25,12 @@ const defaultTextValue:ITextProps = {
   style: {},
   isTranslate: true,
   isPoppins: false,
-  weight: FONT_WEIGHT.regular,
-  color: COLORS.black
+  weight: FONT_WEIGHT.medium,
+  color: COLORS.text_black
 }
 const Text = (props:PropsWithChildren<ITextProps>) => {
   const {
-    weight = FONT_WEIGHT.regular,
+    weight = FONT_WEIGHT.medium,
     isTranslate = true,
     isPoppins = false,
     size = FONT_SIZE.regular,
@@ -43,22 +43,41 @@ const Text = (props:PropsWithChildren<ITextProps>) => {
 
   function getFont() {
     if (weight === 800) {
-      return FONT_NAME.BOLD;
+      return FONT_NAME.BLACK;
     }
-    return FONT_NAME.REGULAR;
+    return FONT_NAME.MEDIUM;
   }
 
   function getPoppinsFont() {
-    if (weight === 500) {
+    if (weight === 100) {
+      return FONT_NAME.THIN;
+    }
+    if (weight === 200) {
+      return FONT_NAME.LIGHT;
+    }
+    if (weight === 300) {
+      return FONT_NAME.ROMAN;
+    }
+    if (weight === 400) {
       return FONT_NAME.MEDIUM;
     }
-    if (weight === 600) {
-      return FONT_NAME.SEMIBOLD;
+    if (weight === 500) {
+      return FONT_NAME.REGULAR2;
     }
-    if (weight === 800) {
-      return FONT_NAME.BOLD;
+    if (weight ===600) {
+      return FONT_NAME.REGULAR3;
     }
-    return FONT_NAME.REGULAR;
+    if (weight ===700) {
+      return FONT_NAME.HEAVY;
+    }
+    
+    if (weight ===800) {
+      return FONT_NAME.BLACK;
+    }
+    if (weight ===800) {
+      return FONT_NAME.BLACK2;
+    }
+    return FONT_NAME.REGULAR2;
   }
 
   function getText() {
@@ -88,7 +107,7 @@ Text.defaultValue = {
   style: {},
   isTranslate: true,
   isPoppins: false,
-  weight: FONT_WEIGHT.regular,
+  weight: FONT_WEIGHT.regular2,
   color: COLORS.black
 };
 

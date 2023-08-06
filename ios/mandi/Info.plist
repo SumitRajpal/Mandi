@@ -53,24 +53,15 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>OpenSans-Bold.ttf</string>
-		<string>OpenSans-ExtraBold.ttf</string>
-		<string>OpenSans-Light.ttf</string>
-		<string>OpenSans-Medium.ttf</string>
-		<string>OpenSans-Regular.ttf</string>
-		<string>OpenSans-SemiBold.ttf</string>
-		<string>OpenSans_Condensed-Bold.ttf</string>
-		<string>OpenSans_Condensed-ExtraBold.ttf</string>
-		<string>OpenSans_Condensed-Light.ttf</string>
-		<string>OpenSans_Condensed-Medium.ttf</string>
-		<string>OpenSans_Condensed-Regular.ttf</string>
-		<string>OpenSans_Condensed-SemiBold.ttf</string>
-		<string>OpenSans_SemiCondensed-Bold.ttf</string>
-		<string>OpenSans_SemiCondensed-ExtraBold.ttf</string>
-		<string>OpenSans_SemiCondensed-Light.ttf</string>
-		<string>OpenSans_SemiCondensed-Medium.ttf</string>
-		<string>OpenSans_SemiCondensed-Regular.ttf</string>
-		<string>OpenSans_SemiCondensed-SemiBold.ttf</string>
+		<string>BT-Black.otf</string>
+		<string>BT-Black2.otf</string>
+		<string>BT-Heavy.otf</string>
+		<string>BT-Light.otf</string>
+		<string>BT-Medium.otf</string>
+		<string>BT-Regular2.otf</string>
+		<string>BT-Regular3.otf</string>
+		<string>BT-Roman.otf</string>
+		<string>BT-Thin.otf</string>
 	</array>
 </dict>
 </plist>

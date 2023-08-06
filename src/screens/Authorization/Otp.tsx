@@ -109,10 +109,10 @@ const Otp = (): JSX.Element => {
                         <ScrollView style={styles.container}>
                               <View style={styles.inputView}>
                                     <View style={styles.phone}>
-                                          <Text color={COLORS.text_black} size={FONT_SIZE.regular} isPoppins={true} weight={FONT_WEIGHT.semibold}> We've send varification code to</Text>
+                                          <Text color={COLORS.text_black} size={FONT_SIZE.regular} isPoppins={true} weight={FONT_WEIGHT.heavy}> We've send verification code to</Text>
                                     </View>
                                     <View >
-                                          <Text color={COLORS.text_black} size={FONT_SIZE.medium} isPoppins={true} weight={FONT_WEIGHT.bold}> +91 9021265922</Text>
+                                          <Text color={COLORS.text_black} size={FONT_SIZE.medium} isPoppins={true} weight={FONT_WEIGHT.black}> +91 9021265922</Text>
                                     </View>
                                     <Input
                                           style={[styles.inputView, styles.margin]}
@@ -132,12 +132,12 @@ const Otp = (): JSX.Element => {
                                                 }
                                           }}
                                     />
-                                    <Text color={COLORS.primaryGreen} size={FONT_SIZE.large} isPoppins={true} weight={FONT_WEIGHT.bold} isTranslate={false}> {time ? `Retry in ${time} sec` : 'Retry Now'}</Text>
+                                    <Text color={COLORS.primaryGreen} size={FONT_SIZE.large} isPoppins={true} weight={FONT_WEIGHT.heavy} isTranslate={false}> {time ? `Retry in ${time} sec` : 'Retry Now'}</Text>
                               </View>
 
                         </ScrollView>
                         <View style={styles.tnc}>
-                              <Text color={COLORS.secondaryGray} size={FONT_SIZE.extra_small} isPoppins={true} weight={FONT_WEIGHT.semibold}> By continuing you agree to our Terms of service & Privacy policy</Text>
+                              <Text color={COLORS.secondaryGray} size={FONT_SIZE.extra_small} isPoppins={true} weight={FONT_WEIGHT.heavy}> By continuing you agree to our Terms of service & Privacy policy</Text>
                         </View>
                   </SafeAreaView>
 

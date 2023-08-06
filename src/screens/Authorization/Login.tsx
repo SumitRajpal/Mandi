@@ -16,7 +16,7 @@ import DefaultImage from "src/components/DefaultImage";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, { SensorType, interpolate, useAnimatedSensor, useAnimatedStyle } from "react-native-reanimated";
 import Input from "src/components/Input";
-
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const Login = (): JSX.Element => {
   const { setLoggedInUser } = useContext(AuthContext);
@@ -103,7 +103,7 @@ const Login = (): JSX.Element => {
       alignContent:"center",
       alignSelf:"center",
       position:"absolute",
-      bottom: screenHeight/3 
+      bottom: screenHeight/2.9 
     }
   });
   const loginMutation = useMutation(
@@ -212,7 +212,7 @@ const Login = (): JSX.Element => {
             <DefaultImage styles={styles.customImage} imageUri={"https://freepngimg.com/thumb/graphic_design/6-2-graphic-design-transparent.png"} />
           </View>
           <View style={styles.logo}>
-            <Text size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.semibold}> Best app for daily grocery</Text>
+            <Text size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.regular3}> Best app for daily grocery</Text>
           </View>
 
           <Button style={[styles.inputView, styles.margin]} 
@@ -220,13 +220,14 @@ const Login = (): JSX.Element => {
           onPress={() => { setLoginModel(true) }} />
         </ScrollView>
         <View style={styles.tnc}>
-          <Text color={COLORS.secondaryGray} size={FONT_SIZE.extra_small} isPoppins={true} weight={FONT_WEIGHT.semibold}> By continuing you agree to our Terms of service & Privacy policy</Text>
+          <Text color={COLORS.secondaryGray} size={FONT_SIZE.extra_small} isPoppins={true} weight={FONT_WEIGHT.roman}> By continuing you agree to our Terms of service & Privacy policy</Text>
         </View>
 
         <Modal
           animationType="slide"
           visible={loginModel}
           transparent
+          hardwareAccelerated={true}
           onRequestClose={() => {
            
           }}>
@@ -234,10 +235,10 @@ const Login = (): JSX.Element => {
           <View style={styles.modelParent}>
            <View style={styles.modalChild}>
             <View style={styles.close}>
-            <Button style={[styles.inputView, styles.margin]} title="Login" onPress={() => { onLogin() }} />
+            <Icon name="closecircle" size={screenRatio * 30} color={COLORS.text_black} onPress={() => setLoginModel(false)}/> 
             </View>
            <View style={styles.loginText}>
-            <Text size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.bold}> Sign up or Log in </Text>
+            <Text size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.heavy}> Sign up or Log in </Text>
           </View>
           <Input
             style={styles.inputView}
@@ -255,7 +256,7 @@ const Login = (): JSX.Element => {
         
            </View>
            <View style={styles.tnc}>
-          <Text color={COLORS.secondaryGray} size={FONT_SIZE.extra_small} isPoppins={true} weight={FONT_WEIGHT.semibold}> By continuing you agree to our Terms of service & Privacy policy</Text>
+          <Text color={COLORS.secondaryGray} size={FONT_SIZE.extra_small} isPoppins={true} weight={FONT_WEIGHT.roman}> By continuing you agree to our Terms of service & Privacy policy</Text>
         </View>
             </View>
         </Modal>
