@@ -17,6 +17,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, { SensorType, interpolate, useAnimatedSensor, useAnimatedStyle } from "react-native-reanimated";
 import Input from "src/components/Input";
 import Icon from 'react-native-vector-icons/AntDesign';
+import DefaultInput from "src/components/Input";
 
 const Login = (): JSX.Element => {
   const { setLoggedInUser } = useContext(AuthContext);
@@ -212,7 +213,7 @@ const Login = (): JSX.Element => {
             <DefaultImage styles={styles.customImage} imageUri={"https://freepngimg.com/thumb/graphic_design/6-2-graphic-design-transparent.png"} />
           </View>
           <View style={styles.logo}>
-            <Text size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.regular3}> Best app for daily grocery</Text>
+            <Text size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.heavy}> Best app for daily grocery</Text>
           </View>
 
           <Button style={[styles.inputView, styles.margin]} 
@@ -240,8 +241,8 @@ const Login = (): JSX.Element => {
            <View style={styles.loginText}>
             <Text size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.heavy}> Sign up or Log in </Text>
           </View>
-          <Input
-            style={styles.inputView}
+          <DefaultInput
+            style={[styles.inputView]}
             keyboardType={KEYBOARD_TYPE.phone}
             value={phone}
             input={styles.phone}

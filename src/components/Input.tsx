@@ -62,8 +62,9 @@ interface IInput {
   input?: any,
   keyboardType: any,
   onChangeText: (e: any) => void;
+  onFocus?: () => void;
 }
-const Input = (props: IInput) => {
+const DefaultInput = (props: IInput) => {
   const {
     label = "",
     placeholderText = "",
@@ -125,4 +126,4 @@ const Label = (props: any) => {
   );
 };
 
-export default Input;
+export default DefaultInput;

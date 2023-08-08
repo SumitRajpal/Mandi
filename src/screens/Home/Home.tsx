@@ -8,6 +8,8 @@ import ProgressView from "src/components/ProgressView";
 import { Button, Text } from "src/components";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Footer from "src/components/footer";
+import DefaultCategory from "src/components/DefaultCategory";
+import DefaultSearchBar from "src/components/DefaultSearchBar";
 
 const Home = (): JSX.Element => {
   const styles = StyleSheet.create({
@@ -22,14 +24,14 @@ const Home = (): JSX.Element => {
       width: screenWidth,
       height: screenHeight / 10
     },
-    
+
     headerDetails: {
       flexBasis: "80%",
-      alignItems:"flex-start",
+      alignItems: "flex-start",
       alignSelf: "center",
-      gap: screenRatio 
+      gap: screenRatio
     },
-    
+
     profileDetails: {
       flexBasis: "20%",
       alignItems: "center",
@@ -62,6 +64,22 @@ const Home = (): JSX.Element => {
       width: screenWidth,
       height: screenHeight / 11
     },
+
+    flexContent: {
+      flexBasis:"20%",
+      alignContent:"center",
+      textAlign:"center",
+      alignItems: "center",
+      alignSelf:"center"
+    },
+    gridFlex: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      padding: 0,
+      gap:0,
+      maxWidth: screenWidth,
+  
+    },
   });
 
   return (
@@ -74,13 +92,44 @@ const Home = (): JSX.Element => {
         </View>
         <View style={styles.profileDetails}>
           <Icon name="user-circle-o" size={screenRatio * 30} color={COLORS.text_black} />
-
         </View>
       </View>
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.container}>
+          
+          <View style={{flex:1,flexDirection:"row",flexWrap:"wrap",marginHorizontal:5}}>
+        <View style={{flexBasis:"25%",alignItems:"center"}}>
+        <DefaultCategory title="Dairy & Breakfast" imageUri={"https://www.freepnglogos.com/uploads/vegetables-png/fruits-vegetables-exotic-veggies-simply-organic-cart-2.png"} />
+        </View>
+        <View style={{flexBasis:"25%",alignItems:"center"}}>
+        <DefaultCategory title="Dairy & Breakfast" imageUri={"https://www.freepnglogos.com/uploads/vegetables-png/fruits-vegetables-exotic-veggies-simply-organic-cart-2.png"} />
+        </View>
+        <View style={{flexBasis:"25%",alignItems:"center"}}>
+        <DefaultCategory title="Dairy & Breakfast" imageUri={"https://www.freepnglogos.com/uploads/vegetables-png/fruits-vegetables-exotic-veggies-simply-organic-cart-2.png"} />
+        </View>
+        <View style={{flexBasis:"25%",alignItems:"center"}}>
+        <DefaultCategory title="Dairy & Breakfast" imageUri={"https://www.freepnglogos.com/uploads/vegetables-png/fruits-vegetables-exotic-veggies-simply-organic-cart-2.png"} />
+        </View>
+        </View>
+
+        <View style={{flex:1,flexDirection:"row",flexWrap:"wrap",marginHorizontal:5}}>
+        <View style={{flexBasis:"25%",alignItems:"center"}}>
+        <DefaultCategory title="Dairy & Breakfast" imageUri={"https://www.freepnglogos.com/uploads/vegetables-png/fruits-vegetables-exotic-veggies-simply-organic-cart-2.png"} />
+        </View>
+        <View style={{flexBasis:"25%",alignItems:"center"}}>
+        <DefaultCategory title="Dairy & Breakfast" imageUri={"https://www.freepnglogos.com/uploads/vegetables-png/fruits-vegetables-exotic-veggies-simply-organic-cart-2.png"} />
+        </View>
+        <View style={{flexBasis:"25%",alignItems:"center"}}>
+        <DefaultCategory title="Munchies" imageUri={"https://www.freepnglogos.com/uploads/vegetables-png/fruits-vegetables-exotic-veggies-simply-organic-cart-2.png"} />
+        </View>
+        <View style={{flexBasis:"25%",alignItems:"center"}}>
+        <DefaultCategory title="Dairy & Breakfast" imageUri={"https://www.freepnglogos.com/uploads/vegetables-png/fruits-vegetables-exotic-veggies-simply-organic-cart-2.png"} />
+        </View>
+        </View>
         </ScrollView>
-      <Footer/>
+
+
+        <Footer />
       </SafeAreaView>
 
     </View>

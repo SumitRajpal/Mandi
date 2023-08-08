@@ -74,10 +74,10 @@ const Text = (props:PropsWithChildren<ITextProps>) => {
     if (weight ===800) {
       return FONT_NAME.BLACK;
     }
-    if (weight ===800) {
+    if (weight ===900) {
       return FONT_NAME.BLACK2;
     }
-    return FONT_NAME.REGULAR2;
+    return FONT_NAME.MEDIUM;
   }
 
   function getText() {

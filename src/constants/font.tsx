@@ -12,6 +12,7 @@ const FONT_WEIGHT = {
 
 const FONT_SIZE = {
   extra_small: 10,
+  small: 12,
   regular: 13,
   medium: 14,
   large: 16,
