@@ -16,6 +16,7 @@ import DefaultImage from "src/components/DefaultImage";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, { SensorType, interpolate, useAnimatedSensor, useAnimatedStyle } from "react-native-reanimated";
 import Input from "src/components/Input";
+import DefaultInput from "src/components/Input";
 
 
 const Otp = (): JSX.Element => {
@@ -114,7 +115,7 @@ const Otp = (): JSX.Element => {
                                     <View >
                                           <Text color={COLORS.text_black} size={FONT_SIZE.medium} isPoppins={true} weight={FONT_WEIGHT.black}> +91 9021265922</Text>
                                     </View>
-                                    <Input
+                                    <DefaultInput
                                           style={[styles.inputView, styles.margin]}
                                           keyboardType={KEYBOARD_TYPE.phone}
                                           value={otp}
