@@ -10,13 +10,18 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Footer from "src/components/footer";
 import DefaultCategory from "src/components/DefaultCategory";
 import DefaultSearchBar from "src/components/DefaultSearchBar";
+import ShopCategory from "src/components/Products/ShopCategory";
+import CartProduct from "src/components/CartProduct";
+import ProductListItem from "src/components/ProductListItem";
+import CartButton from "src/components/CartButton";
 
 const Home = (): JSX.Element => {
   const styles = StyleSheet.create({
     container: {
-      flex: 1.0,
-      backgroundColor: COLORS.secondaryWhite
+      flex: 1,
+      backgroundColor: COLORS.white
     },
+    cart: { flex: 1, flexDirection: "row", flexWrap: "wrap", padding: 10 },
     headerFlex: {
       flexDirection: 'row',
       flexWrap: 'wrap',
@@ -37,54 +42,15 @@ const Home = (): JSX.Element => {
       alignItems: "center",
       alignSelf: "center"
     },
-    footerContainer: {
-      position: "absolute",
-      bottom: 0,
-      shadowColor: COLORS.primaryRed,
-      shadowOffset: { width: 0, height: 5 },
-      shadowRadius: 2,
-      shadowOpacity: 0.9,
-      elevation: 10,
-      backgroundColor: COLORS.secondaryWhite,
-      padding: 0,
-      borderRadius: 15,
-      width: screenWidth,
-      height: screenHeight / 12,
 
-    },
-    footerBasis: {
-      flexBasis: "50%",
-      gap: screenRatio * 10,
-      alignSelf: "center"
-    },
-    footerFlex: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      padding: screenRatio * 5,
-      width: screenWidth,
-      height: screenHeight / 11
-    },
 
-    flexContent: {
-      flexBasis:"20%",
-      alignContent:"center",
-      textAlign:"center",
-      alignItems: "center",
-      alignSelf:"center"
-    },
-    gridFlex: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      padding: 0,
-      gap:0,
-      maxWidth: screenWidth,
-  
-    },
+
+
   });
 
   return (
     <View style={styles.container} >
-      <View style={styles.headerFlex}>
+      {/* <View style={styles.headerFlex}>
         <View style={styles.headerDetails}>
           <Text color={COLORS.text_black} size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.heavy}>Delivering in</Text>
           <Text color={COLORS.text_black} size={FONT_SIZE.xxx_large} isPoppins={true} weight={FONT_WEIGHT.black}>Tomorrow 8am</Text>
@@ -93,45 +59,17 @@ const Home = (): JSX.Element => {
         <View style={styles.profileDetails}>
           <Icon name="user-circle-o" size={screenRatio * 30} color={COLORS.text_black} />
         </View>
-      </View>
+        
+      </View> */}
       <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.container}>
-          
-          <View style={{flex:1,flexDirection:"row",flexWrap:"wrap",marginHorizontal:5}}>
-        <View style={{flexBasis:"25%",alignItems:"center"}}>
-        <DefaultCategory title="Dairy & Breakfast" imageUri={"https://www.freepnglogos.com/uploads/vegetables-png/fruits-vegetables-exotic-veggies-simply-organic-cart-2.png"} />
-        </View>
-        <View style={{flexBasis:"25%",alignItems:"center"}}>
-        <DefaultCategory title="Dairy & Breakfast" imageUri={"https://www.freepnglogos.com/uploads/vegetables-png/fruits-vegetables-exotic-veggies-simply-organic-cart-2.png"} />
-        </View>
-        <View style={{flexBasis:"25%",alignItems:"center"}}>
-        <DefaultCategory title="Dairy & Breakfast" imageUri={"https://www.freepnglogos.com/uploads/vegetables-png/fruits-vegetables-exotic-veggies-simply-organic-cart-2.png"} />
-        </View>
-        <View style={{flexBasis:"25%",alignItems:"center"}}>
-        <DefaultCategory title="Dairy & Breakfast" imageUri={"https://www.freepnglogos.com/uploads/vegetables-png/fruits-vegetables-exotic-veggies-simply-organic-cart-2.png"} />
-        </View>
-        </View>
 
-        <View style={{flex:1,flexDirection:"row",flexWrap:"wrap",marginHorizontal:5}}>
-        <View style={{flexBasis:"25%",alignItems:"center"}}>
-        <DefaultCategory title="Dairy & Breakfast" imageUri={"https://www.freepnglogos.com/uploads/vegetables-png/fruits-vegetables-exotic-veggies-simply-organic-cart-2.png"} />
-        </View>
-        <View style={{flexBasis:"25%",alignItems:"center"}}>
-        <DefaultCategory title="Dairy & Breakfast" imageUri={"https://www.freepnglogos.com/uploads/vegetables-png/fruits-vegetables-exotic-veggies-simply-organic-cart-2.png"} />
-        </View>
-        <View style={{flexBasis:"25%",alignItems:"center"}}>
-        <DefaultCategory title="Munchies" imageUri={"https://www.freepnglogos.com/uploads/vegetables-png/fruits-vegetables-exotic-veggies-simply-organic-cart-2.png"} />
-        </View>
-        <View style={{flexBasis:"25%",alignItems:"center"}}>
-        <DefaultCategory title="Dairy & Breakfast" imageUri={"https://www.freepnglogos.com/uploads/vegetables-png/fruits-vegetables-exotic-veggies-simply-organic-cart-2.png"} />
-        </View>
-        </View>
+        <ScrollView style={styles.container}
+          showsVerticalScrollIndicator={false} >
+<CartProduct title="Green Chilly - 100gm - (Hari mirch)" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
+
         </ScrollView>
-
-
         <Footer />
       </SafeAreaView>
-
     </View>
   );
 };

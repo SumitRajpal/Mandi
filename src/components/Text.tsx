@@ -19,7 +19,8 @@ interface ITextProps{
     size?:number,
     color?:string,
     children?:ReactNode,
-    style?: any 
+    style?: any,
+    numberOfLines?:number
 }
 const defaultTextValue:ITextProps = {
   style: {},
@@ -36,6 +37,7 @@ const Text = (props:PropsWithChildren<ITextProps>) => {
     size = FONT_SIZE.regular,
     color = COLORS.text_black,
     children,
+    numberOfLines,
     style = {},
     ...extraProps
   } = props;
@@ -96,6 +98,7 @@ const Text = (props:PropsWithChildren<ITextProps>) => {
   return (
     <RNText
       {...extraProps}
+      numberOfLines={numberOfLines}
       style={[{ color: fontColor, fontSize, fontFamily }, style]}
     >
       {text}
