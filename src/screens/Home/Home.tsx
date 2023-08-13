@@ -21,6 +21,11 @@ const Home = (): JSX.Element => {
       flex: 1,
       backgroundColor: COLORS.white
     },
+    safearea: {
+      flex: 1,
+      paddingBottom:screenHeight/12,
+      backgroundColor: COLORS.white
+    },
     cart: { flex: 1, flexDirection: "row", flexWrap: "wrap", padding: 10 },
     headerFlex: {
       flexDirection: 'row',
@@ -61,14 +66,16 @@ const Home = (): JSX.Element => {
           <Icon name="user-circle-o" size={screenRatio * 30} color={COLORS.text_black} />
         </View>
       </View>} */}
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.safearea}>
 
         <ScrollView
           showsVerticalScrollIndicator={false} >
         
+        <ProductHorizontal horizontalTitle="Order Again"/>
           <ShopCategory />
 
-          <ProductHorizontal/>
+          <ProductHorizontal horizontalTitle="Best Seller"/>
+
         </ScrollView>
         <Footer />
       </SafeAreaView>

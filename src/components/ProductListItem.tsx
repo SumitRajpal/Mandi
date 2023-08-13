@@ -84,7 +84,7 @@ const ProductListItem = (): JSX.Element =>
       <View style={defaultStyle.textFlexContainer}>
         <View style={defaultStyle.titleContainer}>
           <View style={defaultStyle.titleDetails}>
-            <Label size={FONT_SIZE.medium} weight={FONT_WEIGHT.heavy} title={"Harpic disinfectent cleaner for the home using dgrhrehrhrhrh dherh"} />
+            <Label  size={FONT_SIZE.medium} weight={FONT_WEIGHT.heavy} title={"Harpic disinfectent cleaner for the home"} />
           </View>
           <View style={defaultStyle.titleExtraDetails}>
             <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", alignContent: "flex-start", justifyContent: "center" }}>

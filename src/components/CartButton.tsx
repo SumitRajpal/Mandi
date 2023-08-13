@@ -21,7 +21,7 @@ const CartButton = (props: ICartButton): JSX.Element => {
             container: {
                   flex: 1.0,
                   borderWidth: 1,
-                  display:"flex",
+                  display: "flex",
                   borderRadius: 10,
                   flexDirection: "column",
                   flexWrap: "wrap",
@@ -30,10 +30,10 @@ const CartButton = (props: ICartButton): JSX.Element => {
             },
 
             cartText: {
-                  flex:1,
-                  justifyContent:"center",
-                  alignContent:"center",
-                  alignSelf:"center",
+                  flex: 1,
+                  justifyContent: "center",
+                  alignContent: "center",
+                  alignSelf: "center",
                   textAlign: "center",
                   color: COLORS.primaryGreen,
                   letterSpacing: 1
@@ -43,21 +43,19 @@ const CartButton = (props: ICartButton): JSX.Element => {
                   display: "flex",
                   flexDirection: "row",
                   flexWrap: "wrap",
-                  alignItems:"center",
-                  alignContent:"center",
-                  justifyContent:"space-evenly"
+                  alignItems: "center",
+                  alignContent: "center",
+                  justifyContent: "center"
             },
             incdec: {
                   flex: 1,
-                  height:"auto",
-                  width:"auto",
+                  height: "auto",
+                  width: "auto",
                   alignItems: "center",
-                  flexBasis: "40%"
 
             },
             quanity: {
                   flex: 1,
-                  flexBasis: "20%",
                   alignItems: "center",
             },
             white: {
@@ -65,7 +63,7 @@ const CartButton = (props: ICartButton): JSX.Element => {
             }
 
       });
-      const [quantity, setQuantity] = useState(5);
+      const [quantity, setQuantity] = useState(1);
       const cartStyle = StyleSheet.create({
             parentButton: {
                   borderColor: COLORS.primaryGreen,
@@ -94,10 +92,10 @@ const CartButton = (props: ICartButton): JSX.Element => {
 
                   </View> :
                         <Pressable onPress={() => setQuantity(quantity + 1)}>
-                             <View style={defaultStyles.cartFlex}>
-                             <Label styles={defaultStyles.cartText} title={"Add"} />
-                             </View>
-                              
+                              <View style={defaultStyles.cartFlex}>
+                                    <Label styles={defaultStyles.cartText} title={"Add"} />
+                              </View>
+
                         </Pressable>
                   }
             </View>
@@ -115,7 +113,7 @@ const Label = (props: ILABEL) => {
       const defaultStyle = StyleSheet.create({
             text: {
                   overflow: "hidden",
-                  lineHeight: 30,
+                  lineHeight: 32,
             }
       });
       return (

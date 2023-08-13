@@ -5,10 +5,9 @@ import Animated from "react-native-reanimated";
 import { AnimatedImage } from "react-native-reanimated/lib/typescript/reanimated2/component/Image";
 import { screenHeight, screenRatio, screenWidth } from "src/constants";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
-import Text from "./Text";
-import DefaultImage from "./DefaultImage";
+import {Text} from "src/components";
 import Icon from 'react-native-vector-icons/Entypo';
-import CartButton from "./CartButton";
+import CartButton from "src/components/CartButton";
 
 const defaultStyles = StyleSheet.create({
       container: {
@@ -106,11 +105,11 @@ const CartProduct = (props: IDefaultImage): JSX.Element => {
                                                 <Label weight={FONT_WEIGHT.heavy} size={FONT_SIZE.regular} title={"₹1011"} />
                                           </View>
                                           <View style={{ flex: 1, alignItems: "flex-end", justifyContent: "flex-end" }}>
-                                                <Label styles={defaultStyles.strike} weight={FONT_WEIGHT.regular2} size={FONT_SIZE.regular} title={"₹1501"} />
+                                                <Label lstyles={defaultStyles.strike} weight={FONT_WEIGHT.regular2} size={FONT_SIZE.regular} title={"₹1501"} />
                                           </View>
                                     </View>
                               </View>
-                              <View style={{ flex: 4, flexWrap: "wrap",justifyContent:"center",alignContent:"space-around"  }}>
+                              <View style={{ flex: 4, flexWrap: "wrap",justifyContent:"center",alignContent:"center"  }}>
                                     <CartButton />
                               </View>
                         </View>
@@ -122,15 +121,15 @@ const CartProduct = (props: IDefaultImage): JSX.Element => {
 
 interface ILABEL {
       title: any
-      styles?: any
+      lstyles?: any
       size?: number
       weight?: number
 }
 const Label = (props: ILABEL) => {
-      const { title, styles, size = FONT_SIZE.medium, weight = FONT_WEIGHT.heavy } = props;
+      const { title, lstyles, size = FONT_SIZE.medium, weight = FONT_WEIGHT.heavy } = props;
       return (
             <Text
-                  style={[defaultStyles.text, styles]}
+                  style={[defaultStyles.text, lstyles]}
                   size={size}
                   isPoppins={true}
                   numberOfLines={2}
