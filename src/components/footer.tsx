@@ -1,14 +1,12 @@
 
 import React, { useState } from "react";
-import { ActivityIndicator, Modal, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Modal, Pressable, StyleSheet, View } from "react-native";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { Button, Text } from "src/components";
 import { screenHeight, screenRatio, screenWidth } from "src/constants";
-import DefaultModel from "./DefaultModel";
 import ProductListItem from "./ProductListItem";
-import CartList from "./Products/CartList";
-import ProductSorting from "./ProductSorting";
 import DefaultImage from "./DefaultImage";
+import CartListModel from "./CartListModel";
 
 const defaultStyles = StyleSheet.create({
   footerContainer: {
@@ -54,7 +52,7 @@ const defaultStyles = StyleSheet.create({
     width: 46,
     padding: 5,
     backgroundColor: COLORS.white,
-    borderWidth: 0.5,
+    borderWidth: 0.4,
     borderColor: COLORS.secondaryGray
   }
 });
@@ -71,6 +69,7 @@ const Footer = (): JSX.Element => {
     <View style={defaultStyles.footerContainer}>
       <View style={defaultStyles.footerFlex}>
         <View style={defaultStyles.footerBasis}>
+          <Pressable style={{ flex: 1}} onPress={() => setModel(!model)}>
           <View style={{ flex: 1, flexDirection: "row" }}>
             <View style={{ flex: 1, flexShrink: 1, padding:0 }}>
               <View style={{ flex: 1, gap:-20, padding:5,flexDirection: "row", flexShrink: 1, paddingHorizontal: 20 }}>
@@ -93,16 +92,17 @@ const Footer = (): JSX.Element => {
             <View style={{ flex: 1 }}>
               <Text
                 style={[defaultStyles.text]}
-                size={FONT_SIZE.large}
+                size={FONT_SIZE.medium}
                 isPoppins={true}
                 numberOfLines={1}
                 weight={FONT_WEIGHT.medium}
                 color={COLORS.text_black}
-              >
-                {"46 Items"}
+              > 
+                {"46 Items  "}
               </Text>
             </View>
           </View>
+          </Pressable>
         </View>
 
         <View style={defaultStyles.footerBasis}>
@@ -111,7 +111,7 @@ const Footer = (): JSX.Element => {
 
         </View>
       </View>
-      <ProductSorting visible={model} height={"100%"} />
+      <CartListModel visible={model} height={"100%"}  onModelClose={(value) => setModel(value)}/>
 
     </View>);
 }

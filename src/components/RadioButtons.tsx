@@ -1,6 +1,6 @@
 
 import React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
 import { COLORS, FONT_SIZE, FONT_WEIGHT, screenHeight } from "src/constants";
 import Text from "./Text";
 
@@ -15,12 +15,13 @@ export default function RadioButtons(props:IRadioButton) {
   return (
     <View style={styles.row}>
       {options.map((item:any) => (
+        <Pressable key={item.key} style={{flex:1}} onPress={() => {
+          onSelect(item);
+        }}>
         <View key={item.key} style={[styles.buttonContainer]} >
           <TouchableOpacity
             style={[styles.circle]}
-            onPress={() => {
-              onSelect(item);
-            }}
+            
           >
             {selectedOption && selectedOption?.key === item.key && (
               <View style={styles.checkedCircle} />
@@ -37,6 +38,7 @@ export default function RadioButtons(props:IRadioButton) {
             {item.text}
           </Text>
         </View>
+        </Pressable>
       ))}
     </View>
   );
@@ -44,6 +46,7 @@ export default function RadioButtons(props:IRadioButton) {
 
 const styles = StyleSheet.create({
   buttonContainer: {
+    flex:1,
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "flex-start"

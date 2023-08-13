@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { FlatList, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import React, { } from "react"
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { api } from "src/api/http";
@@ -13,7 +13,7 @@ import DefaultSearchBar from "src/components/DefaultSearchBar";
 import ShopCategory from "src/components/Products/ShopCategory";
 import CartProduct from "src/components/CartProduct";
 import ProductListItem from "src/components/ProductListItem";
-import CartButton from "src/components/CartButton";
+import ProductHorizontal from "src/components/Products/ProductHorizontal";
 
 const Home = (): JSX.Element => {
   const styles = StyleSheet.create({
@@ -48,9 +48,10 @@ const Home = (): JSX.Element => {
 
   });
 
+
   return (
     <View style={styles.container} >
-      {/* <View style={styles.headerFlex}>
+      {/* {<View style={styles.headerFlex}>
         <View style={styles.headerDetails}>
           <Text color={COLORS.text_black} size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.heavy}>Delivering in</Text>
           <Text color={COLORS.text_black} size={FONT_SIZE.xxx_large} isPoppins={true} weight={FONT_WEIGHT.black}>Tomorrow 8am</Text>
@@ -59,14 +60,15 @@ const Home = (): JSX.Element => {
         <View style={styles.profileDetails}>
           <Icon name="user-circle-o" size={screenRatio * 30} color={COLORS.text_black} />
         </View>
-        
-      </View> */}
+      </View>} */}
       <SafeAreaView style={styles.container}>
 
-        <ScrollView style={styles.container}
+        <ScrollView
           showsVerticalScrollIndicator={false} >
-<CartProduct title="Green Chilly - 100gm - (Hari mirch)" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
+        
+          <ShopCategory />
 
+          <ProductHorizontal/>
         </ScrollView>
         <Footer />
       </SafeAreaView>

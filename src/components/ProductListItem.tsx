@@ -13,6 +13,7 @@ const defaultStyle = StyleSheet.create({
   },
   parent: {
     flex: 1,
+    gap: 10,
     flexDirection: "row",
     flexWrap: "wrap",
   },
@@ -35,8 +36,8 @@ const defaultStyle = StyleSheet.create({
 
   },
   textFlexContainer: {
-    flex: 8,
-    justifyContent: "center",
+    flex: 7,
+    justifyContent: "space-around",
     alignItems: "flex-start"
   },
   titleContainer: {
@@ -44,23 +45,21 @@ const defaultStyle = StyleSheet.create({
     flexDirection: "column",
     flexWrap: "wrap",
     gap: 10,
-    alignContent: "center",
-    alignItems: "center",
+    alignContent: "flex-start",
+    alignItems: "flex-start",
 
   },
   titleDetails: {
     flex: 1,
-    flexWrap: "wrap",
-    alignItems: "flex-end",
-    alignContent: "space-between",
-    justifyContent: "flex-end"
+    alignItems: "flex-start",
+    alignContent: "space-around",
+    justifyContent: "flex-start"
   },
   titleExtraDetails: {
     flex: 1,
-    flexWrap: "wrap",
-    alignItems: "flex-end",
-    alignContent: "space-between",
-    justifyContent: "flex-end"
+    alignItems: "flex-start",
+    alignContent: "space-around",
+    justifyContent: "flex-start",
   },
   text: {
     flex: 1,
@@ -88,15 +87,28 @@ const ProductListItem = (): JSX.Element =>
             <Label size={FONT_SIZE.medium} weight={FONT_WEIGHT.heavy} title={"Harpic disinfectent cleaner for the home using dgrhrehrhrhrh dherh"} />
           </View>
           <View style={defaultStyle.titleExtraDetails}>
-            <View style={{ flex: 1, flexDirection: "row", alignContent: "center" }}>
+            <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", alignContent: "flex-start", justifyContent: "center" }}>
               <View style={{
-                flex: 4, flexWrap: "wrap",
-                alignItems: "center",
-                alignContent: "flex-start",
-                justifyContent: "flex-start"
+                flex: 4,
+                alignItems: "flex-start",
+                alignContent: "space-between",
+                justifyContent: "space-between"
               }}>
-                <Label weight={FONT_WEIGHT.roman} title={"500 ml"} />
-                <Label size={FONT_SIZE.regular} weight={FONT_WEIGHT.heavy} title={"₹105"} />
+                <View style={{ flex: 1, flexDirection: "column", gap: 5 }}>
+                  <View style={{ flex: 1 }}>
+                    <Label weight={FONT_WEIGHT.roman} title={"500 ml"} />
+                  </View>
+                  <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", alignContent: "space-between", gap: 1 }}>
+                    <View style={{ flex: 3, flexWrap: "wrap", alignItems: "flex-start" }}>
+                      <Label size={FONT_SIZE.regular} weight={FONT_WEIGHT.heavy} title={"₹105"} />
+                    </View>
+                    <View style={{ flex: 1, flexWrap: "wrap", alignItems: "stretch" }}>
+                      <Label styles={{
+                        textDecorationLine: 'line-through', textDecorationStyle: 'solid'
+                      }} size={FONT_SIZE.regular} weight={FONT_WEIGHT.roman} title={"₹150"} />
+                    </View>
+                  </View>
+                </View>
               </View>
               <View style={{
                 flex: 2, flexWrap: "wrap",

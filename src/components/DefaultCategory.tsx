@@ -1,12 +1,9 @@
 
 import React from "react";
 import { Image, Modal, Platform, StyleSheet, View } from "react-native";
-import Animated from "react-native-reanimated";
-import { AnimatedImage } from "react-native-reanimated/lib/typescript/reanimated2/component/Image";
 import { screenHeight, screenWidth } from "src/constants";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import Text from "./Text";
-import DefaultImage from "./DefaultImage";
 
 const defaultStyles = StyleSheet.create({
       container: {
@@ -17,16 +14,15 @@ const defaultStyles = StyleSheet.create({
             width: "100%",
             alignContent:"center",
             borderRadius: 15,
-            flexBasis: "60%"
       },
       parentContainer: {
             flex: 1,
             alignSelf: "center",
             alignItems:"center",
             flexDirection: "column",
-            gap: 5,
-            height: screenHeight / 5.5,
-            width: screenWidth / 4.6,
+            gap: 1,
+            height: screenHeight,
+            width: screenWidth ,
       },
       imageFeatures: {
             flex: 1,
@@ -58,7 +54,6 @@ const defaultStyles = StyleSheet.create({
       },
       title: {
             padding: 0,
-            flexBasis: "40%"
       }
 });
 
@@ -70,7 +65,7 @@ interface IDefaultImage {
       imageStyles?: any,
       styles?: any,
       imageUri: any,
-      title: string
+      title?: string
 }
 const DefaultCategory = (props: IDefaultImage): JSX.Element => {
       const { styles, imageStyles, imageUri, title } = props
@@ -86,7 +81,7 @@ const DefaultCategory = (props: IDefaultImage): JSX.Element => {
 
                   </View>
                   <View style={defaultStyles.title}>
-                        <Label title={title} />
+                  {title && <Label title={title} />}
                   </View>
             </View>);
 }

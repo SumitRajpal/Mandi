@@ -3,7 +3,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 import { Image, Modal, Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import { screenHeight, screenRatio, screenWidth } from "src/constants";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
-import { Button, Text } from ".";
+import { Button, Text } from "src/components";
 
 
 interface ILABEL {
@@ -25,16 +25,15 @@ const DefaultLabel = (props: ILABEL): JSX.Element => {
             }
       );
 
-      return (
-            <Text
+      return (<Text
                   style={[defaultStyles.text, styles]}
                   size={size}
+                  isTranslate={false}
                   isPoppins={true}
                   numberOfLines={2}
                   weight={weight}
                   color={COLORS.text_black}
-            >
-                  {title}
+            >{title}
             </Text>);
 }
 export default DefaultLabel;

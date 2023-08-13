@@ -37,7 +37,7 @@ const defaultStyles = StyleSheet.create(
                   alignContent: "center",
                   alignSelf: "center",
                   position: "absolute",
-                  bottom: screenHeight / 3
+                  bottom: screenHeight / 2.6
             },
             margin: {
                   marginTop: screenRatio * 20
@@ -96,10 +96,11 @@ const ProductSorting = (props: IDefaultModel): JSX.Element => {
                                                 <RadioButtons
                                                       selectedOption={{ key: sorting }}
                                                       options={[
-                                                      { text: 'Relevance (default)', key: 'default1' },
+                                                      { text: 'Relevance (default)', key: 'default' },
                                                       { text: 'Price (low to high)', key: 'default2' },
                                                       { text: 'Price (high to low)', key: 'default3' },
-                                                      { text: 'Price (low to high)', key: 'default4' }]}
+                                                      { text: 'Price (low to high)', key: 'default4' },
+                                                      { text: 'Discount (high to low)', key: 'default5' }]}
                                                       onSelect={(response) => {
 
                                                             setSorting(response?.key)

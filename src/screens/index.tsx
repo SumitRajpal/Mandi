@@ -3,6 +3,7 @@ import Splash from 'src/screens/Splash/Splash';
 import Login from 'src/screens/Authorization/Login';
 import Home from 'src/screens/Home/Home';
 import Otp from 'src/screens/Authorization/Otp';
+import ProductList from 'src/screens/Product/ProductList';
 
 const SCREENS:any = {
   Splash: {
@@ -29,6 +30,13 @@ const SCREENS:any = {
     title: SCREEN_IDENTIFIER.Otp.title,
     identifier: SCREEN_IDENTIFIER.Otp.identifier,
     component:Otp
+  },
+  ProductList:{
+    key: SCREEN_IDENTIFIER.ProductList.key,
+    title: SCREEN_IDENTIFIER.ProductList.title,
+    identifier: SCREEN_IDENTIFIER.ProductList.identifier,
+    component:ProductList
+    
   }
 };
 

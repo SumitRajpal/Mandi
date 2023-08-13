@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { StyleSheet, TextInput, View, Keyboard, Button } from "react-native";
 import { COLORS, KEYBOARD_TYPE, screenHeight, screenRatio, screenWidth } from "src/constants";
 import Icon from 'react-native-vector-icons/AntDesign';
-import DefaultInput from "./Input";
+import {DefaultInput} from "src/components";
 
 
 const DefaultSearchBar = () => {
@@ -22,13 +22,13 @@ const DefaultSearchBar = () => {
 
                         <Icon name="search1"
                               size={screenRatio * 16}
-                              style={{ marginLeft: 0 }}
+                              style={{ marginLeft: 5 }}
                               color={COLORS.text_black}
                         />
 
 
                         <DefaultInput
-                              border={{ borderWidth: 0 }}
+                              border={{ borderWidth: 0}}
                               style={[styles.input]}
                               keyboardType={KEYBOARD_TYPE.deafult}
                               value={searchPhrase}
@@ -39,8 +39,8 @@ const DefaultSearchBar = () => {
 
                         {clicked && searchPhrase && (
                               <Icon name="closecircle"
-                                    size={screenRatio * 14}
-                                    style={{ marginLeft: 1 }}
+                                    size={screenRatio * 15}
+                                    style={{ marginRight: 5 }}
                                     color={COLORS.text_black}
                                     onPress={() => {
                                           setSearchPhrase("")
@@ -60,24 +60,28 @@ const styles = StyleSheet.create({
             flex:1,
             justifyContent: "flex-start",
             alignItems: "center",
-            flexDirection: "row",
-            height: screenHeight,
+            flexDirection: "column",
+            height:screenHeight/18,
             width: screenWidth
       },
       searchBar__unclicked: {
             padding: 0,
             flexDirection: "row",
             flex:1,
-            width: "90%",
-            backgroundColor: COLORS.primaryGray,
+            borderColor:COLORS.secondaryGray,
+            borderWidth:1,
+            height:screenHeight/18,
+            backgroundColor: COLORS.white,
             borderRadius: 15,
             alignItems: "center",
       },
       searchBar__clicked: {
             padding: 0,
+            borderColor:COLORS.secondaryGray,
+            borderWidth:1,
             flexDirection: "row",
-            width: "90%",
-            backgroundColor: COLORS.primaryGray,
+            height:screenHeight/18,
+            backgroundColor: COLORS.white,
             borderRadius: 15,
             alignItems: "center",
             justifyContent: "space-evenly",
@@ -86,6 +90,7 @@ const styles = StyleSheet.create({
             fontSize: 10,
             marginLeft: 0,
             borderWidth: 0,
+            height:screenHeight/16,
             width: "80%",
       }
 });

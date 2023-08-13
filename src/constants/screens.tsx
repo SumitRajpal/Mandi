@@ -1,5 +1,5 @@
 const SCREEN_IDENTIFIER = {
-   Splash: {
+  Splash: {
     key: 'splash',
     identifier: 'Splash',
     title: 'splash',
@@ -14,10 +14,15 @@ const SCREEN_IDENTIFIER = {
     identifier: 'Home',
     title: 'home',
   },
-  Otp:{
+  Otp: {
     key: 'otp',
     identifier: 'Otp',
     title: 'otp',
+  },
+  ProductList: {
+    key: 'product_list',
+    identifier: 'ProductList',
+    title: 'product_list',
   }
 };
 
