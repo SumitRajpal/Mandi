@@ -3,11 +3,9 @@ import React, { ReactNode, useEffect, useState } from "react";
 import { Image, Modal, Platform, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { screenHeight, screenRatio, screenWidth } from "src/constants";
 import { COLORS } from "src/constants/font";
-import { Button } from ".";
 import Icon from 'react-native-vector-icons/AntDesign';
-import CartList from "./Products/CartList";
-import Footer from "./footer";
 import GestureRecognizer from "react-native-swipe-gestures";
+import PaymentOption from "src/screens/Payment/PaymentOption";
 
 
 /**
@@ -20,7 +18,7 @@ interface IDefaultModel {
       height: any,
       onModelClose(value: boolean): any;
 }
-const CartListModel = (props: IDefaultModel): JSX.Element => {
+const PaymentModel = (props: IDefaultModel): JSX.Element => {
       const { styles, visible, height, onModelClose } = props
       const [isModel, setModel] = useState(false);
 
@@ -31,8 +29,8 @@ const CartListModel = (props: IDefaultModel): JSX.Element => {
                         height: "auto",
                         position: "absolute",
                         bottom: 0,
-                        maxHeight: "70%",
-                        minHeight: "50%",
+                        maxHeight: "100%",
+                        minHeight: "70%",
                         paddingHorizontal: 10,
                         width: screenWidth,
                         backgroundColor: COLORS.primaryWhite,
@@ -46,8 +44,6 @@ const CartListModel = (props: IDefaultModel): JSX.Element => {
                               shadowColor: COLORS.black,
                               elevation: 4,
                         },
-
-                        paddingBottom:screenHeight/12
                   },
                   modelParent: {
                         height: screenHeight,
@@ -78,7 +74,6 @@ const CartListModel = (props: IDefaultModel): JSX.Element => {
                               visible={isModel}
                               transparent
                               onRequestClose={() => {
-                                    console.log(isModel)
                                     setModel(!isModel);
                                     onModelClose(!isModel)
                               }}>
@@ -88,14 +83,12 @@ const CartListModel = (props: IDefaultModel): JSX.Element => {
                                           <View style={defaultStyles.close}>
                                                 <Icon name="closecircle" size={screenRatio * 30} color={COLORS.text_black} onPress={() => {
                                                       setModel(!isModel);
-
                                                       onModelClose(!isModel)
                                                 }} />
                                           </View>
                                           <ScrollView style={defaultStyles.container}>
-                                                <CartList />
+                                            <PaymentOption/>
                                           </ScrollView>
-                                          <Footer />
                                     </View>
                               </View>
                         </Modal>
@@ -103,4 +96,4 @@ const CartListModel = (props: IDefaultModel): JSX.Element => {
             </GestureRecognizer>
       );
 }
-export default CartListModel;
+export default PaymentModel;

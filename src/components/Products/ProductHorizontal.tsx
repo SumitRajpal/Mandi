@@ -69,11 +69,11 @@ const defaultStyles = StyleSheet.create({
  * ProgressView is Function Component to render indicator modal
  * @property {bool} visible - show modal
  */
-interface IProductHorizontal { 
-      horizontalTitle:string
+interface IProductHorizontal {
+      horizontalTitle: string
 }
-const ProductHorizontal = (props:IProductHorizontal): JSX.Element => {
-      const {horizontalTitle} = props;
+const ProductHorizontal = (props: IProductHorizontal): JSX.Element => {
+      const { horizontalTitle } = props;
       const navigation = useNavigation();
       const ordersList = [{ id: 1, name: "fwfwf" }, { id: 2, name: "fwfwf" }, { id: 3, name: "fwfwf" }, { id: 42, name: "fwfwf" }, { id: 50, name: "fwfwf" }, { id: 6, name: "fwfwf" },
       { id: 15, name: "fwfwf" }, { id: 26, name: "fwfwf" }, { id: 34, name: "fwfwf" }, { id: 45, name: "fwfwf" }, { id: 58, name: "fwfwf" }, { id: 67, name: "fwfwf" },
@@ -82,33 +82,33 @@ const ProductHorizontal = (props:IProductHorizontal): JSX.Element => {
 
 
       return (
-            
-                  <View style={{flex:1,flexWrap:"wrap" , flexDirection:"column"}}>
-                    <View style={{flex:1}} >
-                        <View style = {{flex:1,flexWrap:"wrap" , flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
-                         <View style={{flex:1,alignContent:"center",alignItems:"flex-start" ,padding:10}}>
-                          <DefaultLabel  size={FONT_SIZE.large} title={horizontalTitle}/>
-                         </View>
-                         <View style={{flex:1,alignContent:"center",alignItems:"flex-end" ,padding:10}}>
-                         <DefaultLabel styles={{color:COLORS.primaryGreen}} size={FONT_SIZE.medium} title={"see all"}/>
-                         </View>
+
+            <View style={{ flex: 1, flexWrap: "wrap", flexDirection: "column" }}>
+                  <View style={{ flex: 1 }} >
+                        <View style={{ flex: 1, flexWrap: "wrap", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                              <View style={{ flex: 1, alignContent: "center", alignItems: "flex-start", padding: 10 }}>
+                                    <DefaultLabel size={FONT_SIZE.large} title={horizontalTitle} />
+                              </View>
+                              <View style={{ flex: 1, alignContent: "center", alignItems: "flex-end", padding: 10 }}>
+                                    <DefaultLabel styles={{ color: COLORS.primaryGreen }} size={FONT_SIZE.medium} title={"see all"} />
+                              </View>
                         </View>
-                    </View>
-                  <View style={{flex:1}}>
-                  <FlatList
-                                          data={ordersList}
-                                          horizontal
-                                          nestedScrollEnabled
-                                          contentContainerStyle={{}}
-                                          showsVerticalScrollIndicator={false}
-                                          keyExtractor={(item, index) => item?.id + index.toString()}
-                                          onEndReachedThreshold={0.5}
-                                          renderItem={({ item }) => item && <CartProduct styles={{ width: screenWidth / 2.5 }} imageStyles={{ padding: screenHeight / 16 }} title="Green Chilly - 100gm - (Hari mirch)" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
-                                    }
-                                    />
                   </View>
+                  <View style={{ flex: 1 }}>
+                        <FlatList
+                              data={ordersList}
+                              horizontal
+                              nestedScrollEnabled
+                              contentContainerStyle={{}}
+                              showsVerticalScrollIndicator={false}
+                              keyExtractor={(item, index) => item?.id + index.toString()}
+                              onEndReachedThreshold={0.5}
+                              renderItem={({ item }) => item && <CartProduct styles={{ width: screenWidth / 2.5 }} imageStyles={{ padding: screenHeight / 16 }} title="Green Chilly - 100gm - (Hari mirch)" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
+                              }
+                        />
                   </View>
-            )
+            </View>
+      )
 }
 
 export default ProductHorizontal;

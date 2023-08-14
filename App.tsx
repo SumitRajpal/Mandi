@@ -47,9 +47,8 @@ function App(): JSX.Element {
                     screenOptions={{
                       headerShown: false,
                       gestureEnabled: false
-                    }}
-                    initialRouteName={SCREENS.Home.identifier}
-                  >
+                    }} 
+                    initialRouteName={SCREENS.Login.identifier}>
                     {_.toArray(SCREENS).map((item:any) => 
                       item.component ? (
                         <Screen

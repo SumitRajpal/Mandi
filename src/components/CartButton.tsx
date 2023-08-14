@@ -63,7 +63,7 @@ const CartButton = (props: ICartButton): JSX.Element => {
             }
 
       });
-      const [quantity, setQuantity] = useState(1);
+      const [quantity, setQuantity] = useState(0);
       const cartStyle = StyleSheet.create({
             parentButton: {
                   borderColor: COLORS.primaryGreen,

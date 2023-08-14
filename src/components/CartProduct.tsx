@@ -80,7 +80,7 @@ const CartProduct = (props: IDefaultImage): JSX.Element => {
       const { styles, imageStyles, imageUri = "https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png", title } = props
       return (
             <View style={[defaultStyles.container, styles]}>
-                  <View style={defaultStyles.offer}>
+                  <View style={[defaultStyles.offer]}>
                         <Label weight={FONT_WEIGHT.regular3} size={FONT_SIZE.large} title={"15%"} />
                         <Label weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={"OFF"} />
 

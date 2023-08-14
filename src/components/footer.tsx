@@ -1,12 +1,13 @@
 
 import React, { useState } from "react";
-import { ActivityIndicator, Modal, Pressable, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Linking, Modal, Pressable, StyleSheet, View } from "react-native";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { Button, Text } from "src/components";
-import { screenHeight, screenRatio, screenWidth } from "src/constants";
+import { SCREEN_IDENTIFIER, screenHeight, screenRatio, screenWidth } from "src/constants";
 import ProductListItem from "./ProductListItem";
 import DefaultImage from "./DefaultImage";
 import CartListModel from "./CartListModel";
+import { useNavigation } from "@react-navigation/native";
 
 const defaultStyles = StyleSheet.create({
   footerContainer: {
@@ -64,7 +65,7 @@ const defaultStyles = StyleSheet.create({
 
 const Footer = (): JSX.Element => {
   const [model, setModel] = useState<boolean>(false);
-
+  const navigation = useNavigation();
   return (
     <View style={defaultStyles.footerContainer}>
       <View style={defaultStyles.footerFlex}>
@@ -107,8 +108,7 @@ const Footer = (): JSX.Element => {
 
         <View style={defaultStyles.footerBasis}>
           <Button style={{}}
-            title="Next" onPress={() => console.log("fef")} />
-
+            title="Next" onPress={() => {navigation.navigate(SCREEN_IDENTIFIER.Checkout.identifier as never)}} />
         </View>
       </View>
       <CartListModel visible={model} height={"100%"}  onModelClose={(value) => setModel(value)}/>

@@ -23,6 +23,16 @@ const SCREEN_IDENTIFIER = {
     key: 'product_list',
     identifier: 'ProductList',
     title: 'product_list',
+  },
+  Checkout: {
+    key: 'checkout',
+    identifier: 'Checkout',
+    title: 'checkout',
+  },
+  Payment: {
+    key: 'payment',
+    identifier: 'Payment',
+    title: 'payment',
   }
 };
 

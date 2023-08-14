@@ -90,7 +90,7 @@ const defaultStyle = StyleSheet.create({
                   }),
                   backgroundColor: COLORS.primaryGreen,
                   borderRadius: 4
-            },marginBottom:screenHeight/10
+            }
    
       }
 

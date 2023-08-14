@@ -4,6 +4,8 @@ import Login from 'src/screens/Authorization/Login';
 import Home from 'src/screens/Home/Home';
 import Otp from 'src/screens/Authorization/Otp';
 import ProductList from 'src/screens/Product/ProductList';
+import Checkout from 'src/screens/Checkout/Checkout';
+import PaymentOption from 'src/screens/Payment/PaymentOption';
 
 const SCREENS:any = {
   Splash: {
@@ -36,6 +38,20 @@ const SCREENS:any = {
     title: SCREEN_IDENTIFIER.ProductList.title,
     identifier: SCREEN_IDENTIFIER.ProductList.identifier,
     component:ProductList
+    
+  },
+  Checkout:{
+    key: SCREEN_IDENTIFIER.Checkout.key,
+    title: SCREEN_IDENTIFIER.Checkout.title,
+    identifier: SCREEN_IDENTIFIER.Checkout.identifier,
+    component:Checkout
+    
+  },
+  Payment:{
+    key: SCREEN_IDENTIFIER.Payment.key,
+    title: SCREEN_IDENTIFIER.Payment.title,
+    identifier: SCREEN_IDENTIFIER.Payment.identifier,
+    component:PaymentOption
     
   }
 };
