@@ -121,22 +121,6 @@ const CartList = (): JSX.Element =>
                   <View style={{ flex: 1, margin: 5 }}>
                         <StockOutProductList />
                   </View>
-
-                  <View style={{ flex: 1, margin: 5 }}>
-                        <StockOutProductList />
-                  </View>
-
-                  <View style={{ flex: 1, margin: 5 }}>
-                        <StockOutProductList />
-                  </View>
-
-                  <View style={{ flex: 1, margin: 5 }}>
-                        <StockOutProductList />
-                  </View>
-
-                  <View style={{ flex: 1, margin: 5 }}>
-                        <StockOutProductList />
-                  </View>
             </View>
             <View style={defaultStyle.savings}>
                   <View style={{ borderRadius: 10, flex: 1, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "center", backgroundColor: COLORS.tertiaryBlue, padding: 10 }}>

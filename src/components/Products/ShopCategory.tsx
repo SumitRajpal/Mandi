@@ -12,14 +12,13 @@ const defaultStyles = StyleSheet.create({
             justifyContent: "flex-start"
       },
       container: {
-            flex: 1.0,
+            flex: 6,
             padding: 0,
             backgroundColor: COLORS.secondaryBlue,
             height: "100%",
             width: "100%",
             alignContent: "flex-start",
             borderRadius: 15,
-            flexBasis: "60%",
       },
       parentContainer: {
             flex: 1,
@@ -60,7 +59,7 @@ const defaultStyles = StyleSheet.create({
       },
       title: {
             padding: 0,
-            flexBasis: "40%"
+            flex:4
       }
 });
 
@@ -81,30 +80,30 @@ const ShopCategory = (): JSX.Element => {
                               </View>
                         </View>
                         <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", marginHorizontal: 5 }}>
-                              <View style={{ flexBasis: "25%", alignItems: "center" }}>
+                              <View style={{ flex: 1, alignItems: "center" }}>
                                     <DefaultCategory title="Dairy & Breakfast" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
                               </View>
-                              <View style={{ flexBasis: "25%", alignItems: "center" }}>
+                              <View style={{ flex: 1, alignItems: "center" }}>
                                     <DefaultCategory title="Dairy & Breakfast" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
                               </View>
-                              <View style={{ flexBasis: "25%", alignItems: "center" }}>
+                              <View style={{ flex: 1, alignItems: "center" }}>
                                     <DefaultCategory title="Dairy & Breakfast" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
                               </View>
-                              <View style={{ flexBasis: "25%", alignItems: "center" }}>
+                              <View style={{ flex: 1, alignItems: "center" }}>
                                     <DefaultCategory title="Dairy & Breakfast" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
                               </View>
                         </View>
                         <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", marginHorizontal: 5 }}>
-                              <View style={{ flexBasis: "25%", alignItems: "center" }}>
+                              <View style={{ flex: 1, alignItems: "center" }}>
                                     <DefaultCategory title="Dairy & Breakfast" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
                               </View>
-                              <View style={{ flexBasis: "25%", alignItems: "center" }}>
+                              <View style={{ flex: 1, alignItems: "center" }}>
                                     <DefaultCategory title="Dairy & Breakfast" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
                               </View>
-                              <View style={{ flexBasis: "25%", alignItems: "center" }}>
+                              <View style={{ flex: 1, alignItems: "center" }}>
                                     <DefaultCategory title="Munchies" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
                               </View>
-                              <View style={{ flexBasis: "25%", alignItems: "center" }}>
+                              <View style={{ flex: 1, alignItems: "center" }}>
                                     <DefaultCategory title="Dairy & Breakfast" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
                               </View>
                         </View>

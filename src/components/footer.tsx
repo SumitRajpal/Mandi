@@ -23,7 +23,7 @@ const defaultStyles = StyleSheet.create({
     padding: 0,
     borderRadius: 15,
     width: screenWidth,
-    height: screenHeight / 12,
+    height: screenRatio * (screenHeight / 16),
 
   },
   footerBasis: {
@@ -36,7 +36,7 @@ const defaultStyles = StyleSheet.create({
     flexWrap: 'wrap',
     padding: screenRatio * 5,
     width: screenWidth,
-    height: screenHeight / 11,
+    height: screenRatio*( screenHeight / 11),
 
   },
   text: {
@@ -50,10 +50,11 @@ const defaultStyles = StyleSheet.create({
   },
   image: {
     borderRadius: 10,
-    width: 46,
-    padding: 5,
+    width: screenRatio * 36,
+    height:screenRatio * 36,
+    padding: screenRatio * 5,
     backgroundColor: COLORS.white,
-    borderWidth: 0.4,
+    borderWidth: screenRatio* 0.4,
     borderColor: COLORS.secondaryGray
   }
 });
@@ -73,7 +74,7 @@ const Footer = (): JSX.Element => {
           <Pressable style={{ flex: 1}} onPress={() => setModel(!model)}>
           <View style={{ flex: 1, flexDirection: "row" }}>
             <View style={{ flex: 1, flexShrink: 1, padding:0 }}>
-              <View style={{ flex: 1, gap:-20, padding:5,flexDirection: "row", flexShrink: 1, paddingHorizontal: 20 }}>
+              <View style={{ flex: 1, gap:- (screenRatio*10), padding:5,flexDirection: "row", flexShrink: 1, paddingHorizontal: 20 }}>
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center", alignContent: "center" }}>
                   <DefaultImage styles={defaultStyles.image} imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
                 </View>

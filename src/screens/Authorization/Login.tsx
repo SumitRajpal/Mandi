@@ -94,6 +94,8 @@ const Login = (): JSX.Element => {
     },
     modelParent:{
      height:screenHeight,
+
+     backgroundColor:COLORS.transparent,
      bottom:isKeyboardVisible ? screenHeight / 3 : 0
     },
     loginText:{

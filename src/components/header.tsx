@@ -21,7 +21,7 @@ const defaultStyles = StyleSheet.create({
             backgroundColor: COLORS.secondaryWhite,
             padding: 0,
             width: screenWidth,
-            height: screenHeight / 14,
+            height: screenRatio*(screenHeight / 18),
 
       },
       footerBasis: {
@@ -49,7 +49,7 @@ const Header = (props:IHEADER): JSX.Element => {
             <View style={defaultStyles.footerContainer}>
                   <View style={defaultStyles.footerFlex}>
                         <View style={{ flex:1,alignItems:"center" }}>
-                              <FMIcon name="arrow-left" size={20} color={COLORS.tertiaryGray} onPress={() => navigation.goBack()} />
+                              <FMIcon name="arrow-left" size={screenRatio*16} color={COLORS.tertiaryGray} onPress={() => navigation.goBack()} />
 
                         </View>
                         <View style={{ flex: 8 ,justifyContent:"center",alignItems:"center"}}>

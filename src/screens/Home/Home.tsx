@@ -25,7 +25,7 @@ const Home = (): JSX.Element => {
     },
     safearea: {
       flex: 1,
-      paddingBottom: screenHeight / 12,
+      paddingBottom: screenRatio*(screenHeight / 16),
       backgroundColor: COLORS.white
     },
     cart: { flex: 1, flexDirection: "row", flexWrap: "wrap", padding: 10 },

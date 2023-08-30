@@ -49,6 +49,7 @@ const ProductDetailsModel = (props: IDefaultModel): JSX.Element => {
                         height: screenHeight,
                         bottom: 0,
                         marginBottom:0 ,
+                        backgroundColor:COLORS.transparent
                   },
                   close: {
                         alignContent: "center",

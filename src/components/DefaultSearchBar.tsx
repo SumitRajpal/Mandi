@@ -56,7 +56,6 @@ export default DefaultSearchBar;
 // styles
 const styles = StyleSheet.create({
       container: {
-            padding: 0,
             flex:1,
             justifyContent: "flex-start",
             alignItems: "center",
@@ -70,7 +69,7 @@ const styles = StyleSheet.create({
             flex:1,
             borderColor:COLORS.secondaryGray,
             borderWidth:1,
-            height:screenHeight/18,
+            height: screenHeight/18,
             backgroundColor: COLORS.white,
             borderRadius: 15,
             width:"95%",

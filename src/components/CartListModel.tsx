@@ -31,12 +31,12 @@ const CartListModel = (props: IDefaultModel): JSX.Element => {
                         height: "auto",
                         position: "absolute",
                         bottom: 0,
-                        maxHeight: "70%",
-                        minHeight: "50%",
-                        paddingHorizontal: 10,
+                        maxHeight: screenRatio * (screenHeight/4),
+                        minHeight: screenRatio * (screenHeight/2),
+                        paddingHorizontal: screenRatio * 8,
                         width: screenWidth,
                         backgroundColor: COLORS.primaryWhite,
-                        borderRadius: screenRatio * 20,
+                        borderRadius: screenRatio * 14,
                         shadow: {
                               shadowRadius: 10,
                               shadowOffset: {
@@ -47,18 +47,20 @@ const CartListModel = (props: IDefaultModel): JSX.Element => {
                               elevation: 4,
                         },
 
-                        paddingBottom:screenHeight/12
+                        paddingBottom: screenRatio * (screenHeight/14)
                   },
                   modelParent: {
                         height: screenHeight,
                         bottom: 0,
                         marginBottom:0 ,
+
+                        backgroundColor:COLORS.transparent
                   },
                   close: {
                         alignContent: "center",
                         alignSelf: "center",
                         position: "absolute",
-                        top: -(screenHeight / 10)
+                        top: -(screenRatio*(screenHeight / 16))
                   }
             }
       );
@@ -68,7 +70,7 @@ const CartListModel = (props: IDefaultModel): JSX.Element => {
 
       return (
             <GestureRecognizer config={{
-                  velocityThreshold: 0.1,
+                  velocityThreshold: 0.5,
                   directionalOffsetThreshold: 80
             }} onSwipeDown={() => { setModel(false) }}>
                   <SafeAreaView style={{ flex: 1 }}>

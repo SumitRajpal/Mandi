@@ -4,7 +4,7 @@ import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Footer from "src/components/footer";
 import CartProduct from "src/components/CartProduct";
-import { screenHeight } from "src/constants";
+import { screenHeight, screenWidth } from "src/constants";
 import { DefaultSearchBar } from "src/components";
 
 const ProductList = (): JSX.Element => {
@@ -19,12 +19,11 @@ const ProductList = (): JSX.Element => {
       { id: 15, name: "fwfwf" }, { id: 27, name: "fwfwf" }, { id: 36, name: "fwfwf" }, { id: 49, name: "fwfwf" }, { id: 55, name: "fwfwf" }, { id: 63, name: "fwfwf" },
       { id: 19, name: "fwfwf" }, { id: 20, name: "fwfwf" }, { id: 38, name: "fwfwf" }, { id: 41, name: "fwfwf" }, { id: 53, name: "fwfwf" }, { id: 62, name: "fwfwf" }]
 
-
       return (
             <View style={styles.container} >
                   <SafeAreaView style={styles.container}>
                         <View style={{ flex: 1, flexDirection: "column", justifyContent: "center", alignContent: "center" }}>
-                              <View style={{ flex: 0.54, alignContent: "center", alignItems: "center", alignSelf: "center", margin: 10, marginHorizontal: 50 }}>
+                              <View style={{ flex: 0.50, alignContent: "center", alignItems: "center", alignSelf: "center", margin: 10, marginHorizontal: 50 }}>
                                     <DefaultSearchBar />
                               </View>
                               <View style={{ flex: 9.5 }}>

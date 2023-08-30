@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SIcon from 'react-native-vector-icons/Fontisto';
 import CheckoutFooter from "src/components/CheckoutFooter";
+import Header from "src/components/header";
 const Checkout = (): JSX.Element => {
       const defaultStyles = StyleSheet.create({
             container: {
@@ -47,6 +48,7 @@ const Checkout = (): JSX.Element => {
             <View style={defaultStyles.container} >
                   <SafeAreaView style={defaultStyles.container}>
                         <ScrollView style={defaultStyles.container}>
+                              <Header title="Checkout"/>
                               <View style={{ paddingHorizontal: 10 }}>
                                     <CartList />
 

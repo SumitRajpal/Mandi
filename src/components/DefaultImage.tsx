@@ -3,7 +3,7 @@ import React from "react";
 import { Image, Modal, Platform, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { AnimatedImage } from "react-native-reanimated/lib/typescript/reanimated2/component/Image";
-import { screenHeight, screenWidth } from "src/constants";
+import { screenHeight, screenRatio, screenWidth } from "src/constants";
 import { COLORS } from "src/constants/font";
 
 const defaultStyles = StyleSheet.create({
@@ -11,10 +11,10 @@ const defaultStyles = StyleSheet.create({
             flex: 1.0,
             padding:10,
             backgroundColor: COLORS.secondaryBlue,
-            height: screenHeight / 7,
-            width: screenWidth / 3.5,
+            height: screenRatio*(screenHeight / 8),
+            width: screenRatio* (screenWidth / 4),
             justifyContent: "center",
-            borderRadius: 30
+            borderRadius:screenRatio* 30
       },
       imageFeatures: {
             flex: 1,
@@ -36,7 +36,8 @@ const defaultStyles = StyleSheet.create({
             }
       },
       image: {
-            flex: 1
+            flex: 1,
+            
       }
 });
 

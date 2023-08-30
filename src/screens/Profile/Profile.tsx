@@ -12,7 +12,7 @@ const Profile = (): JSX.Element => {
       const defaultStyles = StyleSheet.create({
             container: {
                   flex: 1,
-                  backgroundColor: COLORS.white
+                  backgroundColor: COLORS.white_alpha
             },
             bill: {
                   flex: 1,
@@ -24,7 +24,7 @@ const Profile = (): JSX.Element => {
                         ...Platform.select({
                               android: {
                                     elevation: 5,
-                                    shadowColor: COLORS.primaryGreen,
+                                    shadowColor: COLORS.black_alpha,
                               },
                               ios: {
                                     shadowColor: COLORS.primaryGreen,
@@ -76,25 +76,25 @@ const Profile = (): JSX.Element => {
                                           <Pressable  android_ripple={{color:COLORS.primaryGray }} onPress={() => navigation.navigate(SCREEN_IDENTIFIER.OrderHistory.identifier as never)}>
                                                 <View style={{ flex: 1, padding: 10, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
                                                       <View style={{ flex: 2 }}>
-                                                            <FMIcon name="bag-shopping" size={16} color={COLORS.tertiaryGray} />
+                                                            <FMIcon name="bag-shopping" size={screenRatio*14} color={COLORS.tertiaryGray} />
                                                       </View>
                                                       <View style={{ flex: 16, borderBottomWidth: 0, borderColor: COLORS.primaryGray }}>
                                                             <DefaultLabel styles={{ color: COLORS.tertiaryGray, padding: 5 }} weight={FONT_WEIGHT.medium} size={FONT_SIZE.large} title={"Your Orders"} />
                                                       </View>
                                                       <View style={{ flex: 2, alignItems: "flex-end" }}>
-                                                            <Icon name="arrow-forward-ios" size={16} color={COLORS.tertiaryGray} />
+                                                            <Icon name="arrow-forward-ios" size={screenRatio*14} color={COLORS.tertiaryGray} />
                                                       </View>
                                                 </View>
                                           </Pressable>
                                           <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 10, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
                                                 <View style={{ flex: 2 }}>
-                                                      <FMIcon name="location-arrow" size={16} color={COLORS.tertiaryGray} />
+                                                      <FMIcon name="location-arrow" size={screenRatio*14} color={COLORS.tertiaryGray} />
                                                 </View>
                                                 <View style={{ flex: 16, borderBottomWidth: 0, borderColor: COLORS.primaryGray }}>
                                                       <DefaultLabel styles={{ color: COLORS.tertiaryGray, padding: 5 }} weight={FONT_WEIGHT.medium} size={FONT_SIZE.large} title={"Address book"} />
                                                 </View>
                                                 <View style={{ flex: 2, alignItems: "flex-end" }}>
-                                                      <Icon name="arrow-forward-ios" size={16} color={COLORS.tertiaryGray} />
+                                                      <Icon name="arrow-forward-ios" size={screenRatio*14} color={COLORS.tertiaryGray} />
                                                 </View>
                                           </View>
                                     </View>
@@ -108,46 +108,46 @@ const Profile = (): JSX.Element => {
 
                                           <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 10, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
                                                 <View style={{ flex: 2 }}>
-                                                      <FMIcon name="share-nodes" size={16} color={COLORS.tertiaryGray} />
+                                                      <FMIcon name="share-nodes" size={screenRatio*14} color={COLORS.tertiaryGray} />
                                                 </View>
                                                 <View style={{ flex: 16, borderBottomWidth: 0, borderColor: COLORS.primaryGray }}>
                                                       <DefaultLabel styles={{ color: COLORS.tertiaryGray, padding: 5 }} weight={FONT_WEIGHT.medium} size={FONT_SIZE.large} title={"Share the app"} />
                                                 </View>
                                                 <View style={{ flex: 2, alignItems: "flex-end" }}>
-                                                      <Icon name="arrow-forward-ios" size={16} color={COLORS.tertiaryGray} />
+                                                      <Icon name="arrow-forward-ios" size={screenRatio*14} color={COLORS.tertiaryGray} />
                                                 </View>
                                           </View>
                                           <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 10, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
                                                 <View style={{ flex: 2 }}>
-                                                      <FMIcon name="location-arrow" size={16} color={COLORS.tertiaryGray} />
+                                                      <FMIcon name="location-arrow" size={screenRatio*14} color={COLORS.tertiaryGray} />
                                                 </View>
                                                 <View style={{ flex: 16, borderBottomWidth: 0, borderColor: COLORS.primaryGray }}>
                                                       <DefaultLabel styles={{ color: COLORS.tertiaryGray, padding: 5 }} weight={FONT_WEIGHT.medium} size={FONT_SIZE.large} title={"About us"} />
                                                 </View>
                                                 <View style={{ flex: 2, alignItems: "flex-end" }}>
-                                                      <Icon name="arrow-forward-ios" size={16} color={COLORS.tertiaryGray} />
+                                                      <Icon name="arrow-forward-ios" size={screenRatio*14} color={COLORS.tertiaryGray} />
                                                 </View>
                                           </View>
                                           <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 10, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
                                                 <View style={{ flex: 2 }}>
-                                                      <FMIcon name="bell" size={16} color={COLORS.tertiaryGray} />
+                                                      <FMIcon name="bell" size={screenRatio*14} color={COLORS.tertiaryGray} />
                                                 </View>
                                                 <View style={{ flex: 16, borderBottomWidth: 0, borderColor: COLORS.primaryGray }}>
                                                       <DefaultLabel styles={{ color: COLORS.tertiaryGray, padding: 5 }} weight={FONT_WEIGHT.medium} size={FONT_SIZE.large} title={"Notification Settings"} />
                                                 </View>
                                                 <View style={{ flex: 2, alignItems: "flex-end" }}>
-                                                      <Icon name="arrow-forward-ios" size={16} color={COLORS.tertiaryGray} />
+                                                      <Icon name="arrow-forward-ios" size={screenRatio*14} color={COLORS.tertiaryGray} />
                                                 </View>
                                           </View>
                                           <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 10, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
                                                 <View style={{ flex: 2 }}>
-                                                      <FMIcon name="power-off" size={16} color={COLORS.tertiaryGray} />
+                                                      <FMIcon name="power-off" size={screenRatio*14} color={COLORS.tertiaryGray} />
                                                 </View>
                                                 <View style={{ flex: 16, borderBottomWidth: 0, borderColor: COLORS.primaryGray }}>
                                                       <DefaultLabel styles={{ color: COLORS.tertiaryGray, padding: 5 }} weight={FONT_WEIGHT.medium} size={FONT_SIZE.large} title={"Logout"} />
                                                 </View>
                                                 <View style={{ flex: 2, alignItems: "flex-end" }}>
-                                                      <Icon name="arrow-forward-ios" size={16} color={COLORS.tertiaryGray} />
+                                                      <Icon name="arrow-forward-ios" size={screenRatio*14} color={COLORS.tertiaryGray} />
                                                 </View>
                                           </View>
                                     </View>

@@ -8,12 +8,12 @@ import Icon from 'react-native-vector-icons/FontAwesome6';
 import DefaultImage from "src/components/DefaultImage";
 
 const OrderHistoryItems = (): JSX.Element => {
-    
+    console.log(screenRatio)
       const defaultStyles = StyleSheet.create(
             {
                   image: {
-                        maxWidth:screenWidth/6,
-                        height:screenHeight/12,
+                        maxWidth:screenRatio*50,
+                        height:screenRatio*50,
                         borderRadius: 10,
                         backgroundColor: COLORS.white,
                         borderWidth: 0.4,
@@ -48,7 +48,7 @@ const OrderHistoryItems = (): JSX.Element => {
       );
 
       return (<View style={defaultStyles.parent}>
-            <View style={{ flex: 1, flexDirection: "column", gap: 20 }}>
+            <View style={{ flex: 1, flexDirection: "column", gap: 20 ,backgroundColor:COLORS.white}}>
                   <View style={{ flex: 4,paddingTop:20 }}>
                         <View style={{ flex: 1, flexDirection: "row", alignContent: "center", justifyContent: "center" }}>
                               <View style={{ flex: 2, alignItems: "center", justifyContent: "center" }}>

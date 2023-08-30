@@ -29,12 +29,12 @@ const PaymentModel = (props: IDefaultModel): JSX.Element => {
                         height: "auto",
                         position: "absolute",
                         bottom: 0,
-                        maxHeight: "100%",
-                        minHeight: "70%",
-                        paddingHorizontal: 10,
+                        maxHeight: screenRatio* (screenHeight/2),
+                        minHeight:  screenRatio* (screenHeight/2),
+                        paddingHorizontal: screenRatio * 8,
                         width: screenWidth,
                         backgroundColor: COLORS.primaryWhite,
-                        borderRadius: screenRatio * 20,
+                        borderRadius: screenRatio * 14,
                         shadow: {
                               shadowRadius: 10,
                               shadowOffset: {
@@ -49,12 +49,13 @@ const PaymentModel = (props: IDefaultModel): JSX.Element => {
                         height: screenHeight,
                         bottom: 0,
                         marginBottom:0 ,
+                        backgroundColor:COLORS.transparent
                   },
                   close: {
                         alignContent: "center",
                         alignSelf: "center",
                         position: "absolute",
-                        top: -(screenHeight / 10)
+                        top: - screenRatio * (screenHeight / 10)
                   }
             }
       );

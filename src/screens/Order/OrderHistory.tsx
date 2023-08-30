@@ -10,11 +10,11 @@ const OrderHistory = (): JSX.Element => {
       const styles = StyleSheet.create({
             container: {
                   flex: 1,
-                  backgroundColor: COLORS.tertiaryGray
+                  backgroundColor: COLORS.secondaryBlue
             },
             safearea: {
                   flex: 1,
-                  backgroundColor: COLORS.white
+                  backgroundColor: COLORS.secondaryBlue
             },
 
 
@@ -29,11 +29,11 @@ const OrderHistory = (): JSX.Element => {
             <View style={styles.container} >
                   <SafeAreaView style={styles.safearea}>
                   <Header title="Orders"/>
-                        <View style={{ paddingVertical: 5 }}>
+                        <View style={{ paddingVertical: 0 }}>
                               
                               <FlatList
                                     data={ordersList}
-                                    contentContainerStyle={{ marginHorizontal: 5, paddingBottom: 0 }}
+                                    contentContainerStyle={{ marginHorizontal: 5, paddingBottom: screenHeight/12 }}
                                     showsVerticalScrollIndicator={true}
                                     keyExtractor={(item, index) => item?.id + index.toString()}
                                     onEndReachedThreshold={0.5}

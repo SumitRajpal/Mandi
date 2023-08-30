@@ -42,21 +42,21 @@ const defaultStyles = StyleSheet.create({
       offer: {
             zIndex: 1,
             padding: 5,
-            height: screenHeight/16,
-            width: screenWidth /8,
+            height: screenRatio * (screenHeight/22),
+            width: screenRatio * (screenWidth /11),
             position: "absolute",
             backgroundColor: COLORS.action_review,
             top: 0,
-            borderBottomEndRadius:40,
-            borderBottomStartRadius:40,
-            left: 10,
+            borderBottomEndRadius:screenRatio * 20,
+            borderBottomStartRadius:screenRatio * 20,
+            left: screenRatio * 8,
             alignItems: "center",
             justifyContent: "space-evenly"
 
       },
       image: {
             flex: 10,
-            padding:screenWidth/4, 
+            padding: screenRatio* (screenWidth/10), 
             
       },
       text: {
