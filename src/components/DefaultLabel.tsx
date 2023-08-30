@@ -33,7 +33,7 @@ const DefaultLabel = (props: ILABEL): JSX.Element => {
                   numberOfLines={2}
                   weight={weight}
                   color={COLORS.text_black}
-            >{title}
+            >{title} 
             </Text>);
 }
 export default DefaultLabel;

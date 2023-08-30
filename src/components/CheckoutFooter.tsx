@@ -99,8 +99,8 @@ const CheckoutFooter = (): JSX.Element => {
         </View>
         <View style={defaultStyles.footerBasis}>
           <Button style={{}}
-            title="Next" onPress={() => {navigation.navigate(SCREEN_IDENTIFIER.Checkout.identifier as never)
-            Linking.openURL('tez://upi/pay?pa=piyush.rajpal08@okhdfcbank&pn=Piyush Rajpal&tn=Testing&am=1&cu=INR').then(value => {
+            title="1452     Place order" onPress={() => {navigation.navigate(SCREEN_IDENTIFIER.Checkout.identifier as never)
+            Linking.openURL('paytmmp://pay?pa=916306150790@paytm&pn=DrishtiAhuja&tn=Note&am=1&cu=INR').then(value => {
               console.log(value)
             }).catch(error => {console.log(error,"error")});
             }} />
@@ -111,5 +111,6 @@ const CheckoutFooter = (): JSX.Element => {
     </View>);
 }
 
+// tez://upi/pay?pa=piyush.rajpal08@okhdfcbank&pn=Piyush Rajpal&tn=Testing&am=1&cu=INR'
 
 export default CheckoutFooter;

@@ -37,6 +37,7 @@ const FONT_NAME = {
 const COLORS = {
   primaryGreen: 'rgb(50, 134, 22)',
   secondaryGreen :'rgb(31, 94, 15)' ,
+  tertiaryGreen:'rgb(234, 255, 236)',
   primaryGray:'rgb(243, 244, 248)',
   secondaryGray:'rgb(145, 151, 167)',
   tertiaryGray:'rgb(107, 107, 107)',

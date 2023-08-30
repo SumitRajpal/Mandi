@@ -33,6 +33,16 @@ const SCREEN_IDENTIFIER = {
     key: 'payment',
     identifier: 'Payment',
     title: 'payment',
+  },
+  Profile: {
+    key: 'profile',
+    identifier: 'Profile',
+    title: 'profile',
+  },
+  OrderHistory: {
+    key: 'orderhistory',
+    identifier: 'OrderHistory',
+    title: 'orderhistory',
   }
 };
 

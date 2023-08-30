@@ -15,7 +15,7 @@ import CartProduct from "src/components/CartProduct";
 import ProductListItem from "src/components/ProductListItem";
 import ProductHorizontal from "src/components/Products/ProductHorizontal";
 
-const Home = (): JSX.Element => {
+const Profile = (): JSX.Element => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -60,23 +60,10 @@ const Home = (): JSX.Element => {
       
         <ScrollView
           showsVerticalScrollIndicator={false} >
-            <View style={styles.headerFlex}>
-        <View style={styles.headerDetails}>
-          <Text color={COLORS.text_black} size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.heavy}>Delivering in</Text>
-          <Text color={COLORS.text_black} size={FONT_SIZE.xxx_large} isPoppins={true} weight={FONT_WEIGHT.black}>Tomorrow 8am</Text>
-          <Text color={COLORS.text_black} size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.heavy}>Home - </Text>
-        </View>
-        <View style={styles.profileDetails}>
-          <Icon name="user-circle-o" size={screenRatio * 30} color={COLORS.text_black} />
-        </View>
-      </View>
-          <ProductHorizontal horizontalTitle="Order Again" />
-          <ShopCategory />
-          <ProductHorizontal horizontalTitle="Best Seller" />
-        </ScrollView>
-        <Footer />
+           
+         </ScrollView>
       </SafeAreaView>
     </View>
   );
 };
-export default Home;
+export default Profile;
