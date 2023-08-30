@@ -32,7 +32,7 @@ const ProductList = (): JSX.Element => {
                                           data={ordersList}
                                           numColumns={2}
                                           contentContainerStyle={{ marginHorizontal: 5, paddingBottom: screenHeight / 12 }}
-                                          showsVerticalScrollIndicator={true}
+                                          showsHorizontalScrollIndicator={true}
                                           keyExtractor={(item, index) => item?.id + index.toString()}
                                           onEndReachedThreshold={0.5}
                                           renderItem={({ item }) => item && <CartProduct title="Green Chilly - 100gm - (Hari mirch)" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />}

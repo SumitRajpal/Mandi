@@ -48,7 +48,7 @@ function App(): JSX.Element {
                       headerShown: false,
                       gestureEnabled: false
                     }} 
-                    initialRouteName={SCREENS.OrderHistory.identifier}>
+                    initialRouteName={SCREENS.Home.identifier}>
                     {_.toArray(SCREENS).map((item:any) => 
                       item.component ? (
                         <Screen

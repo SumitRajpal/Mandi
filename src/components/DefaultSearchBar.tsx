@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
             height:screenHeight/18,
             backgroundColor: COLORS.white,
             borderRadius: 15,
+            width:"95%",
             alignItems: "center",
       },
       searchBar__clicked: {
@@ -81,6 +82,7 @@ const styles = StyleSheet.create({
             borderWidth:1,
             flexDirection: "row",
             height:screenHeight/18,
+            width:"95%",
             backgroundColor: COLORS.white,
             borderRadius: 15,
             alignItems: "center",

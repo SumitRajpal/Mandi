@@ -4,12 +4,13 @@ import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { WEB_SERVICES, screenHeight, screenRatio, screenWidth } from "src/constants";
 
 import OrderHistoryItems from "src/components/OrderHItoryItems";
+import Header from "src/components/header";
 
 const OrderHistory = (): JSX.Element => {
       const styles = StyleSheet.create({
             container: {
                   flex: 1,
-                  backgroundColor: COLORS.white
+                  backgroundColor: COLORS.tertiaryGray
             },
             safearea: {
                   flex: 1,
@@ -26,9 +27,10 @@ const OrderHistory = (): JSX.Element => {
 
       return (
             <View style={styles.container} >
-
                   <SafeAreaView style={styles.safearea}>
+                  <Header title="Orders"/>
                         <View style={{ paddingVertical: 5 }}>
+                              
                               <FlatList
                                     data={ordersList}
                                     contentContainerStyle={{ marginHorizontal: 5, paddingBottom: 0 }}

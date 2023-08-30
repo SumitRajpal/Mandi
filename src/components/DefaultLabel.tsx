@@ -18,9 +18,7 @@ const DefaultLabel = (props: ILABEL): JSX.Element => {
       const defaultStyles = StyleSheet.create(
             {
                   text: {
-                        flex: 1,
                         overflow: "hidden",
-                        lineHeight: 16,
                   }
             }
       );
