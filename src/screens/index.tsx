@@ -8,6 +8,7 @@ import Checkout from 'src/screens/Checkout/Checkout';
 import PaymentOption from 'src/screens/Payment/PaymentOption';
 import Profile from 'src/screens/Profile/Profile';
 import OrderHistory from 'src/screens/Order/OrderHistory';
+import OrderHistoryDetails from 'src/screens/Order/OrderHIstoryDetails';
 
 const SCREENS: any = {
   Splash: {
@@ -68,6 +69,12 @@ const SCREENS: any = {
     title: SCREEN_IDENTIFIER.OrderHistory.title,
     identifier: SCREEN_IDENTIFIER.OrderHistory.identifier,
     component: OrderHistory
+  },
+  OrderHistoryDetails: {
+    key: SCREEN_IDENTIFIER.OrderHistoryDetails.key,
+    title: SCREEN_IDENTIFIER.OrderHistoryDetails.title,
+    identifier: SCREEN_IDENTIFIER.OrderHistoryDetails.identifier,
+    component: OrderHistoryDetails
   }
 };
 

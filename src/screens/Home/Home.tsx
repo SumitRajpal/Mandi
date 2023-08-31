@@ -61,6 +61,7 @@ const Home = (): JSX.Element => {
       <SafeAreaView style={styles.safearea}>
       
         <ScrollView
+         stickyHeaderIndices={[1]}
           showsVerticalScrollIndicator={false} >
             <View style={styles.headerFlex}>
         <View style={styles.headerDetails}>

@@ -1,14 +1,15 @@
 
 import React, { ReactNode, useEffect, useState } from "react";
-import { Image, Modal, Platform, SafeAreaView, StyleSheet, View } from "react-native";
-import { screenHeight, screenRatio, screenWidth } from "src/constants";
+import { Image, Modal, Platform, Pressable, SafeAreaView, StyleSheet, View } from "react-native";
+import { SCREEN_IDENTIFIER, screenHeight, screenRatio, screenWidth } from "src/constants";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { Button, DefaultLabel, Text } from "src/components";
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import DefaultImage from "src/components/DefaultImage";
+import { useNavigation } from "@react-navigation/native";
 
 const OrderHistoryItems = (): JSX.Element => {
-    console.log(screenRatio)
+    const navigation = useNavigation();
       const defaultStyles = StyleSheet.create(
             {
                   image: {
@@ -48,6 +49,7 @@ const OrderHistoryItems = (): JSX.Element => {
       );
 
       return (<View style={defaultStyles.parent}>
+            <Pressable android_ripple={{color:COLORS.dark_gray}} onPress={() => navigation.navigate(SCREEN_IDENTIFIER.OrderHistoryDetails.identifier as never)} >
             <View style={{ flex: 1, flexDirection: "column", gap: 20 ,backgroundColor:COLORS.white}}>
                   <View style={{ flex: 4,paddingTop:20 }}>
                         <View style={{ flex: 1, flexDirection: "row", alignContent: "center", justifyContent: "center" }}>
@@ -100,6 +102,7 @@ const OrderHistoryItems = (): JSX.Element => {
                         </View>
                   </View>
             </View>
+            </Pressable>
       </View>);
 }
 export default OrderHistoryItems;

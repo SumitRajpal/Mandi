@@ -43,6 +43,11 @@ const SCREEN_IDENTIFIER = {
     key: 'orderhistory',
     identifier: 'OrderHistory',
     title: 'orderhistory',
+  },
+  OrderHistoryDetails:{
+    key: 'orderhistorydetails',
+    identifier: 'OrderHistoryDetails',
+    title: 'orderhistorydetails',
   }
 };
 
