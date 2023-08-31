@@ -49,8 +49,9 @@ const OrderHistoryItems = (): JSX.Element => {
       );
 
       return (<View style={defaultStyles.parent}>
-            <Pressable android_ripple={{color:COLORS.dark_gray}} onPress={() => navigation.navigate(SCREEN_IDENTIFIER.OrderHistoryDetails.identifier as never)} >
-            <View style={{ flex: 1, flexDirection: "column", gap: 20 ,backgroundColor:COLORS.white}}>
+            
+            <View style={{ flex: 1, flexDirection: "column", gap: 20 ,backgroundColor:COLORS.white ,borderRadius:screenRatio * 10}}>
+            <Pressable android_ripple={{color:COLORS.primaryGray}} onPress={() => navigation.navigate(SCREEN_IDENTIFIER.OrderHistoryDetails.identifier as never)} >
                   <View style={{ flex: 4,paddingTop:20 }}>
                         <View style={{ flex: 1, flexDirection: "row", alignContent: "center", justifyContent: "center" }}>
                               <View style={{ flex: 2, alignItems: "center", justifyContent: "center" }}>
@@ -96,13 +97,14 @@ const OrderHistoryItems = (): JSX.Element => {
 
                         </View>
                   </View>
+                  </Pressable>
                   <View style={{ flex: 4, padding:10,alignContent: "center", alignItems: "center", borderColor: COLORS.primaryGray, borderTopWidth: 0.2 }}>
                         <View style={{ flex: 1}}>
                               <DefaultLabel styles={{ color: COLORS.primaryGreen }} weight={FONT_WEIGHT.regular3} size={FONT_SIZE.regular} title={"Reorder"} />
                         </View>
                   </View>
             </View>
-            </Pressable>
+           
       </View>);
 }
 export default OrderHistoryItems;

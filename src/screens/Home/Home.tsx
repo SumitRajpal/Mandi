@@ -72,8 +72,8 @@ const Home = (): JSX.Element => {
           <Icon name="user-circle-o" size={screenRatio * 30} color={COLORS.text_black}  onPress={() => navigation.navigate(SCREEN_IDENTIFIER.Profile.identifier as never)}/>
         </View>
       </View>
-
-      <DefaultSearchBar/>
+<View style={{flex:1,backgroundColor:COLORS.white ,paddingVertical:10}}><DefaultSearchBar/></View>
+      
           <ProductHorizontal horizontalTitle="Order Again" />
           <ShopCategory />
           <ProductHorizontal horizontalTitle="Best Seller" />

@@ -3,7 +3,7 @@ import React from "react";
 import { ActivityIndicator, FlatList, Image, Modal, Platform, Pressable, StyleSheet, View } from "react-native";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { DefaultLabel, Text } from "src/components";
-import { SCREEN_IDENTIFIER, screenHeight, screenWidth } from "src/constants";
+import { SCREEN_IDENTIFIER, screenHeight, screenRatio, screenWidth } from "src/constants";
 import { useNavigation } from "@react-navigation/native";
 import CartProduct from "../CartProduct";
 
@@ -13,14 +13,12 @@ const defaultStyles = StyleSheet.create({
             justifyContent: "flex-start"
       },
       container: {
-            flex: 1.0,
+            flex: 6,
             padding: 0,
             backgroundColor: COLORS.secondaryBlue,
-            height: "100%",
-            width: "100%",
             alignContent: "flex-start",
             borderRadius: 15,
-            flexBasis: "60%",
+            
       },
       parentContainer: {
             flex: 1,
@@ -28,8 +26,6 @@ const defaultStyles = StyleSheet.create({
             alignItems: "center",
             flexDirection: "column",
             gap: 5,
-            height: screenHeight / 5.5,
-            width: screenWidth / 4.6,
       },
       imageFeatures: {
             flex: 1,
@@ -61,7 +57,7 @@ const defaultStyles = StyleSheet.create({
       },
       title: {
             padding: 0,
-            flexBasis: "40%"
+            flex:4
       }
 });
 

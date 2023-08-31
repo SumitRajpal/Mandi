@@ -48,11 +48,12 @@ const Header = (props:IHEADER): JSX.Element => {
       return (
             <View style={defaultStyles.footerContainer}>
                   <View style={defaultStyles.footerFlex}>
-                        <View style={{ flex:1,alignItems:"center" }}>
-                              <FMIcon name="arrow-left" size={screenRatio*16} color={COLORS.tertiaryGray} onPress={() => navigation.goBack()} />
+                        
+                        <View style={{ flex:1,alignItems:"center",padding:5 }}>
+                              <FMIcon name="arrow-left" size={screenRatio*16} color={COLORS.text_black} onPress={() => navigation.goBack()} />
 
                         </View>
-                        <View style={{ flex: 8 ,justifyContent:"center",alignItems:"center"}}>
+                        <View style={{ flex: 8 ,justifyContent:"center",alignItems:"flex-start",paddingHorizontal:10}}>
                               <DefaultLabel size={FONT_SIZE.extra_large} weight={FONT_WEIGHT.medium} title={title} />
                         </View>
                         <View style={{ flex:1,alignItems:"center" }}>
