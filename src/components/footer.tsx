@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { ActivityIndicator, Linking, Modal, Pressable, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Linking, Modal, Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { Button, Text } from "src/components";
 import { SCREEN_IDENTIFIER, screenHeight, screenRatio, screenWidth } from "src/constants";
@@ -71,7 +71,7 @@ const Footer = (): JSX.Element => {
     <View style={defaultStyles.footerContainer}>
       <View style={defaultStyles.footerFlex}>
         <View style={defaultStyles.footerBasis}>
-          <Pressable style={{ flex: 1}} onPress={() => setModel(!model)}>
+          <TouchableOpacity  style={{ flex: 1}} onPress={() => setModel(!model)}>
           <View style={{ flex: 1, flexDirection: "row" }}>
             <View style={{ flex: 1, flexShrink: 1, padding:0 }}>
               <View style={{ flex: 1, gap:- (screenRatio*10), padding:5,flexDirection: "row", flexShrink: 1, paddingHorizontal: 20 }}>
@@ -104,7 +104,7 @@ const Footer = (): JSX.Element => {
               </Text>
             </View>
           </View>
-          </Pressable>
+          </TouchableOpacity>
         </View>
 
         <View style={defaultStyles.footerBasis}>

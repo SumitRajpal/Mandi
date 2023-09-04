@@ -12,24 +12,24 @@ import { COLORS } from "src/constants";
  * @property {int} weight - font weight
  * @property {int} size - font size
  */
-interface ITextProps{
-  weight?:number,
-    isTranslate?:boolean,
-    isPoppins?:boolean,
-    size?:number,
-    color?:string,
-    children?:ReactNode,
-    style?: any,
-    numberOfLines?:number
+interface ITextProps {
+  weight?: number,
+  isTranslate?: boolean,
+  isPoppins?: boolean,
+  size?: number,
+  color?: string,
+  children?: ReactNode,
+  style?: any,
+  numberOfLines?: number
 }
-const defaultTextValue:ITextProps = {
+const defaultTextValue: ITextProps = {
   style: {},
   isTranslate: true,
   isPoppins: false,
   weight: FONT_WEIGHT.medium,
   color: COLORS.text_black
 }
-const Text = (props:PropsWithChildren<ITextProps>) => {
+const Text = (props: PropsWithChildren<ITextProps>) => {
   const {
     weight = FONT_WEIGHT.medium,
     isTranslate = true,
@@ -66,17 +66,17 @@ const Text = (props:PropsWithChildren<ITextProps>) => {
     if (weight === 500) {
       return FONT_NAME.REGULAR2;
     }
-    if (weight ===600) {
+    if (weight === 600) {
       return FONT_NAME.REGULAR3;
     }
-    if (weight ===700) {
+    if (weight === 700) {
       return FONT_NAME.HEAVY;
     }
-    
-    if (weight ===800) {
+
+    if (weight === 800) {
       return FONT_NAME.BLACK;
     }
-    if (weight ===900) {
+    if (weight === 900) {
       return FONT_NAME.BLACK2;
     }
     return FONT_NAME.MEDIUM;

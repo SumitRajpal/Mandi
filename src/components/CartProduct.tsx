@@ -5,7 +5,7 @@ import Animated from "react-native-reanimated";
 import { AnimatedImage } from "react-native-reanimated/lib/typescript/reanimated2/component/Image";
 import { screenHeight, screenRatio, screenWidth } from "src/constants";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
-import {Text} from "src/components";
+import {DefaultLabel, Text} from "src/components";
 import Icon from 'react-native-vector-icons/Entypo';
 import CartButton from "src/components/CartButton";
 
@@ -73,44 +73,49 @@ const defaultStyles = StyleSheet.create({
 interface IDefaultImage {
       imageStyles?: any,
       styles?: any,
-      imageUri: any,
-      title: string
+      data:any
 }
 const CartProduct = (props: IDefaultImage): JSX.Element => {
-      const { styles, imageStyles, imageUri = "https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png", title } = props
+      const { styles, imageStyles,data } = props
+      const discountedPrice  = data?.price[0]?.price * (100 - data?.product_offer[0]?.discount) / 100 || 0
       return (
             <View style={[defaultStyles.container, styles]}>
+                  { data?.product_offer[0].type ==="PERCENTAGE" ?  
                   <View style={[defaultStyles.offer]}>
-                        <Label weight={FONT_WEIGHT.regular3} size={FONT_SIZE.large} title={"15%"} />
-                        <Label weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={"OFF"} />
+                  <DefaultLabel weight={FONT_WEIGHT.heavy} size={FONT_SIZE.small} title={`${data?.product_offer[0]?.discount}%`} />
+                        <DefaultLabel weight={FONT_WEIGHT.heavy} size={FONT_SIZE.small} title={"OFF"} />
 
-                  </View>
+                  </View> :
+                  <View style={[defaultStyles.offer]}>
+                        <DefaultLabel weight={FONT_WEIGHT.heavy} size={FONT_SIZE.small} title={`Buy 1`} />
+                        <DefaultLabel weight={FONT_WEIGHT.heavy} size={FONT_SIZE.small} title={`Get 2`} />
+                  </View>}
                   <View style={{ flex: 6,flexWrap:"wrap" ,alignContent:"center",alignItems:"center"}}>
                         <Image
                               style={[defaultStyles.image,imageStyles]}
-                              source={{ uri: imageUri }}
+                              source={{ uri: data?.image || "https://freepngimg.com/thumb/white%20roses/4-white-rose-png-image-flower-white-rose-png-picture.png" }}
                         />
                   </View>
                   <View style={{ flex: 3, flexWrap: "wrap", alignItems: "flex-start", justifyContent: "space-evenly" }}>
-                        <Label weight={FONT_WEIGHT.regular3} size={FONT_SIZE.medium} title={title} />
+                        <DefaultLabel weight={FONT_WEIGHT.regular3} size={FONT_SIZE.medium} title={data?.name} />
                   </View>
                   <View style={{ flex: 1, flexWrap: "wrap", alignItems: "flex-start", justifyContent: "space-evenly" }}>
-                        <Label weight={FONT_WEIGHT.regular3} size={FONT_SIZE.small} title={"100gm"} />
+                        <DefaultLabel weight={FONT_WEIGHT.regular3} size={FONT_SIZE.small} title={data?.weight} />
                   </View>
                   <View style={{ flex: 2.5, flexWrap: "wrap", alignItems: "center", justifyContent: "space-evenly" }}>
                         <View style={{ flex: 1, flexDirection: "row" }}>
                               <View style={{ flex: 3, flexWrap: "wrap" }}>
                                     <View style={{ flex: 1, flexDirection: "column", flexWrap: "wrap",justifyContent:"center",alignContent:"space-around" }}>
                                           <View style={{ flex: 1, alignItems: "flex-end", justifyContent: "flex-end" }}>
-                                                <Label weight={FONT_WEIGHT.heavy} size={FONT_SIZE.regular} title={"₹1011"} />
+                                                <DefaultLabel weight={FONT_WEIGHT.heavy} size={FONT_SIZE.regular} title={`₹${discountedPrice}`} />
                                           </View>
                                           <View style={{ flex: 1, alignItems: "flex-end", justifyContent: "flex-end" }}>
-                                                <Label lstyles={defaultStyles.strike} weight={FONT_WEIGHT.regular2} size={FONT_SIZE.regular} title={"₹1501"} />
+                                                <DefaultLabel styles={defaultStyles.strike} weight={FONT_WEIGHT.regular2} size={FONT_SIZE.regular} title={`₹${data?.price[0]?.price || 0}`} />
                                           </View>
                                     </View>
                               </View>
                               <View style={{ flex: 4, flexWrap: "wrap",justifyContent:"center",alignContent:"center"  }}>
-                                    <CartButton />
+                                    <CartButton data={data} />
                               </View>
                         </View>
                   
@@ -119,25 +124,4 @@ const CartProduct = (props: IDefaultImage): JSX.Element => {
 }
 
 
-interface ILABEL {
-      title: any
-      lstyles?: any
-      size?: number
-      weight?: number
-}
-const Label = (props: ILABEL) => {
-      const { title, lstyles, size = FONT_SIZE.medium, weight = FONT_WEIGHT.heavy } = props;
-      return (
-            <Text
-                  style={[defaultStyles.text, lstyles]}
-                  size={size}
-                  isPoppins={true}
-                  numberOfLines={2}
-                  weight={weight}
-                  color={COLORS.text_black}
-            >
-                  {title}
-            </Text>
-      );
-};
 export default CartProduct;

@@ -8,15 +8,22 @@ const WEB_SERVICES = {
     DELETE: "DELETE"
   },
   auth: {
-    getPermissions:`${ApiConfig.url}auth/permissions`,
-    login: `${ApiConfig.url}auth/login`,
+    getPermissions: `${ApiConfig.url}auth/permissions`,
+    signin: `${ApiConfig.url}signin`,
     refresh: `${ApiConfig.url}auth/refresh`,
   },
-  user:{
- getUser:`${ApiConfig.url}users`,
+  user: {
+    signin: `${ApiConfig.url}users/signin`,
+    getUser: `${ApiConfig.url}users`,
   },
-  utility: {
-    appVersion: `${ApiConfig.url}utils/version`,
+  products: {
+    getProducts: `${ApiConfig.url}products`,
+  },
+  category: {
+    getCategory: `${ApiConfig.url}category`
+  },
+    utility: {
+      appVersion: `${ApiConfig.url}utils/version`,
   }
 };
 

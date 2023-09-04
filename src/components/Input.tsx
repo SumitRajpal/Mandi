@@ -63,6 +63,7 @@ interface IInput {
   keyboardType: any,
   onChangeText: (e: any) => void;
   onFocus?: () => void;
+  onBlur?:() => void;
 }
 const DefaultInput = (props: IInput) => {
   const {

@@ -2,7 +2,7 @@ import { navigationRef } from 'src/components/RootNavigation';
 import AuthProvider from 'src/context/AuthProvider';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from "@react-navigation/stack";
-import { SCREENS } from 'src/screens';
+import { SCREENS, StackParamList } from 'src/screens';
 import React, { Suspense, useEffect } from 'react';
 import _ from "lodash";
 import {LogBox, Platform, SafeAreaView} from 'react-native';
@@ -13,7 +13,7 @@ import { LocalizationProvider } from 'src/context/LocalizationProvider';
 
 
 LogBox.ignoreAllLogs(false);
-const { Navigator, Screen } = createStackNavigator();
+const { Navigator, Screen } = createStackNavigator<StackParamList>();
 
 
 function App(): JSX.Element {
@@ -48,7 +48,7 @@ function App(): JSX.Element {
                       headerShown: false,
                       gestureEnabled: false
                     }} 
-                    initialRouteName={SCREENS.Home.identifier}>
+                    initialRouteName={SCREENS.Splash.identifier}>
                     {_.toArray(SCREENS).map((item:any) => 
                       item.component ? (
                         <Screen

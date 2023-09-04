@@ -21,7 +21,7 @@ const ProductList = (): JSX.Element => {
                   <SafeAreaView style={styles.container}>
                         <View style={{ flex: 1, flexDirection: "column", justifyContent: "center", alignContent: "center" }}>
                               <View style={{ flex: 1, alignContent: "center", alignItems: "center", alignSelf: "center", margin: 10, marginHorizontal: 50 }}>
-                                    <DefaultSearchBar />
+                                    <DefaultSearchBar  searchValue="" onChangeText={() => {}}/>
                               </View>
                         </View>
 

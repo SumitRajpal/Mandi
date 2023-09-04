@@ -4,9 +4,9 @@ import { Modal, StyleSheet, View, ScrollView, Platform, Keyboard } from "react-n
 import React, { Component, useContext, useEffect, useState } from "react"
 import Toast from "react-native-simple-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { KEYBOARD_TYPE, SCREEN_IDENTIFIER, STRING, WEB_SERVICES, screenHeight, screenRatio, screenWidth } from "src/constants";
+import { KEYBOARD_TYPE, REGEX, SCREEN_IDENTIFIER, STRING, WEB_SERVICES, screenHeight, screenRatio, screenWidth } from "src/constants";
 import { IUSERS } from "src/models";
-import { CommonActions, useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation, useRoute } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ProgressView from "src/components/ProgressView";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -19,13 +19,20 @@ import Input from "src/components/Input";
 import DefaultInput from "src/components/Input";
 
 
+interface NewCustomer {
+      readonly phone : string
+      readonly isUserExist:boolean
+}
+
 const Otp = (): JSX.Element => {
       const { setLoggedInUser } = useContext(AuthContext);
       const navigation = useNavigation();
+      const route = useRoute();
       const queryClient = useQueryClient();
       const [loginModel, setLoginModel] = useState(false);
       const [otp, setOtp] = useState("");
       const [time, setTime] = useState(59);
+      
       useEffect(() => {
             let interval = setInterval(() => {
                   setTime(lastTimerCount => {
@@ -68,7 +75,7 @@ const Otp = (): JSX.Element => {
             margin: {
                   margin: screenRatio * 40
             },
-            phone:{
+            phone: {
                   marginTop: screenRatio * 50,
                   margin: screenRatio * 10
             },
@@ -76,16 +83,17 @@ const Otp = (): JSX.Element => {
       const loginMutation = useMutation(
             (body: any) =>
                   api({
-                        url: WEB_SERVICES.auth.login,
+                        url: WEB_SERVICES.user.signin,
                         method: WEB_SERVICES.method.POST,
                         body,
                   }),
             {
                   onSuccess: (response: IUSERS) => {
                         setLoggedInUser(response);
+                        console.log(response)
                         navigation.dispatch(
                               CommonActions.reset({
-                                    index: 1,
+                                    index: 0,
                                     routes: [{ name: SCREEN_IDENTIFIER.Home.identifier }]
                               })
                         );
@@ -95,13 +103,12 @@ const Otp = (): JSX.Element => {
                   }
             }
       );
-
       const onLogin = async () => {
             const params: any = {
                   phone: "9125365642"
             };
             setLoginModel(!loginModel)
-            // await loginMutation.mutate(params);
+             await loginMutation.mutate(params);
       };
 
       return (
@@ -113,7 +120,7 @@ const Otp = (): JSX.Element => {
                                           <Text color={COLORS.text_black} size={FONT_SIZE.regular} isPoppins={true} weight={FONT_WEIGHT.heavy}> We've send verification code to</Text>
                                     </View>
                                     <View >
-                                          <Text color={COLORS.text_black} size={FONT_SIZE.medium} isPoppins={true} weight={FONT_WEIGHT.black}> +91 9021265922</Text>
+                                          <Text color={COLORS.text_black} size={FONT_SIZE.medium} isPoppins={true} weight={FONT_WEIGHT.black}>{String("+91 ").concat(route.params?.phone)}</Text>
                                     </View>
                                     <DefaultInput
                                           style={[styles.inputView, styles.margin]}
@@ -122,14 +129,11 @@ const Otp = (): JSX.Element => {
                                           input={styles.otp}
                                           maxLength={4}
                                           onChangeText={(otp: string) => {
-                                                setOtp(otp)
-                                                if (otp.length === 4) {
-                                                      navigation.dispatch(
-                                                            CommonActions.reset({
-                                                              index: 0,
-                                                              routes: [{ name: SCREEN_IDENTIFIER.Home.identifier }]
-                                                            }) 
-                                                          );
+                                                if (REGEX.otpRegex.test(otp)) {
+                                                      setOtp(otp)
+                                                }
+                                                if (otp.trim().length === 4) {
+                                                     onLogin();
                                                 }
                                           }}
                                     />

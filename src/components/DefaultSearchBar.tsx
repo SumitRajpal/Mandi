@@ -1,14 +1,25 @@
 // SearchBar.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, TextInput, View, Keyboard, Button } from "react-native";
 import { COLORS, KEYBOARD_TYPE, screenHeight, screenRatio, screenWidth } from "src/constants";
 import Icon from 'react-native-vector-icons/AntDesign';
 import {DefaultInput} from "src/components";
 
+interface ISearchBar {
+      onChangeText: (e: any) => void;
+      searchValue:string
+      onClear?: (e: any) => void;
+}
 
-const DefaultSearchBar = () => {
+const DefaultSearchBar = (props:ISearchBar) => {
+      const {searchValue} = props;
       const [clicked, setClicked] = useState(false)
       const [searchPhrase, setSearchPhrase] = useState("")
+ 
+useEffect(() => {
+      setSearchPhrase(searchValue)
+}, [searchValue])
+
 
       return (
             <View style={styles.container}>
@@ -28,13 +39,13 @@ const DefaultSearchBar = () => {
 
 
                         <DefaultInput
+                              {...props}
                               border={{ borderWidth: 0}}
                               style={[styles.input]}
                               keyboardType={KEYBOARD_TYPE.deafult}
-                              value={searchPhrase}
                               onFocus={() => setClicked(true)}
+                              onBlur={() => setClicked(false)}
                               placeholderText={"Search"}
-                              onChangeText={setSearchPhrase}
                         />
 
                         {clicked && searchPhrase && (

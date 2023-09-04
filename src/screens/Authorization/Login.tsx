@@ -4,7 +4,7 @@ import { Modal, StyleSheet, View, ScrollView, Platform, Keyboard } from "react-n
 import React, { Component, useContext, useEffect, useState } from "react"
 import Toast from "react-native-simple-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { KEYBOARD_TYPE, SCREEN_IDENTIFIER, STRING, WEB_SERVICES, screenHeight, screenRatio, screenWidth } from "src/constants";
+import { KEYBOARD_TYPE, REGEX, SCREEN_IDENTIFIER, STRING, WEB_SERVICES, screenHeight, screenRatio, screenWidth } from "src/constants";
 import { IUSERS } from "src/models";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -20,7 +20,6 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import DefaultInput from "src/components/Input";
 
 const Login = (): JSX.Element => {
-  const { setLoggedInUser } = useContext(AuthContext);
   const navigation = useNavigation();
   const queryClient = useQueryClient();
   const [loginModel, setLoginModel] = useState(false);
@@ -34,18 +33,19 @@ const Login = (): JSX.Element => {
     gridFlex: {
       flexDirection: 'row',
       flexWrap: 'wrap',
-      padding: 5,
+      padding: 0,
+      gap:5,
       alignItems: "center",
       width: screenWidth,
-  
+
     },
-    otp:{
-      letterSpacing:screenWidth/8,
-      textAlign:"center",
+    otp: {
+      letterSpacing: screenRatio * (screenWidth / 10),
+      textAlign: "center",
     },
-    phone:{
-      letterSpacing:2,
-      textAlignVertical:"top",
+    phone: {
+      letterSpacing: 1,
+      textAlignVertical: "top",
     },
     logo: {
       alignItems: "center",
@@ -53,11 +53,12 @@ const Login = (): JSX.Element => {
       marginVertical: screenRatio * 10
     },
     customImage: {
+      flex: 1,
       backgroundColor: COLORS.secondaryWhite,
-      borderRadius: 30
+      borderRadius:screenRatio * 20
     },
     flexContent: {
-      flexBasis: "33%",
+      flex: 1,
       alignItems: "center"
     },
     tnc: {
@@ -67,7 +68,7 @@ const Login = (): JSX.Element => {
       backgroundColor: COLORS.primaryGray,
       position: "absolute",
       alignItems: "center",
-      bottom: isKeyboardVisible ?  screenRatio * 5 :    0  
+      bottom: isKeyboardVisible ? screenRatio * 5 : 0
     },
     inputView: {
       marginHorizontal: screenRatio * 20
@@ -75,13 +76,13 @@ const Login = (): JSX.Element => {
     margin: {
       marginTop: screenRatio * 20
     },
-    modalChild:{
-      height:screenHeight/3,
-      position:"absolute",
-      bottom:0,
-      width:screenWidth,
-      backgroundColor:COLORS.primaryWhite,
-      borderRadius:screenRatio * 20,
+    modalChild: {
+      height: screenHeight / 3,
+      position: "absolute",
+      bottom: 0,
+      width: screenWidth,
+      backgroundColor: COLORS.primaryWhite,
+      borderRadius: screenRatio * 20,
       shadow: {
         shadowRadius: 10,
         shadowOffset: {
@@ -92,52 +93,31 @@ const Login = (): JSX.Element => {
         elevation: 4,
       },
     },
-    modelParent:{
-     height:screenHeight,
+    modelParent: {
+      height: screenHeight,
 
-     backgroundColor:COLORS.transparent,
-     bottom:isKeyboardVisible ? screenHeight / 3 : 0
+      backgroundColor: COLORS.transparent,
+      bottom: isKeyboardVisible ? screenHeight / 3 : 0
     },
-    loginText:{
+    loginText: {
       alignItems: "center",
       marginVertical: screenRatio * 20
     },
-    close:{
-      alignContent:"center",
-      alignSelf:"center",
-      position:"absolute",
-      bottom: screenHeight/2.9 
+    close: {
+      alignContent: "center",
+      alignSelf: "center",
+      position: "absolute",
+      bottom: screenRatio *(screenHeight / 3.5)
     }
   });
-  const loginMutation = useMutation(
-    (body: any) =>
-      api({
-        url: WEB_SERVICES.auth.login,
-        method: WEB_SERVICES.method.POST,
-        body,
-      }),
-    {
-      onSuccess: (response: IUSERS) => {
-        setLoggedInUser(response);
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 1,
-            routes: [{ name: SCREEN_IDENTIFIER.Home.identifier }]
-          })
-        );
-      },
-      onError: (error: any) => {
-        Toast.show(error.message, 5);
-      }
-    }
-  );
+
   const setInitialState = async () => {
     await AsyncStorage.clear();
     queryClient.clear();
   };
 
   useEffect(() => {
-    
+
     const showKeyboardListener = Keyboard.addListener("keyboardDidShow", () => {
       setKeyboardVisible(true);
     });
@@ -151,12 +131,11 @@ const Login = (): JSX.Element => {
   }, []);
 
   const onLogin = async () => {
-    const params: any = {
-      phone: "9125365642"
-    };
-    setLoginModel(!loginModel)
-    navigation.navigate(SCREEN_IDENTIFIER.Otp.identifier as never)
-    // await loginMutation.mutate(params);
+    const checkUserData = {
+      phone:phone
+     }
+     setLoginModel(!loginModel)
+    navigation.navigate(SCREEN_IDENTIFIER.Otp.identifier,checkUserData)
   };
   // const HALF_PI = Math.PI / 2;
   // const IMAGE_OFFESET = 30;
@@ -218,9 +197,9 @@ const Login = (): JSX.Element => {
             <Text size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.heavy}> Best app for daily grocery</Text>
           </View>
 
-          <Button style={[styles.inputView, styles.margin]} 
-          title="Login" 
-          onPress={() => { setLoginModel(true) }} />
+          <Button style={[styles.inputView, styles.margin]}
+            title="Login"
+            onPress={() => { setLoginModel(true) }} />
         </ScrollView>
         <View style={styles.tnc}>
           <Text color={COLORS.secondaryGray} size={FONT_SIZE.extra_small} isPoppins={true} weight={FONT_WEIGHT.roman}> By continuing you agree to our Terms of service & Privacy policy</Text>
@@ -232,36 +211,39 @@ const Login = (): JSX.Element => {
           transparent
           hardwareAccelerated={true}
           onRequestClose={() => {
-           
+
           }}>
-            
+
           <View style={styles.modelParent}>
-           <View style={styles.modalChild}>
-            <View style={styles.close}>
-            <Icon name="closecircle" size={screenRatio * 30} color={COLORS.text_black} onPress={() => setLoginModel(false)}/> 
+            <View style={styles.modalChild}>
+              <View style={styles.close}>
+                <Icon name="closecircle" size={screenRatio * 30} color={COLORS.text_black} onPress={() => setLoginModel(false)} />
+              </View>
+              <View style={styles.loginText}>
+                <Text size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.heavy}> Sign up or Log in </Text>
+              </View>
+              <DefaultInput
+                style={[styles.inputView]}
+                keyboardType={KEYBOARD_TYPE.phone}
+                value={phone}
+                input={styles.phone}
+                maxLength={10}
+                placeholderText={STRING.enter_phone_number}
+                onChangeText={(phone: any) => {
+                  if (REGEX.phoneRegex.test(phone)) {
+                    setPhone(phone);
+                  }
+                  
+                }}
+              />
+              <Button style={[styles.inputView, styles.margin]}
+                title="Login" disabled={!(phone.trim().length === 10)} onPress={() => { onLogin() }} />
+
             </View>
-           <View style={styles.loginText}>
-            <Text size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.heavy}> Sign up or Log in </Text>
+            <View style={styles.tnc}>
+              <Text color={COLORS.secondaryGray} size={FONT_SIZE.extra_small} isPoppins={true} weight={FONT_WEIGHT.roman}> By continuing you agree to our Terms of service & Privacy policy</Text>
+            </View>
           </View>
-          <DefaultInput
-            style={[styles.inputView]}
-            keyboardType={KEYBOARD_TYPE.phone}
-            value={phone}
-            input={styles.phone}
-            maxLength={10}
-            placeholderText={STRING.phone_error_message}
-            onChangeText={(phone: any) => {
-              setPhone(phone);
-            }}
-          />
-           <Button style={[styles.inputView, styles.margin]} 
-           title="Login" disabled= {!(phone.length ===10)} onPress={() => { onLogin() }} />
-        
-           </View>
-           <View style={styles.tnc}>
-          <Text color={COLORS.secondaryGray} size={FONT_SIZE.extra_small} isPoppins={true} weight={FONT_WEIGHT.roman}> By continuing you agree to our Terms of service & Privacy policy</Text>
-        </View>
-            </View>
         </Modal>
       </SafeAreaView>
 

@@ -6,7 +6,6 @@ import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { Text } from "src/components";
 import Icon from 'react-native-vector-icons/AntDesign';
 import { RadioButtons } from "src/components";
-import DefaultLabel from "./DefaultLabel";
 
 
 const defaultStyles = StyleSheet.create(
@@ -29,8 +28,10 @@ const defaultStyles = StyleSheet.create(
                   },
             },
             modelParent: {
-                  flex: 1,
-                  marginBottom: 5,
+                  height: screenHeight,
+                  bottom: 0,
+                  marginBottom:0 ,
+                  backgroundColor:COLORS.transparent
 
             },
             close: {
@@ -52,10 +53,10 @@ interface IDefaultModel {
       children?: ReactNode
       styles?: any,
       visible: boolean,
-      height: any
+      height?: any
 }
 const ProductSorting = (props: IDefaultModel): JSX.Element => {
-      const { styles, visible, children, height } = props
+      const { styles, visible } = props
       const [isModel, setModel] = useState(false);
       const [sorting, setSorting] = useState("default");
 
@@ -69,6 +70,7 @@ const ProductSorting = (props: IDefaultModel): JSX.Element => {
                   animationType="slide"
                   visible={isModel}
                   transparent
+                  hardwareAccelerated 
                   onRequestClose={() => {
                         setModel(false);
                   }}>

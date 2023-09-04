@@ -1,15 +1,18 @@
 
 import React, { ReactNode, useEffect, useState } from "react";
-import { Image, Modal, Platform, Pressable, SafeAreaView, StyleSheet, View } from "react-native";
+import { Image, Modal, Platform, Pressable, SafeAreaView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { SCREEN_IDENTIFIER, screenHeight, screenRatio, screenWidth } from "src/constants";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { Button, DefaultLabel, Text } from "src/components";
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import DefaultImage from "src/components/DefaultImage";
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { StackParamList } from "src/screens";
 
 const OrderHistoryItems = (): JSX.Element => {
-    const navigation = useNavigation();
+      type StackNavigation = StackNavigationProp<StackParamList>;
+      const navigation = useNavigation<StackNavigation>();
       const defaultStyles = StyleSheet.create(
             {
                   image: {
@@ -51,8 +54,8 @@ const OrderHistoryItems = (): JSX.Element => {
       return (<View style={defaultStyles.parent}>
             
             <View style={{ flex: 1, flexDirection: "column", gap: 20 ,backgroundColor:COLORS.white ,borderRadius:screenRatio * 10}}>
-            <Pressable android_ripple={{color:COLORS.primaryGray}} onPress={() => navigation.navigate(SCREEN_IDENTIFIER.OrderHistoryDetails.identifier as never)} >
-                  <View style={{ flex: 4,paddingTop:20 }}>
+            <TouchableOpacity  onPress={() => navigation.navigate(SCREEN_IDENTIFIER.OrderHistoryDetails.identifier as never)} >
+                  <View style={{ flex: 4,paddingVertical:20 }}>
                         <View style={{ flex: 1, flexDirection: "row", alignContent: "center", justifyContent: "center" }}>
                               <View style={{ flex: 2, alignItems: "center", justifyContent: "center" }}>
                                     <View style={{ flex: 1, borderRadius: 15, padding: 15, backgroundColor: COLORS.tertiaryGreen }}>
@@ -97,7 +100,7 @@ const OrderHistoryItems = (): JSX.Element => {
 
                         </View>
                   </View>
-                  </Pressable>
+                  </TouchableOpacity>
                   <View style={{ flex: 4, padding:10,alignContent: "center", alignItems: "center", borderColor: COLORS.primaryGray, borderTopWidth: 0.2 }}>
                         <View style={{ flex: 1}}>
                               <DefaultLabel styles={{ color: COLORS.primaryGreen }} weight={FONT_WEIGHT.regular3} size={FONT_SIZE.regular} title={"Reorder"} />

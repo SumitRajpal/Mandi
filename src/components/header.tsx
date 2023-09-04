@@ -7,6 +7,8 @@ import { SCREEN_IDENTIFIER, screenHeight, screenRatio, screenWidth } from "src/c
 
 import FMIcon from 'react-native-vector-icons/FontAwesome6';
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { StackParamList } from "src/screens";
 
 const defaultStyles = StyleSheet.create({
       footerContainer: {
@@ -43,7 +45,9 @@ interface IHEADER {
       title:string
 }
 const Header = (props:IHEADER): JSX.Element => {
-      const navigation = useNavigation();
+      type StackNavigation = StackNavigationProp<StackParamList>;
+  const navigation = useNavigation<StackNavigation>();
+      
       const {title} = props
       return (
             <View style={defaultStyles.footerContainer}>

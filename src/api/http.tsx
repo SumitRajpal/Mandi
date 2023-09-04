@@ -2,6 +2,7 @@ import { logoutNavigation } from "src/components/RootNavigation";
 import { ApiConfig, STORAGE_KEYS, WEB_SERVICES } from "src/constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+
 export const getHeaders = async () => {
   const storage: any = await AsyncStorage.getItem(STORAGE_KEYS.login_user_details);
   const result = JSON.parse(storage);
@@ -67,7 +68,7 @@ export const api = async (
   { url = "",
     method = "GET",
     body = null,
-    isFormData = false,
+    params = {},
     checkAuth = false, }
 ) => {
   let requestConfig: any = {};
@@ -76,8 +77,11 @@ export const api = async (
   if (body) {
     requestConfig = {
       ...requestConfig,
-      data:  JSON.stringify(body)
+      data: JSON.stringify(body)
     };
+  }
+  if (params) {
+    requestConfig.params = params;
   }
   const response = await handleRequest({ requestConfig, checkAuth });
   return response?.data || {};
@@ -87,7 +91,7 @@ export const getHttp = async (url: any, body: any) => {
   try {
     const response = await api({
       url,
-      body,
+      params:body,
     });
     return onSuccess(response);
   } catch (err) {

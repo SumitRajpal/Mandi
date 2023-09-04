@@ -34,4 +34,13 @@ const DefaultLabel = (props: ILABEL): JSX.Element => {
             >{title} 
             </Text>);
 }
+interface IConversion{
+      type: "l" | "gm"
+      weight: number
+}
+
+const WeightConversion =  (props:IConversion) : JSX.Element => {
+    const {type,weight} = props
+      return (<View>{weight < 1000 ? weight+type : weight/1000 + type} </View>);
+}
 export default DefaultLabel;

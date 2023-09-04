@@ -1,10 +1,14 @@
 
-import React from "react";
-import { ActivityIndicator, Image, Modal, Platform, Pressable, StyleSheet, View } from "react-native";
+import React, { useMemo } from "react";
+import { ActivityIndicator, FlatList, Image, Modal, Platform, Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { DefaultLabel, Text } from "src/components";
-import { SCREEN_IDENTIFIER, screenHeight, screenWidth } from "src/constants";
+import { SCREEN_IDENTIFIER, WEB_SERVICES, screenHeight, screenWidth } from "src/constants";
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { StackParamList } from "src/screens";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "src/api/http";
 
 const defaultStyles = StyleSheet.create({
       shopcontainer: {
@@ -59,7 +63,7 @@ const defaultStyles = StyleSheet.create({
       },
       title: {
             padding: 0,
-            flex:4
+            flex: 4
       }
 });
 
@@ -69,70 +73,88 @@ const defaultStyles = StyleSheet.create({
  */
 
 const ShopCategory = (): JSX.Element => {
-      const navigation = useNavigation();
+
+      const fetchAppVersion = () => api({ url: WEB_SERVICES.category.getCategory });
+
+      const { isLoading: isLoadingAppVersion, data: categoryListData, refetch } = useQuery(["getCategory"],
+            fetchAppVersion,
+            {
+                  onError: () => {
+
+                  },
+                  onSuccess: (response: any) => {
+
+
+                  }
+            }
+      );
+
+      const categoryList = useMemo(
+            () => categoryListData?.rows || [],
+            [categoryListData]
+      );
+
       return (
-            <Pressable onPress={() =>  navigation.navigate(SCREEN_IDENTIFIER.ProductList.identifier as never)
-            }>
-                  <View style={defaultStyles.shopcontainer}>
-                        <View style={{ flex: 1, flexDirection: "column", flexWrap: "wrap", justifyContent: "flex-start" }}>
-                              <View style={{ flex: 1, alignItems: "flex-start", alignContent: "flex-start", padding: 10 }}>
-                                    <Label size={FONT_SIZE.large} weight={FONT_WEIGHT.black} title="Category" />
-                              </View>
-                        </View>
-                        <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", marginHorizontal: 5 }}>
-                              <View style={{ flex: 1, alignItems: "center" }}>
-                                    <DefaultCategory title="Dairy & Breakfast" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
-                              </View>
-                              <View style={{ flex: 1, alignItems: "center" }}>
-                                    <DefaultCategory title="Dairy & Breakfast" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
-                              </View>
-                              <View style={{ flex: 1, alignItems: "center" }}>
-                                    <DefaultCategory title="Dairy & Breakfast" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
-                              </View>
-                              <View style={{ flex: 1, alignItems: "center" }}>
-                                    <DefaultCategory title="Dairy & Breakfast" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
-                              </View>
-                        </View>
-                        <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", marginHorizontal: 5 }}>
-                              <View style={{ flex: 1, alignItems: "center" }}>
-                                    <DefaultCategory title="Dairy & Breakfast" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
-                              </View>
-                              <View style={{ flex: 1, alignItems: "center" }}>
-                                    <DefaultCategory title="Dairy & Breakfast" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
-                              </View>
-                              <View style={{ flex: 1, alignItems: "center" }}>
-                                    <DefaultCategory title="Munchies" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
-                              </View>
-                              <View style={{ flex: 1, alignItems: "center" }}>
-                                    <DefaultCategory title="Dairy & Breakfast" imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
-                              </View>
+
+            <View style={defaultStyles.shopcontainer}>
+
+                  <View style={{ flex: 1, flexDirection: "column", flexWrap: "wrap", justifyContent: "flex-start" }}>
+                        <View style={{ flex: 1, alignItems: "flex-start", alignContent: "flex-start", padding: 10 }}>
+                              <Label size={FONT_SIZE.large} weight={FONT_WEIGHT.black} title="Category" />
                         </View>
                   </View>
-            </Pressable>)
+
+                  <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", marginHorizontal: 5 }}>
+                        <FlatList
+                               scrollEnabled={false}
+                              data={categoryList}
+                              numColumns={4}
+                              showsHorizontalScrollIndicator={true}
+                              keyExtractor={(item, index) => item?.id + index.toString()}
+                              renderItem={({ item }) => item && <DefaultCategory title={item?.name} imageUri={item?.image} data={item} />}
+                        />
+                  </View>
+            </View>
+      )
 }
 interface IDefaultImage {
       imageStyles?: any,
       styles?: any,
       imageUri: any,
-      title: string
+      title: string,
+      data: any
 }
 const DefaultCategory = (props: IDefaultImage): JSX.Element => {
       const { styles, imageStyles, imageUri, title } = props
+      type StackNavigation = StackNavigationProp<StackParamList>;
+      const navigation = useNavigation<StackNavigation>();
       return (
-            <View style={[defaultStyles.parentContainer, styles]}>
-                  <View style={[defaultStyles.container, styles]}>
-                        <View style={defaultStyles.imageFeatures}>
-                              <Image
-                                    style={[defaultStyles.image, imageStyles]}
-                                    source={{ uri: imageUri }}
-                              />
+
+            <View style={{ flex: 1, alignItems: "center" }}>
+
+                  <View style={[defaultStyles.parentContainer, styles]}>
+
+                        <View style={[defaultStyles.container, styles]}>
+                              <View style={defaultStyles.imageFeatures}>
+                                    <TouchableOpacity style={{ flex: 1 }} onPress={() => navigation.navigate((SCREEN_IDENTIFIER.ProductList.identifier) as never)} >
+                                          <Image
+
+                                                style={[defaultStyles.image, imageStyles]}
+                                                source={{ uri: imageUri }}
+                                          />
+                                    </TouchableOpacity>
+                              </View>
+
+                        </View>
+                        <View style={defaultStyles.title}>
+                              <Label title={title} />
                         </View>
 
                   </View>
-                  <View style={defaultStyles.title}>
-                        <Label title={title} />
-                  </View>
-            </View>);
+
+            </View>
+
+      );
 }
 interface ILABEL {
       title: string

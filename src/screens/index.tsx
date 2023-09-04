@@ -78,4 +78,16 @@ const SCREENS: any = {
   }
 };
 
+export type StackParamList = {
+  Splash: undefined;
+  OrderHistoryDetails: undefined;
+  OrderHistory: undefined;
+  Profile: undefined;
+  Payment: undefined;
+  Checkout: undefined;
+  ProductList: undefined;
+  Login: undefined;
+  Otp: undefined;
+  Home: undefined;
+};
 export { SCREENS };

@@ -15,7 +15,7 @@ export default function RadioButtons(props:IRadioButton) {
   return (
     <View style={styles.row}>
       {options.map((item:any) => (
-        <Pressable key={item.key} style={{flex:1}} onPress={() => {
+        <TouchableOpacity key={item.key} style={{flex:1}} onPress={() => {
           onSelect(item);
         }}>
         <View key={item.key} style={[styles.buttonContainer]} >
@@ -38,7 +38,7 @@ export default function RadioButtons(props:IRadioButton) {
             {item.text}
           </Text>
         </View>
-        </Pressable>
+        </TouchableOpacity>
       ))}
     </View>
   );

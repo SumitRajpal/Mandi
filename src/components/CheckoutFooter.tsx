@@ -1,12 +1,14 @@
 
 import React, { useState } from "react";
-import { ActivityIndicator, Linking, Modal, Pressable, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Linking, Modal, Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { Button, Text } from "src/components";
 import { SCREEN_IDENTIFIER, screenHeight, screenRatio, screenWidth } from "src/constants";
 import DefaultImage from "src/components/DefaultImage";
 import { useNavigation } from "@react-navigation/native";
 import PaymentModel from "src/components/PaymentModel";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { StackParamList } from "src/screens";
 
 const defaultStyles = StyleSheet.create({
   footerContainer: {
@@ -68,12 +70,13 @@ const defaultStyles = StyleSheet.create({
 
 const CheckoutFooter = (): JSX.Element => {
   const [model, setModel] = useState<boolean>(false);
-  const navigation = useNavigation();
+  type StackNavigation = StackNavigationProp<StackParamList>;
+  const navigation = useNavigation<StackNavigation>();
   return (
     <View style={defaultStyles.footerContainer}>
       <View style={defaultStyles.footerFlex}>
         <View style={defaultStyles.selectpayment}>
-          <Pressable style={{ flex: 1}} onPress={() => setModel(!model)}>
+          <TouchableOpacity style={{ flex: 1}} onPress={() => setModel(!model)}>
           <View style={{ flex: 1, flexDirection: "column" }}>
             <View style={{ flex: 1}}>
               <View style={{ flex: 1, gap:0,flexDirection: "row" }}>
@@ -95,11 +98,11 @@ const CheckoutFooter = (): JSX.Element => {
               </Text>
             </View>
           </View>
-          </Pressable>
+          </TouchableOpacity>
         </View>
         <View style={defaultStyles.footerBasis}>
           <Button style={{}}
-            title="1452     Place order" onPress={() => {navigation.navigate(SCREEN_IDENTIFIER.Checkout.identifier as never)
+            title="₹1452     Place order" onPress={() => {navigation.navigate(SCREEN_IDENTIFIER.Checkout.identifier as never)
             Linking.openURL('paytmmp://pay?pa=916306150790@paytm&pn=DrishtiAhuja&tn=Note&am=1&cu=INR').then(value => {
               console.log(value)
             }).catch(error => {console.log(error,"error")});
