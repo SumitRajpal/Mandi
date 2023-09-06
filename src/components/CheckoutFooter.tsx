@@ -1,14 +1,16 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ActivityIndicator, Linking, Modal, Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { Button, Text } from "src/components";
-import { SCREEN_IDENTIFIER, screenHeight, screenRatio, screenWidth } from "src/constants";
+import { SCREEN_IDENTIFIER, WEB_SERVICES, screenHeight, screenRatio, screenWidth } from "src/constants";
 import DefaultImage from "src/components/DefaultImage";
 import { useNavigation } from "@react-navigation/native";
 import PaymentModel from "src/components/PaymentModel";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { StackParamList } from "src/screens";
+import { api } from "src/api/http";
+import { useQuery } from "@tanstack/react-query";
 
 const defaultStyles = StyleSheet.create({
   footerContainer: {
@@ -67,11 +69,44 @@ const defaultStyles = StyleSheet.create({
  * ProgressView is Function Component to render indicator modal
  * @property {bool} visible - show modal
  */
-
-const CheckoutFooter = (): JSX.Element => {
+interface ICheckoutFooter{
+  product_id?:Array<string>
+  localCart: any,
+}
+const CheckoutFooter = (props:ICheckoutFooter): JSX.Element => {
+  const {product_id=[],localCart={}} = props;
   const [model, setModel] = useState<boolean>(false);
   type StackNavigation = StackNavigationProp<StackParamList>;
   const navigation = useNavigation<StackNavigation>();
+
+   const fetchCart = () => api(
+            {
+                  url: WEB_SERVICES.cart.getCart,
+                  method: WEB_SERVICES.method.GET,
+                  params: {
+                        filter: { product_id: product_id },
+                  }
+            }
+      );
+      const { isLoading, data: cartListData, refetch, } = useQuery(["getCartList"],
+            fetchCart,
+            {
+                  enabled: product_id.length > 1,
+                  onError: () => {
+
+                  },
+                  onSuccess: (response: any) => {
+
+
+                  }
+            }
+      );
+
+      useEffect(() => {
+            refetch();
+      }, [product_id,localCart])
+      const amountAfterDicount = useMemo(() => cartListData?.rows?.reduce((partialSum: number, accumulator: any) => partialSum + ((100 - accumulator?.product_offer[0]?.discount) / 100) * (accumulator.price[0]?.price * localCart[accumulator?.product_id]?.quantity), 0), [cartListData, product_id]);
+
   return (
     <View style={defaultStyles.footerContainer}>
       <View style={defaultStyles.footerFlex}>
@@ -101,12 +136,20 @@ const CheckoutFooter = (): JSX.Element => {
           </TouchableOpacity>
         </View>
         <View style={defaultStyles.footerBasis}>
-          <Button style={{}}
-            title="₹1452     Place order" onPress={() => {navigation.navigate(SCREEN_IDENTIFIER.Checkout.identifier as never)
-            Linking.openURL('paytmmp://pay?pa=916306150790@paytm&pn=DrishtiAhuja&tn=Note&am=1&cu=INR').then(value => {
+       {isLoading ?  
+       
+       
+       <Button style={{}}
+          
+            title="Loading . . . " 
+            onPress={()=> {}} />:
+       <Button style={{}}
+          
+            title={`₹${amountAfterDicount}    Place order`} onPress={() => {navigation.navigate(SCREEN_IDENTIFIER.Checkout.identifier as never)
+            Linking.openURL(`paytmmp://pay?pa=916306150790@paytm&pn=DrishtiAhuja&tn=Note&am=${amountAfterDicount}&cu=INR`).then(value => {
               console.log(value)
             }).catch(error => {console.log(error,"error")});
-            }} />
+            }} /> }
         </View>
       </View>
       <PaymentModel visible={model} height={"100%"}  onModelClose={(value) => setModel(value)}/>

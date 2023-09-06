@@ -22,6 +22,9 @@ const WEB_SERVICES = {
   category: {
     getCategory: `${ApiConfig.url}category`
   },
+  cart:{
+    getCart:`${ApiConfig.url}cart`
+  },
     utility: {
       appVersion: `${ApiConfig.url}utils/version`,
   }

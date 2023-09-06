@@ -3,9 +3,10 @@ import React from "react";
 import { ActivityIndicator, Modal, StyleSheet, View } from "react-native";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import Text from "./Text";
-import { screenHeight, screenWidth } from "src/constants";
-import DefaultImage from "./DefaultImage";
-import CartButton from "./CartButton";
+import { screenHeight, screenRatio, screenWidth } from "src/constants";
+import DefaultImage from "src/components/DefaultImage";
+import CartButton from "src/components/CartButton";
+import DefaultLabel from "src/components/DefaultLabel";
 
 const defaultStyle = StyleSheet.create({
   container: {
@@ -24,19 +25,20 @@ const defaultStyle = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     borderWidth: 2,
+    padding:screenRatio *2,
     borderColor: COLORS.primaryGray,
     borderRadius: 10
   },
 
   imageFlexContainer: {
-    flex: 2,
+    flex: 1.8,
     flexWrap: "wrap",
     alignItems: "center",
     justifyContent: "center"
 
   },
   textFlexContainer: {
-    flex: 7,
+    flex: 7.2,
     justifyContent: "space-around",
     alignItems: "flex-start"
   },
@@ -72,19 +74,22 @@ const defaultStyle = StyleSheet.create({
  * ProgressView is Function Component to render indicator modal
  * @property {bool} visible - show modal
  */
+interface IProductList {
+  data?:any
+}
 
-const ProductListItem = (): JSX.Element =>
-
-  <View style={defaultStyle.container}>
+const ProductListItem = (props:IProductList): JSX.Element =>{
+  const {data} = props;
+  return (<View style={defaultStyle.container}>
     <View style={defaultStyle.parent}>
       <View style={defaultStyle.imageFlexContainer}>
-        <DefaultImage styles={defaultStyle.imageContainer} imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
+        <DefaultImage styles={defaultStyle.imageContainer} imageUri={data?.image} />
 
       </View>
       <View style={defaultStyle.textFlexContainer}>
         <View style={defaultStyle.titleContainer}>
           <View style={defaultStyle.titleDetails}>
-            <Label  size={FONT_SIZE.medium} weight={FONT_WEIGHT.heavy} title={"Harpic disinfectent cleaner for the home"} />
+            <DefaultLabel  size={FONT_SIZE.medium} weight={FONT_WEIGHT.heavy} title={data?.name} />
           </View>
           <View style={defaultStyle.titleExtraDetails}>
             <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", alignContent: "flex-start", justifyContent: "center" }}>
@@ -96,14 +101,14 @@ const ProductListItem = (): JSX.Element =>
               }}>
                 <View style={{ flex: 1, flexDirection: "column", gap: 5 }}>
                   <View style={{ flex: 1 }}>
-                    <Label weight={FONT_WEIGHT.roman} title={"500 ml"} />
+                    <DefaultLabel weight={FONT_WEIGHT.roman} title={"500 ml"} />
                   </View>
                   <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", alignContent: "space-between", gap: 1 }}>
                     <View style={{ flex: 3, flexWrap: "wrap", alignItems: "flex-start" }}>
-                      <Label size={FONT_SIZE.regular} weight={FONT_WEIGHT.heavy} title={"₹105"} />
+                      <DefaultLabel size={FONT_SIZE.regular} weight={FONT_WEIGHT.heavy} title={"₹105"} />
                     </View>
                     <View style={{ flex: 1, flexWrap: "wrap", alignItems: "stretch" }}>
-                      <Label styles={{
+                      <DefaultLabel styles={{
                         textDecorationLine: 'line-through', textDecorationStyle: 'solid'
                       }} size={FONT_SIZE.regular} weight={FONT_WEIGHT.roman} title={"₹150"} />
                     </View>
@@ -116,36 +121,16 @@ const ProductListItem = (): JSX.Element =>
                 alignContent: "center",
                 justifyContent: "flex-end"
               }}>
-                <CartButton />
+                <CartButton data={data} />
               </View>
             </View>
           </View>
         </View>
       </View>
     </View>
-  </View>
-
-interface ILABEL {
-  title: any
-  styles?: any
-  size?: number
-  weight?: number
+  </View>)
 }
-const Label = (props: ILABEL) => {
-  const { title, styles, size = FONT_SIZE.medium, weight = FONT_WEIGHT.heavy } = props;
-  return (
-    <Text
-      style={[defaultStyle.text, styles]}
-      size={size}
-      isPoppins={true}
-      numberOfLines={2}
-      weight={weight}
-      color={COLORS.text_black}
-    >
-      {title}
-    </Text>
-  );
-};
+
 
 
 export default ProductListItem;

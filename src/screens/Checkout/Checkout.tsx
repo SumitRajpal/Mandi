@@ -1,8 +1,7 @@
 import { FlatList, Platform, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import React, { } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import CartList from "src/components/Products/CartList";
-import Footer from "src/components/footer";
 import { DefaultLabel } from "src/components";
 import { screenHeight, screenRatio } from "src/constants";
 import Icon from 'react-native-vector-icons/Entypo';
@@ -10,7 +9,19 @@ import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SIcon from 'react-native-vector-icons/Fontisto';
 import CheckoutFooter from "src/components/CheckoutFooter";
 import Header from "src/components/header";
+import { AuthContext } from "src/context/AuthProvider";
 const Checkout = (): JSX.Element => {
+      const { getCart } = useContext(AuthContext);
+      const [getCartData, setCartData] = useState({});
+      const [cartResponse, setCartResponse] = useState({});
+     
+      useEffect(() => {
+            async function getData() {
+                  const result = await getCart();
+                  setCartData(result)
+            }
+            getData();
+      }, [getCartData]);
       const defaultStyles = StyleSheet.create({
             container: {
                   flex: 1,
@@ -48,63 +59,12 @@ const Checkout = (): JSX.Element => {
             <View style={defaultStyles.container} >
                   <SafeAreaView style={defaultStyles.container}>
                         <ScrollView style={defaultStyles.container}>
-                              <Header title="Checkout"/>
+                              <Header title="Checkout" />
                               <View style={{ paddingHorizontal: 10 }}>
-                                    <CartList />
-
-                                    <View style={defaultStyles.bill}>
-                                          <View style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, flex: 1, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "center", backgroundColor: COLORS.white, padding: 10 }}>
-                                                <View style={{ flex: 6, alignItems: "flex-start", alignContent: "center" }}>
-                                                      <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={"Bill Details"} />
-                                                </View>
-                                          </View>
-                                          <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical:5,flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
-                                                <View style={{ flex: 1 }}>
-                                                      <Icon name="news" size={12} color={COLORS.tertiaryGray} />
-                                                </View>
-                                                <View style={{ flex: 16 }}>
-                                                      <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={"Item Total"} />
-                                                </View>
-                                                <View style={{ flex: 4 ,alignItems:"flex-end"}}>
-                                                      <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={"985"} />
-                                                </View>
-                                          </View>
-                                          <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical:5,flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
-                                                <View style={{ flex: 1 }}>
-                                                      <MIcon name="bike-fast" size={12} color={COLORS.tertiaryGray} />
-                                                </View>
-                                                <View style={{ flex: 16 }}>
-                                                      <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={"Delivery Charges"} />
-                                                </View>
-                                                <View style={{ flex: 4,alignItems:"flex-end" }}>
-                                                      <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={"15"} />
-                                                </View>
-                                          </View>
-                                          <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical:5,flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
-                                                <View style={{ flex: 1 }}>
-                                                      <SIcon name="shopping-bag" size={12} color={COLORS.tertiaryGray} />
-                                                </View>
-                                                <View style={{ flex: 16 }}>
-                                                      <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={"Packing charges"} />
-                                                </View>
-                                                <View style={{ flex: 4,alignItems:"flex-end" }}>
-                                                      <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={"985"} />
-                                                </View>
-                                          </View>
-                                          <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical:10,flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
-                                                
-                                                <View style={{ flex: 16 }}>
-                                                      <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.medium} title={"Grand Total"} />
-                                                </View>
-                                                <View style={{ flex: 4,alignItems:"flex-end" }}>
-                                                      <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.medium} title={"97520"} />
-                                                </View>
-                                          </View>
-                                          
-                                    </View>
+                                   {getCartData &&  <CartList onResponse={(res) => {} }showBill localCart={getCartData} showSaving product_id={Object.keys(getCartData)} />}
                               </View>
                         </ScrollView>
-                        <CheckoutFooter />
+                        {getCartData &&  <CheckoutFooter localCart={getCartData}  product_id={Object.keys(getCartData)} />}
                   </SafeAreaView>
             </View>
       );

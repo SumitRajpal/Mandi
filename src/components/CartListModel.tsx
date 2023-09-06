@@ -1,5 +1,5 @@
 
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useContext, useEffect, useState } from "react";
 import { Image, Modal, Platform, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { screenHeight, screenRatio, screenWidth } from "src/constants";
 import { COLORS } from "src/constants/font";
@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import CartList from "./Products/CartList";
 import Footer from "./footer";
 import GestureRecognizer from "react-native-swipe-gestures";
+import { AuthContext } from "src/context/AuthProvider";
 
 
 /**
@@ -21,9 +22,10 @@ interface IDefaultModel {
       onModelClose(value: boolean): any;
 }
 const CartListModel = (props: IDefaultModel): JSX.Element => {
+      const { getCart } = useContext(AuthContext);
       const { styles, visible, height, onModelClose } = props
       const [isModel, setModel] = useState(false);
-
+      const [getCartData, setCartData] = useState({});
       const defaultStyles = StyleSheet.create(
             {
                   container: { flex: 1 },
@@ -31,7 +33,7 @@ const CartListModel = (props: IDefaultModel): JSX.Element => {
                         height: "auto",
                         position: "absolute",
                         bottom: 0,
-                        maxHeight: screenRatio * (screenHeight/4),
+                        maxHeight: screenRatio * (screenHeight/1),
                         minHeight: screenRatio * (screenHeight/2),
                         paddingHorizontal: screenRatio * 8,
                         width: screenWidth,
@@ -66,7 +68,12 @@ const CartListModel = (props: IDefaultModel): JSX.Element => {
       );
       useEffect(() => {
             setModel(visible)
-      }, [visible]);
+            async function getData() {
+                  const result = await getCart();
+                  setCartData(result)
+            }
+            getData();
+      }, [visible,getCartData]);
 
       return (
             <GestureRecognizer config={{
@@ -95,7 +102,7 @@ const CartListModel = (props: IDefaultModel): JSX.Element => {
                                                 }} />
                                           </View>
                                           <ScrollView style={defaultStyles.container}>
-                                                <CartList />
+                                           { getCartData &&    <CartList  onResponse={(res) => {}}localCart={getCartData} product_id={Object.keys(getCartData) || []}/>}
                                           </ScrollView>
                                           <Footer />
                                     </View>

@@ -1,6 +1,6 @@
 const Environment = {
   dev: {
-    url: "http://192.168.196.161:3000/",
+    url: "http://192.168.240.161:3000/",
     api_version: "v1"
   },
   prod: {

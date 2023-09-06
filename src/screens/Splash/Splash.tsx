@@ -20,7 +20,7 @@ import { version as currentVersion } from "../../../app.json";
 
 const Splash= (): JSX.Element => {
   const navigation = useNavigation();
-  const { getLoggedInUser } = useContext(AuthContext);
+  const { getLoggedInUser,getCart } = useContext(AuthContext);
   const styles = StyleSheet.create({
     container: {
       flex: 1.0,
@@ -33,7 +33,6 @@ const Splash= (): JSX.Element => {
   //   PERMISSIONS_KEYS.PROFILE_READ
   // );
 
- 
   function moveToHome() {
     navigation.dispatch(
       CommonActions.reset({
@@ -52,6 +51,7 @@ const Splash= (): JSX.Element => {
   }
  const moveToNext = async () => {
    const result = await getLoggedInUser();
+  //AsyncStorage.removeItem("cart_details")
     if (result) {
       moveToHome();
     } else {

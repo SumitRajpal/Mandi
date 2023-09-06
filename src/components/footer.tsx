@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, Linking, Modal, Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { Button, Text } from "src/components";
@@ -8,6 +8,7 @@ import ProductListItem from "./ProductListItem";
 import DefaultImage from "./DefaultImage";
 import CartListModel from "./CartListModel";
 import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from "src/context/AuthProvider";
 
 const defaultStyles = StyleSheet.create({
   footerContainer: {
@@ -36,7 +37,7 @@ const defaultStyles = StyleSheet.create({
     flexWrap: 'wrap',
     padding: screenRatio * 5,
     width: screenWidth,
-    height: screenRatio*( screenHeight / 11),
+    height: screenRatio * (screenHeight / 11),
 
   },
   text: {
@@ -51,10 +52,10 @@ const defaultStyles = StyleSheet.create({
   image: {
     borderRadius: 10,
     width: screenRatio * 36,
-    height:screenRatio * 36,
+    height: screenRatio * 36,
     padding: screenRatio * 5,
     backgroundColor: COLORS.white,
-    borderWidth: screenRatio* 0.4,
+    borderWidth: screenRatio * 0.4,
     borderColor: COLORS.secondaryGray
   }
 });
@@ -65,54 +66,65 @@ const defaultStyles = StyleSheet.create({
  */
 
 const Footer = (): JSX.Element => {
+  const { getCart } = useContext(AuthContext);
+  const [getCartData, setCartData] = useState({});
+  const [totalItem, setTotalItem] = useState({});
   const [model, setModel] = useState<boolean>(false);
   const navigation = useNavigation();
+  var cartObject: any = getCartData || {}
+
+
+  useEffect(() => {
+    async function getData() {
+      const result = await getCart();
+      setCartData(result)
+    }
+    getData();
+    let total: number = 0;
+    Object.keys(getCartData).map(value => {
+      total += cartObject[value].quantity;
+    })
+    setTotalItem(total)
+  }, [getCartData])
+
   return (
     <View style={defaultStyles.footerContainer}>
       <View style={defaultStyles.footerFlex}>
         <View style={defaultStyles.footerBasis}>
-          <TouchableOpacity  style={{ flex: 1}} onPress={() => setModel(!model)}>
-          <View style={{ flex: 1, flexDirection: "row" }}>
-            <View style={{ flex: 1, flexShrink: 1, padding:0 }}>
-              <View style={{ flex: 1, gap:- (screenRatio*10), padding:5,flexDirection: "row", flexShrink: 1, paddingHorizontal: 20 }}>
-                <View style={{ flex: 1, justifyContent: "center", alignItems: "center", alignContent: "center" }}>
-                  <DefaultImage styles={defaultStyles.image} imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
-                </View>
-                <View style={{ flex: 1, justifyContent: "center", alignItems: "center", alignContent: "center" }}>
-                  <DefaultImage styles={defaultStyles.image} imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
-                </View>
-                <View style={{ flex: 1, justifyContent: "center", alignItems: "center", alignContent: "center" }}>
-                  <DefaultImage styles={defaultStyles.image} imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
-                </View>
-                <View style={{ flex: 1, justifyContent: "center", alignItems: "center", alignContent: "center" }}>
-                  <DefaultImage styles={defaultStyles.image} imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
-                </View><View style={{ flex: 1, justifyContent: "center", alignItems: "center", alignContent: "center" }}>
-                  <DefaultImage styles={defaultStyles.image} imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
+          <TouchableOpacity style={{ flex: 1 }} onPress={() => setModel(!model)}>
+            <View style={{ flex: 1, flexDirection: "row" }}>
+              <View style={{ flex: 1, flexShrink: 1, padding: 0 }}>
+                <View style={{ flex: 1, gap: - (screenRatio * 10), padding: 5, flexDirection: "row", flexShrink: 1, paddingHorizontal: 20 }}>
+                  <View style={{ flex: 1, justifyContent: "center", alignItems: "center", alignContent: "center" }}>
+                    <DefaultImage styles={defaultStyles.image} imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
+                  </View>
+                  <View style={{ flex: 1, justifyContent: "center", alignItems: "center", alignContent: "center" }}>
+                    <DefaultImage styles={defaultStyles.image} imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
+                  </View>
                 </View>
               </View>
+              <View style={{ flex: 1 }}>
+                <Text
+                  style={[defaultStyles.text]}
+                  size={FONT_SIZE.medium}
+                  isPoppins={true}
+                  numberOfLines={1}
+                  weight={FONT_WEIGHT.medium}
+                  color={COLORS.text_black}
+                >
+                  {`${totalItem} Items`}
+                </Text>
+              </View>
             </View>
-            <View style={{ flex: 1 }}>
-              <Text
-                style={[defaultStyles.text]}
-                size={FONT_SIZE.medium}
-                isPoppins={true}
-                numberOfLines={1}
-                weight={FONT_WEIGHT.medium}
-                color={COLORS.text_black}
-              > 
-                {"46 Items  "}
-              </Text>
-            </View>
-          </View>
           </TouchableOpacity>
         </View>
 
         <View style={defaultStyles.footerBasis}>
           <Button style={{}}
-            title="Next" onPress={() => {navigation.navigate(SCREEN_IDENTIFIER.Checkout.identifier as never)}} />
+            title="Next" onPress={() => { navigation.navigate(SCREEN_IDENTIFIER.Checkout.identifier as never) }} />
         </View>
       </View>
-      <CartListModel visible={model} height={"100%"}  onModelClose={(value) => setModel(value)}/>
+      <CartListModel visible={model} height={"100%"} onModelClose={(value) => setModel(value)} />
 
     </View>);
 }

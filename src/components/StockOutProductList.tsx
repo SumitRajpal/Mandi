@@ -3,7 +3,7 @@ import React from "react";
 import { ActivityIndicator, Modal, StyleSheet, View } from "react-native";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import Text from "./Text";
-import { screenHeight, screenWidth } from "src/constants";
+import { screenHeight, screenRatio, screenWidth } from "src/constants";
 import DefaultImage from "./DefaultImage";
 import CartButton from "./CartButton";
 
@@ -13,23 +13,25 @@ const defaultStyle = StyleSheet.create({
       },
       parent: {
             flex: 1,
-            gap: 10,
+            gap: 1,
             flexDirection: "row",
             flexWrap: "wrap",
       },
 
       imageContainer: {
             backgroundColor: COLORS. secondaryWhite,
-            height: "100%",
-            width: "100%",
+            height: screenRatio * 40,
+            width: screenRatio * 40,
             justifyContent: "center",
             borderWidth: 2,
+            padding:screenRatio * 3,
             borderColor: COLORS.primaryGray,
             borderRadius: 10
       },
 
       imageFlexContainer: {
             flex: 1,
+            height:"auto",
             flexWrap: "wrap",
             alignItems: "center",
             justifyContent: "center"
@@ -72,19 +74,22 @@ const defaultStyle = StyleSheet.create({
  * ProgressView is Function Component to render indicator modal
  * @property {bool} visible - show modal
  */
-
-const StockOutProductList = (): JSX.Element =>
-
-      <View style={defaultStyle.container}>
+interface IStockOut {
+      data?:any
+}
+const StockOutProductList = (props:IStockOut): JSX.Element =>
+{
+      const {data} = props;
+      return(<View style={defaultStyle.container}>
             <View style={defaultStyle.parent}>
                   <View style={defaultStyle.imageFlexContainer}>
-                        <DefaultImage styles={defaultStyle.imageContainer} imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
+                        <DefaultImage styles={defaultStyle.imageContainer} imageUri={data?.image} />
 
                   </View>
                   <View style={defaultStyle.textFlexContainer}>
                         <View style={defaultStyle.titleContainer}>
                               <View style={defaultStyle.titleDetails}>
-                                    <Label size={FONT_SIZE.regular} weight={FONT_WEIGHT.medium} title={"Harpic disinfectent cleaner for the home using dgrhrehrhrhrh dherh"} />
+                                    <Label size={FONT_SIZE.regular} weight={FONT_WEIGHT.medium} title={data?.name} />
                               </View>
                               <View style={defaultStyle.titleExtraDetails}>
                                     <View style={{ flex: 1 }}>
@@ -94,8 +99,8 @@ const StockOutProductList = (): JSX.Element =>
                         </View>
                   </View>
             </View>
-      </View>
-
+      </View>)
+}
 interface ILABEL {
       title: any
       styles?: any
