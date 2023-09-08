@@ -65,10 +65,10 @@ const Checkout = (): JSX.Element => {
                         <ScrollView style={defaultStyles.container}>
                               <Header title="Checkout" />
                               <View style={{ paddingHorizontal: 10 }}>
-                                   {!!Object.keys(getCartData).length &&  <CartList onResponse={(res) => {} }showBill localCart={getCartData} showSaving product_ids={Object.keys(getCartData)} />}
+                                    {!!Object.keys(getCartData).length && <CartList onResponse={(res) => { }} showBill localCart={getCartData} showSaving product_ids={Object.keys(getCartData)} />}
                               </View>
                         </ScrollView>
-                        {!!Object.keys(getCartData).length &&  <CheckoutFooter localCart={getCartData}  product_ids={Object.keys(getCartData)} />}
+                        {!!Object.keys(getCartData).length && <CheckoutFooter localCart={getCartData} product_ids={Object.keys(getCartData)} />}
                   </SafeAreaView>
             </View>
       );

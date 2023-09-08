@@ -2,7 +2,7 @@ import { FlatList, Platform, SafeAreaView, ScrollView, StyleSheet, View } from "
 import React, { useMemo } from "react"
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { Button, DefaultLabel } from "src/components";
-import { WEB_SERVICES, screenHeight, screenRatio } from "src/constants";
+import { WEB_SERVICES, screenHeight, screenRatio, screenWidth } from "src/constants";
 import Icon from 'react-native-vector-icons/Entypo';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SIcon from 'react-native-vector-icons/Fontisto';
@@ -11,6 +11,7 @@ import CartHistoryList from "src/components/Products/CartHistoryList";
 import { api } from "src/api/http";
 import { useQuery } from "@tanstack/react-query";
 import { useRoute } from "@react-navigation/native";
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 const OrderHistoryDetails = (): JSX.Element => {
         let route:any = useRoute();
         console.log(route,"route")
@@ -61,10 +62,33 @@ const OrderHistoryDetails = (): JSX.Element => {
 
       return (
             <View style={defaultStyles.container} >
-                  <SafeAreaView style={defaultStyles.container}>
+                 <SafeAreaView style={defaultStyles.container}>
                         <ScrollView style={defaultStyles.container}>
                               <Header title="" />
-                              <View style={{ paddingHorizontal: 10 }}>
+                              { isLoading ?  <View
+            style={{ flex:1,backgroundColor: COLORS.white, paddingVertical: 10 }}>
+            <SkeletonPlaceholder  borderRadius={4} >
+              <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
+                
+                <SkeletonPlaceholder.Item marginLeft={20}>
+                  <SkeletonPlaceholder.Item width={screenWidth/1.2} height={40} borderRadius={10} />
+
+                  <SkeletonPlaceholder.Item flexDirection="column" alignItems="flex-start">
+                  <SkeletonPlaceholder.Item marginTop={10} marginHorizontal={10} width={60} height={60} borderRadius={10} />
+                  <SkeletonPlaceholder.Item marginTop={10} marginHorizontal={10} width={60} height={60} borderRadius={10} />
+                  <SkeletonPlaceholder.Item marginTop={10} marginHorizontal={10} width={60} height={60} borderRadius={10} />
+                  <SkeletonPlaceholder.Item marginTop={10} marginHorizontal={10} width={60} height={60} borderRadius={10} />
+                </SkeletonPlaceholder.Item>
+
+                  <SkeletonPlaceholder.Item marginTop={20} width={screenWidth / 1.26} height={150} />
+
+                  <SkeletonPlaceholder.Item marginTop={20} width={screenWidth / 1.26} height={150} />
+                </SkeletonPlaceholder.Item>
+              </SkeletonPlaceholder.Item>
+
+            </SkeletonPlaceholder>
+            
+          </View> : <View style={{ paddingHorizontal: 10 }}>
                                     <CartHistoryList data={orderHistoryData} />
 
                                     <View style={defaultStyles.bill}>
@@ -152,12 +176,12 @@ const OrderHistoryDetails = (): JSX.Element => {
                                                 </View>
                                           </View>
                                     </View>
-                              </View>
+                              </View>}
                         </ScrollView>
-                        <View style={{padding:screenRatio * 10}}>
+                       { !isLoading && <View style={{padding:screenRatio * 10}}>
                               <Button style={{}}
                                     title="Reorder" onPress={() => console.log("")} />
-                        </View>
+                        </View>}
                   </SafeAreaView>
             </View>
       );

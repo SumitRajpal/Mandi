@@ -18,6 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { StackParamList } from "..";
 import { AuthContext } from "src/context/AuthProvider";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
 const Home = (): JSX.Element => {
   type StackNavigation = StackNavigationProp<StackParamList>;
@@ -40,7 +41,7 @@ const Home = (): JSX.Element => {
     },
     safearea: {
       flex: 1,
-      paddingBottom: !!Object.keys(getCartData)?.length ? screenRatio * (screenHeight / 16):0,
+      paddingBottom: !!Object.keys(getCartData)?.length ? screenRatio * (screenHeight / 16) : 0,
       backgroundColor: COLORS.white
     },
     cart: { flex: 1, flexDirection: "row", flexWrap: "wrap", padding: 10 },
@@ -70,7 +71,8 @@ const Home = (): JSX.Element => {
     <View style={styles.container} >
 
       <SafeAreaView style={styles.safearea}>
-
+      
+      
         <ScrollView
           stickyHeaderIndices={[1]}
           showsVerticalScrollIndicator={false} >
@@ -89,10 +91,34 @@ const Home = (): JSX.Element => {
           </View>
           <View style={{ flex: 1, backgroundColor: COLORS.white, paddingVertical: 10 }}><DefaultSearchBar searchValue="" onChangeText={() => { }} /></View>
           <ProductHorizontal horizontalTitle="Order Again" />
+          <MapView
+          onMapReady={(ready => {
+            console.log(ready,"ready")
+          })}
+          key={"AIzaSyB-bilMkdAN1tu1k8GYTbTVSyLn4sOKjMo"}
+          style={{height:screenHeight/2.5,width:screenWidth}}
+          
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+  provider={PROVIDER_GOOGLE}
+>
+<Marker
+          coordinate={{latitude:20.5937,longitude:78.9629}}
+          key={"AIzaSyB-bilMkdAN1tu1k8GYTbTVSyLn4sOKjMo"}
+          style={{height:screenHeight/2.5,width:screenWidth}}
+        
+/>
+
+</MapView>
           <ShopCategory />
+          
           <ProductHorizontal horizontalTitle="Best Seller" />
         </ScrollView>
-        { !!Object.keys(getCartData).length  && <Footer /> }
+        {!!Object.keys(getCartData).length && <Footer />}
       </SafeAreaView>
     </View>
   );

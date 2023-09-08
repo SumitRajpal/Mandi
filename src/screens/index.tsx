@@ -9,6 +9,7 @@ import PaymentOption from 'src/screens/Payment/PaymentOption';
 import Profile from 'src/screens/Profile/Profile';
 import OrderHistory from 'src/screens/Order/OrderHistory';
 import OrderHistoryDetails from 'src/screens/Order/OrderHIstoryDetails';
+import Address from 'src/screens/Profile/Address';
 
 const SCREENS: any = {
   Splash: {
@@ -75,6 +76,12 @@ const SCREENS: any = {
     title: SCREEN_IDENTIFIER.OrderHistoryDetails.title,
     identifier: SCREEN_IDENTIFIER.OrderHistoryDetails.identifier,
     component: OrderHistoryDetails
+  },
+  Address: {
+    key: SCREEN_IDENTIFIER.Address.key,
+    title: SCREEN_IDENTIFIER.Address.title,
+    identifier: SCREEN_IDENTIFIER.Address.identifier,
+    component: Address
   }
 };
 
@@ -89,5 +96,6 @@ export type StackParamList = {
   Login: undefined;
   Otp: undefined;
   Home: undefined;
+  Addrress:undefined
 };
 export { SCREENS };

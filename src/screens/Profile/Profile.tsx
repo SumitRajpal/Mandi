@@ -92,7 +92,8 @@ const Profile = (): JSX.Element => {
                                                       </View>
                                                 </View>
                                           </TouchableOpacity>
-                                          <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 10, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
+                                          <TouchableOpacity  onPress={() => navigation.navigate(SCREEN_IDENTIFIER.Address.identifier as never)}>   
+                                           <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 10, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
                                                 <View style={{ flex: 2 }}>
                                                       <FMIcon name="location-arrow" size={screenRatio * 14} color={COLORS.tertiaryGray} />
                                                 </View>
@@ -103,6 +104,7 @@ const Profile = (): JSX.Element => {
                                                       <Icon name="arrow-forward-ios" size={screenRatio * 14} color={COLORS.tertiaryGray} />
                                                 </View>
                                           </View>
+                                          </TouchableOpacity>
                                     </View>
 
                                     <View style={defaultStyles.bill}>

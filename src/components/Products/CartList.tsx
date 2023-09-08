@@ -6,12 +6,13 @@ import ProductListItem from "src/components/ProductListItem";
 import Icon from 'react-native-vector-icons/AntDesign';
 import StockOutProductList from "src/components/StockOutProductList";
 import { DefaultLabel } from "src/components";
-import { WEB_SERVICES, screenHeight } from "src/constants";
+import { WEB_SERVICES, screenHeight, screenRatio, screenWidth } from "src/constants";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "src/api/http";
 import EIcon from 'react-native-vector-icons/Entypo';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SIcon from 'react-native-vector-icons/Fontisto';
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
 
 const defaultStyle = StyleSheet.create({
@@ -188,7 +189,32 @@ const CartList = (props: ICartList): JSX.Element => {
             [cartListData, product_ids]);
 
       useMemo(() => onResponse(stockList), [cartListData, product_ids]);
-      return (<View style={{ flex: 1, marginTop: 10 }}>
+      return (
+          <View style={{flex:1}}>
+          { isLoading ?  <View
+            style={{ flex:1,backgroundColor: COLORS.white, paddingVertical: 10 }}>
+            <SkeletonPlaceholder  borderRadius={4} >
+              <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
+                
+                <SkeletonPlaceholder.Item marginLeft={20}>
+                  <SkeletonPlaceholder.Item width={screenWidth/1.2} height={40} borderRadius={10} />
+
+                  <SkeletonPlaceholder.Item flexDirection="column" alignItems="flex-start">
+                  <SkeletonPlaceholder.Item marginTop={10} marginHorizontal={10} width={60} height={60} borderRadius={10} />
+                  <SkeletonPlaceholder.Item marginTop={10} marginHorizontal={10} width={60} height={60} borderRadius={10} />
+                  <SkeletonPlaceholder.Item marginTop={10} marginHorizontal={10} width={60} height={60} borderRadius={10} />
+                  <SkeletonPlaceholder.Item marginTop={10} marginHorizontal={10} width={60} height={60} borderRadius={10} />
+                </SkeletonPlaceholder.Item>
+
+                  <SkeletonPlaceholder.Item marginTop={10} width={screenWidth / 1.26} height={30} />
+
+                </SkeletonPlaceholder.Item>
+              </SkeletonPlaceholder.Item>
+
+            </SkeletonPlaceholder>
+            
+          </View> :
+      <View style={{ flex: 1, marginTop: 10 }}>
             {!!outOfStockCartList?.length && <View style={defaultStyle.outstock}>
                   <View style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, flex: 1, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "center", backgroundColor: COLORS.secondaryRed, padding: 10 }}>
                         <View style={{ flex: 6, alignItems: "flex-start", alignContent: "center" }}>
@@ -295,6 +321,8 @@ const CartList = (props: ICartList): JSX.Element => {
                   </View>
 
             </View>}
-      </View>)
+      </View>}
+      </View>
+      )
 }
 export default CartList;

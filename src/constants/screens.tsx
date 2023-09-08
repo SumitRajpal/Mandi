@@ -48,6 +48,11 @@ const SCREEN_IDENTIFIER = {
     key: 'orderhistorydetails',
     identifier: 'OrderHistoryDetails',
     title: 'orderhistorydetails',
+  },
+  Address:{
+    key: 'address',
+    identifier: 'Address',
+    title: 'address',
   }
 };
 
