@@ -1,10 +1,13 @@
 import { FlatList, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import React, { } from "react"
+import React, { useMemo } from "react"
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
-import { WEB_SERVICES, screenHeight, screenRatio, screenWidth } from "src/constants";
+import { PAGINATION_SIZE, WEB_SERVICES, screenHeight, screenRatio, screenWidth } from "src/constants";
 
 import OrderHistoryItems from "src/components/OrderHItoryItems";
 import Header from "src/components/header";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { api } from "src/api/http";
+import { FlatListLoader } from "src/components";
 
 const OrderHistory = (): JSX.Element => {
       const styles = StyleSheet.create({
@@ -20,25 +23,71 @@ const OrderHistory = (): JSX.Element => {
 
       });
 
-      const ordersList = [{ id: 1, name: "fwfwf" }, { id: 2, name: "fwfwf" }, { id: 3, name: "fwfwf" }, { id: 42, name: "fwfwf" }, { id: 50, name: "fwfwf" }, { id: 6, name: "fwfwf" },
-      { id: 15, name: "fwfwf" }, { id: 26, name: "fwfwf" }, { id: 34, name: "fwfwf" }, { id: 45, name: "fwfwf" }, { id: 58, name: "fwfwf" }, { id: 67, name: "fwfwf" },
-      { id: 15, name: "fwfwf" }, { id: 27, name: "fwfwf" }, { id: 36, name: "fwfwf" }, { id: 49, name: "fwfwf" }, { id: 55, name: "fwfwf" }, { id: 63, name: "fwfwf" },
-      { id: 19, name: "fwfwf" }, { id: 20, name: "fwfwf" }, { id: 38, name: "fwfwf" }, { id: 41, name: "fwfwf" }, { id: 53, name: "fwfwf" }, { id: 62, name: "fwfwf" }]
+    
+      const fetchOrder = async ({ pageParam = 0 }) => {
+            const data = await api({
+              url: WEB_SERVICES.invoice.getInvoice,
+              method: WEB_SERVICES.method.GET,
+              params: {
+                size: PAGINATION_SIZE.size,
+                page: pageParam
+              }
+            });
+            return {
+              response: data,
+              nextPage: data?.last === false ? data.number + 1 : null
+            };
+          };
+      const {
+            isLoading,
+            data: orderListData,
+            hasNextPage,
+            fetchNextPage,
+            refetch,
+            isError,
+            error,
+            isFetchingNextPage
+          } = useInfiniteQuery(
+            [
+              "fetchOrderHistory",
+            ],
+            fetchOrder,
+            {
+              getNextPageParam: (lastPage) => lastPage.nextPage
+            }
+          );
+      
+          const fetchMoreOrder = () => {
+            if (hasNextPage) {
+              fetchNextPage();
+            }
+          };
+          
+          const ordersList = useMemo(
+            () => orderListData?.pages?.flatMap((page) => page?.response?.content),
+            [orderListData]
+          );
 
+          console.log(ordersList,"order",orderListData)
       return (
             <View style={styles.container} >
                   <SafeAreaView style={styles.safearea}>
                   <Header title="Orders"/>
                         <View style={{ paddingVertical: 0 }}>
                               
-                              <FlatList
-                                    data={ordersList}
-                                    contentContainerStyle={{ marginHorizontal: 5, paddingBottom: screenHeight/12 }}
-                                    showsVerticalScrollIndicator={true}
-                                    keyExtractor={(item, index) => item?.id + index.toString()}
-                                    onEndReachedThreshold={0.5}
-                                    renderItem={({ item }) => item && <OrderHistoryItems />}
-                              />
+                               
+            <FlatList
+              data={ordersList}
+              numColumns={1}
+              onEndReached={fetchMoreOrder}
+              contentContainerStyle={{ marginHorizontal: 5, paddingBottom: screenRatio * (screenHeight / 28) }}
+              showsHorizontalScrollIndicator={true}
+              keyExtractor={(item, index) => item?.product_id + index.toString()}
+              onEndReachedThreshold={0.2}
+              renderItem={({ item }) => item && <OrderHistoryItems data={item} />}
+              ListFooterComponent={
+                <FlatListLoader isNext={isFetchingNextPage} />
+              } />
                         </View>
                   </SafeAreaView>
             </View>

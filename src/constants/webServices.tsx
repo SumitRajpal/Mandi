@@ -22,11 +22,20 @@ const WEB_SERVICES = {
   category: {
     getCategory: `${ApiConfig.url}category`
   },
-  cart:{
-    getCart:`${ApiConfig.url}cart`
+  cart: {
+    getCart: `${ApiConfig.url}cart`,
   },
-    utility: {
-      appVersion: `${ApiConfig.url}utils/version`,
+  cartDetails: {
+    postCart: `${ApiConfig.url}cart-details`
+  },
+  payment: {
+    payment: `${ApiConfig.url}payment`
+  },
+  invoice: {
+    getInvoice: `${ApiConfig.url}invoice`,
+  },
+  utility: {
+    appVersion: `${ApiConfig.url}utils/version`,
   }
 };
 

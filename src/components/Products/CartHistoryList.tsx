@@ -1,13 +1,15 @@
 
 import React, { ReactNode, useEffect, useState } from "react";
-import { ActivityIndicator, Modal, Platform, ScrollView, StyleSheet, View } from "react-native";
+import { ActivityIndicator, FlatList, Modal, Platform, ScrollView, StyleSheet, View } from "react-native";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import DefaultCategory from "../DefaultCategory";
 import ProductListItem from "../ProductListItem";
 import Icon from 'react-native-vector-icons/AntDesign';
 import StockOutProductList from "../StockOutProductList";
-import { DefaultLabel } from "src/components";
-import { screenHeight } from "src/constants";
+import { DefaultLabel, HistoryListItem } from "src/components";
+import { WEB_SERVICES, screenHeight } from "src/constants";
+import { api } from "src/api/http";
+import { useQuery } from "@tanstack/react-query";
 
 
 const defaultStyle = StyleSheet.create({
@@ -70,11 +72,11 @@ const defaultStyle = StyleSheet.create({
       },
       cart: {
             flex: 1,
-            shadowColor: COLORS.primaryGreen,
+            shadowColor: COLORS.black,
             borderRadius: 10,
             marginVertical: 5,
             borderWidth: 0.4,
-            borderColor: COLORS.primaryGreen,
+            borderColor: COLORS.tertiaryGray,
             shadow: {
                   ...Platform.select({
                         android: {
@@ -91,7 +93,7 @@ const defaultStyle = StyleSheet.create({
                   backgroundColor: COLORS.primaryGreen,
                   borderRadius: 4
             }
-   
+
       }
 
 });
@@ -100,31 +102,39 @@ const defaultStyle = StyleSheet.create({
  * ProgressView is Function Component to render indicator modal
  * @property {bool} visible - show modal
  */
+interface ICartHistoryList {
+      data?:any
+}
+const CartHistoryList = (props:ICartHistoryList): JSX.Element => {
+      const {data} = props
 
-const CartHistoryList = (): JSX.Element =>
-      <View style={{ flex: 1 , marginTop:10}}>
+      return (<View style={{ flex: 1, marginTop: 10 }}>
 
             <View style={defaultStyle.cart}>
-                  <View style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, flex: 1, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "center", backgroundColor: COLORS.secondaryBlue, padding: 10 }}>
+                  <View style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, flex: 1, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "center", backgroundColor: COLORS.primaryGray, padding: 10 }}>
                         <View style={{ flex: 6, alignItems: "flex-start", alignContent: "center" }}>
-                              <DefaultLabel styles={{ color: COLORS.primaryGreen }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={"Cart"} />
+                              <DefaultLabel styles={{ color: COLORS.tertiaryGray }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={"Order Summary"} />
                         </View>
                         <View style={{ flex: 2, alignItems: "flex-end", alignContent: "center", height: "100%" }}>
-                              <DefaultLabel styles={{ color: COLORS.primaryGreen }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={"₹2651"} />
+                              <DefaultLabel styles={{ color: COLORS.tertiaryGray }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={""} />
                         </View>
                   </View>
-                  <View style={{ flex: 1, margin: 5 }}>
-                        <ProductListItem />
-                  </View>
-                  <View style={{ flex: 1, margin: 5 }}>
-                        <ProductListItem />
-                  </View>
+                  <View style={{ flex: 1 }}>
+                        
 
-                  <View style={{ flex: 1, margin: 5 }}>
-                        <ProductListItem />
+                        <FlatList
+                               scrollEnabled={false}
+                              data={data?.invoice_cart_details}
+                              numColumns={1}
+                              contentContainerStyle={{paddingHorizontal:5,}}
+                              showsHorizontalScrollIndicator={true}
+                              keyExtractor={(item, index) => item?.id + index.toString()}
+                              renderItem={({ item }) => item && <View style={{flex:1, paddingVertical:5}}><HistoryListItem data={item}/></View>}
+                        />
                   </View>
 
             </View>
-      </View>
+      </View>)
+}
 
 export default CartHistoryList;

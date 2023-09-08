@@ -110,10 +110,15 @@ const CartButton = (props: ICartButton): JSX.Element => {
                         <View style={defaultStyles.incdec}>
                               <Icon style={defaultStyles.white} name="minus"
                                     size={screenRatio * 16} color={COLORS.text_black} onPress={() => {
+                                        if(quantity - 1 === 0) {
+                                          delete objectData[product_id]
+                                          setCart(objectData)
+                                          setQuantity(quantity - 1);
+                                        }else{
                                           objectData[product_id] = { product_id:data.product_id,quantity:quantity - 1,image:data.image }
                                           setCart(objectData)
                                           setQuantity(quantity - 1);
-                                        
+                                        }
                                     }} />
                         </View>
                         <View style={defaultStyles.quanity}>

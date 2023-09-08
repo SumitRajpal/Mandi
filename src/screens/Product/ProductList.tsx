@@ -66,7 +66,7 @@ const ProductList = (): JSX.Element => {
     isFetchingNextPage
   } = useInfiniteQuery(
     [
-      "fetchOrder",
+      "fetchProductList",
       searchOrderText.length > 2 ? searchOrderText : "",
     ],
     fetchOrder,

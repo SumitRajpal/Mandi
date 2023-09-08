@@ -1,6 +1,6 @@
 import { STORAGE_KEYS } from "src/constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { Dispatch, ReactNode, SetStateAction, createContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { Dispatch, ReactNode, SetStateAction, createContext, useCallback, useEffect, useMemo, useRef, useState } from "react";
  
 export interface AuthContextInterface {
   getLoggedInUser: any,
@@ -40,8 +40,9 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     if (result) {
       return JSON.parse(result);
     }
-    return null;
+    return {};
   };
+  
   const setModelState = async (data: boolean) => {
     setModel(data)
   };

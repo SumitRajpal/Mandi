@@ -136,7 +136,7 @@ const defaultStyles = StyleSheet.create({
  * @property {bool} visible - show modal
  */
 interface ICartList {
-      product_id: Array<string>
+      product_ids: Array<string>
       showSaving?: boolean,
       localCart: any,
       showBill?: boolean,
@@ -144,22 +144,22 @@ interface ICartList {
 
 }
 const CartList = (props: ICartList): JSX.Element => {
-      const { onResponse, product_id = [], showBill = false, showSaving = false, localCart = {} } = props
+      const { onResponse, product_ids = [], showBill = false, showSaving = false, localCart = {} } = props
       const fetchCart = () => api(
             {
                   url: WEB_SERVICES.cart.getCart,
                   method: WEB_SERVICES.method.GET,
                   params: {
-                        filter: { product_id: product_id },
+                        filter: { product_id: product_ids },
                   }
             }
       );
       const { isLoading, data: cartListData, refetch, } = useQuery(["getCartList"],
             fetchCart,
             {
-                  enabled: product_id.length > 1,
+                  enabled: product_ids?.length > 0,
                   onError: () => {
-
+                        console.log("error", showBill, "cartlist")
                   },
                   onSuccess: (response: any) => {
 
@@ -170,22 +170,24 @@ const CartList = (props: ICartList): JSX.Element => {
 
       useEffect(() => {
             refetch;
-      }, [localCart, product_id, showSaving])
+      }, [localCart, product_ids, showSaving])
 
 
-      const stockList = useMemo(() => cartListData?.rows.filter((data: any) => 
+      const stockList = useMemo(() => cartListData?.rows.filter((data: any) =>
             data?.product_inventory?.quantity > localCart[data?.product_id]?.quantity
-           
-      ), [cartListData, product_id]);
-      
-      const outOfStockCartList = useMemo(() => cartListData?.rows.filter((data: any) => data?.product_inventory?.quantity < localCart[data?.product_id]?.quantity), [cartListData, product_id]);
 
-      const totalPrice = useMemo(() => cartListData?.rows?.reduce((partialSum: number, accumulator: any) => partialSum + (accumulator.price[0]?.price * localCart[accumulator?.product_id]?.quantity), 0), [cartListData, product_id]);
-      const totalItem = useMemo(() => cartListData?.rows?.reduce((partialSum: number, accumulator: any) => (partialSum + localCart[accumulator?.product_id]?.quantity), 0), [cartListData, product_id]);
+      ), [cartListData, product_ids]);
 
-      const amountAfterDicount = useMemo(() => cartListData?.rows?.reduce((partialSum: number, accumulator: any) => partialSum + ((100 - accumulator?.product_offer[0]?.discount) / 100) * (accumulator.price[0]?.price * localCart[accumulator?.product_id]?.quantity), 0), [cartListData, product_id]);
+      const outOfStockCartList = useMemo(() => cartListData?.rows.filter((data: any) => data?.product_inventory?.quantity < localCart[data?.product_id]?.quantity), [cartListData, product_ids]);
 
-      useMemo(() => onResponse(stockList), [cartListData, product_id]);
+      const totalPrice = useMemo(() => cartListData?.rows?.reduce((partialSum: number, accumulator: any) => partialSum + (accumulator.price[0]?.price * localCart[accumulator?.product_ids]?.quantity), 0), [cartListData, product_ids]);
+      const totalItem = useMemo(() => cartListData?.rows?.reduce((partialSum: number, accumulator: any) => (partialSum + localCart[accumulator?.product_id]?.quantity), 0), [cartListData, product_ids]);
+
+      const amountAfterDicount = useMemo(() => cartListData?.rows?.reduce((partialSum: number, accumulator: any) =>
+            partialSum + ((100 - accumulator?.product_offer?.discount) / 100) * (accumulator.price[0]?.price * localCart[accumulator?.product_id]?.quantity), 0),
+            [cartListData, product_ids]);
+
+      useMemo(() => onResponse(stockList), [cartListData, product_ids]);
       return (<View style={{ flex: 1, marginTop: 10 }}>
             {!!outOfStockCartList?.length && <View style={defaultStyle.outstock}>
                   <View style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, flex: 1, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "center", backgroundColor: COLORS.secondaryRed, padding: 10 }}>
@@ -210,7 +212,7 @@ const CartList = (props: ICartList): JSX.Element => {
                         </View>}
                   />
             </View>}
-           
+
 
             {!!stockList?.length && <View style={defaultStyle.cart}>
                   <View style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, flex: 1, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "center", backgroundColor: COLORS.secondaryBlue, padding: 10 }}>

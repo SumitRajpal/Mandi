@@ -1,5 +1,5 @@
 import { FlatList, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { api } from "src/api/http";
 import { SCREEN_IDENTIFIER, WEB_SERVICES, screenHeight, screenRatio, screenWidth } from "src/constants";
@@ -17,10 +17,22 @@ import ProductHorizontal from "src/components/Products/ProductHorizontal";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { StackParamList } from "..";
+import { AuthContext } from "src/context/AuthProvider";
 
 const Home = (): JSX.Element => {
   type StackNavigation = StackNavigationProp<StackParamList>;
   const navigation = useNavigation<StackNavigation>();
+  const { getCart } = useContext(AuthContext);
+  const [getCartData, setCartData] = useState({});
+
+  useEffect(() => {
+    async function getData() {
+      const result = await getCart();
+      setCartData(result)
+    }
+    getData();
+  }, [getCartData])
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -28,7 +40,7 @@ const Home = (): JSX.Element => {
     },
     safearea: {
       flex: 1,
-      paddingBottom: screenRatio * (screenHeight / 16),
+      paddingBottom: !!Object.keys(getCartData)?.length ? screenRatio * (screenHeight / 16):0,
       backgroundColor: COLORS.white
     },
     cart: { flex: 1, flexDirection: "row", flexWrap: "wrap", padding: 10 },
@@ -52,11 +64,7 @@ const Home = (): JSX.Element => {
       alignSelf: "center"
     },
 
-
-
-
   });
-
 
   return (
     <View style={styles.container} >
@@ -84,7 +92,7 @@ const Home = (): JSX.Element => {
           <ShopCategory />
           <ProductHorizontal horizontalTitle="Best Seller" />
         </ScrollView>
-        <Footer />
+        { !!Object.keys(getCartData).length  && <Footer /> }
       </SafeAreaView>
     </View>
   );

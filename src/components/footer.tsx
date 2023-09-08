@@ -81,8 +81,8 @@ const Footer = (): JSX.Element => {
     }
     getData();
     let total: number = 0;
-    Object.keys(getCartData).map(value => {
-      total += cartObject[value].quantity;
+    Object.keys(getCartData)?.map(value => {
+      total += cartObject[value]?.quantity;
     })
     setTotalItem(total)
   }, [getCartData])

@@ -77,12 +77,12 @@ interface IDefaultImage {
 }
 const CartProduct = (props: IDefaultImage): JSX.Element => {
       const { styles, imageStyles,data } = props
-      const discountedPrice  = data?.price[0]?.price * (100 - data?.product_offer[0]?.discount) / 100 || 0
+      const discountedPrice  = data?.price[0]?.price * (100 - data?.product_offer?.discount) / 100 || 0
       return (
             <View style={[defaultStyles.container, styles]}>
-                  { data?.product_offer[0]?.type ==="PERCENTAGE" ?  
+                  { data?.product_offer?.type ==="PERCENTAGE" ?  
                   <View style={[defaultStyles.offer]}>
-                  <DefaultLabel weight={FONT_WEIGHT.heavy} size={FONT_SIZE.small} title={`${data?.product_offer[0]?.discount}%`} />
+                  <DefaultLabel weight={FONT_WEIGHT.heavy} size={FONT_SIZE.small} title={`${data?.product_offer?.discount}%`} />
                         <DefaultLabel weight={FONT_WEIGHT.heavy} size={FONT_SIZE.small} title={"OFF"} />
 
                   </View> :

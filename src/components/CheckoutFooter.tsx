@@ -10,7 +10,8 @@ import PaymentModel from "src/components/PaymentModel";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { StackParamList } from "src/screens";
 import { api } from "src/api/http";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const defaultStyles = StyleSheet.create({
   footerContainer: {
@@ -69,90 +70,124 @@ const defaultStyles = StyleSheet.create({
  * ProgressView is Function Component to render indicator modal
  * @property {bool} visible - show modal
  */
-interface ICheckoutFooter{
-  product_id?:Array<string>
+interface ICheckoutFooter {
+  product_ids?: Array<string>
   localCart: any,
 }
-const CheckoutFooter = (props:ICheckoutFooter): JSX.Element => {
-  const {product_id=[],localCart={}} = props;
+const CheckoutFooter = (props: ICheckoutFooter): JSX.Element => {
+  const { product_ids = [], localCart = {} } = props;
   const [model, setModel] = useState<boolean>(false);
   type StackNavigation = StackNavigationProp<StackParamList>;
   const navigation = useNavigation<StackNavigation>();
 
-   const fetchCart = () => api(
-            {
-                  url: WEB_SERVICES.cart.getCart,
-                  method: WEB_SERVICES.method.GET,
-                  params: {
-                        filter: { product_id: product_id },
-                  }
-            }
-      );
-      const { isLoading, data: cartListData, refetch, } = useQuery(["getCartList"],
-            fetchCart,
-            {
-                  enabled: product_id.length > 1,
-                  onError: () => {
+  const fetchCart = () => api(
+    {
+      url: WEB_SERVICES.cart.getCart,
+      method: WEB_SERVICES.method.GET,
+      params: {
+        filter: { product_id: product_ids },
+      }
+    }
+  );
+  const { isLoading, data: cartListData, refetch, } = useQuery(["getCartList"],
+    fetchCart,
+    {
+      enabled: product_ids.length > 0,
+      onError: (error) => {
+        console.log("checkout footer", error)
+      },
+      onSuccess: (response: any) => {
+       
 
-                  },
-                  onSuccess: (response: any) => {
+      }
+    }
+  );
 
+  useEffect(() => {
+    refetch();
+  }, [product_ids, localCart])
+  const amountAfterDicount = useMemo(() => cartListData?.rows?.reduce((partialSum: number, accumulator: any) => partialSum + ((100 - accumulator?.product_offer?.discount) / 100) * (accumulator.price[0]?.price * localCart[accumulator?.product_id]?.quantity), 0), [cartListData, product_ids]);
+  const cartObject = useMemo(() => cartListData?.rows?.map((data: any) => { return { product_id: data?.product_id, weight: data?.weight, price_id: data.price[0]?.price_id, offer_id: data?.product_offer?.id, user_id: "a810d158-bb1b-4f55-b878-b403b0b79d2c", quantity: localCart[data?.product_id]?.quantity } }), [cartListData, product_ids]);
+  const invoiceObject = {
+    invoice_category: "USER_PURCHASE",
+    user_id: "a810d158-bb1b-4f55-b878-b403b0b79d2c",
+    grand_total: amountAfterDicount,
+    status: "SUCCESS"
+  }
+  const paymentObject = {
+    cart: cartObject,
+    invoice: invoiceObject,
+    payment: {
+      "type": "CREDIT",
+      "mode": "UPI",
+      "status": "SUCCESS",
+      "amount": amountAfterDicount,
+      "note": "got ihfhtrht"
 
-                  }
-            }
-      );
-
-      useEffect(() => {
-            refetch();
-      }, [product_id,localCart])
-      const amountAfterDicount = useMemo(() => cartListData?.rows?.reduce((partialSum: number, accumulator: any) => partialSum + ((100 - accumulator?.product_offer[0]?.discount) / 100) * (accumulator.price[0]?.price * localCart[accumulator?.product_id]?.quantity), 0), [cartListData, product_id]);
+    }
+  }
+  const {mutate:sendCartDetails,isLoading:isTransaction} = useMutation(
+    (body: any) =>
+      api({
+        url: WEB_SERVICES.payment.payment,
+        method: WEB_SERVICES.method.POST,
+        body,
+      }),
+    {
+      onSuccess: (response: any) => {
+        console.log(response)
+        // navigation.navigate(SCREEN_IDENTIFIER.Checkout.identifier as never)
+        // Linking.openURL(`paytmmp://pay?pa=916306150790@paytm&pn=DrishtiAhuja&tn=Note&am=${amountAfterDicount}&cu=INR`).then(value => {
+        //   console.log(value)
+        // }).catch(error => { console.log(error, "error") });
+        AsyncStorage.removeItem("cart_details")
+        navigation.navigate(SCREEN_IDENTIFIER.Home.identifier as never)
+      },
+      onError: (error: any) => {
+        //Toast.show(error.message, 5);
+      }
+    }
+  );
 
   return (
     <View style={defaultStyles.footerContainer}>
       <View style={defaultStyles.footerFlex}>
         <View style={defaultStyles.selectpayment}>
-          <TouchableOpacity style={{ flex: 1}} onPress={() => setModel(!model)}>
-          <View style={{ flex: 1, flexDirection: "column" }}>
-            <View style={{ flex: 1}}>
-              <View style={{ flex: 1, gap:0,flexDirection: "row" }}>
-                <View style={{ flex: 1, justifyContent: "center", alignItems: "center", alignContent: "center" }}>
-                  <DefaultImage styles={defaultStyles.image} imageUri={"https://download.logo.wine/logo/Google_Pay/Google_Pay-Logo.wine.png"} />
+          <TouchableOpacity style={{ flex: 1 }} onPress={() => setModel(!model)}>
+            <View style={{ flex: 1, flexDirection: "column" }}>
+              <View style={{ flex: 1 }}>
+                <View style={{ flex: 1, gap: 0, flexDirection: "row" }}>
+                  <View style={{ flex: 1, justifyContent: "center", alignItems: "center", alignContent: "center" }}>
+                    <DefaultImage styles={defaultStyles.image} imageUri={"https://download.logo.wine/logo/Google_Pay/Google_Pay-Logo.wine.png"} />
+                  </View>
                 </View>
               </View>
+              <View style={{ flex: 1 }}>
+                <Text
+                  style={[defaultStyles.text]}
+                  size={FONT_SIZE.medium}
+                  isPoppins={true}
+                  numberOfLines={1}
+                  weight={FONT_WEIGHT.medium}
+                  color={COLORS.text_black}
+                >
+                  {"Paying by "}
+                </Text>
+              </View>
             </View>
-            <View style={{ flex: 1 }}>
-              <Text
-                style={[defaultStyles.text]}
-                size={FONT_SIZE.medium}
-                isPoppins={true}
-                numberOfLines={1}
-                weight={FONT_WEIGHT.medium}
-                color={COLORS.text_black}
-              > 
-                {"Paying by "}
-              </Text>
-            </View>
-          </View>
           </TouchableOpacity>
         </View>
         <View style={defaultStyles.footerBasis}>
-       {isLoading ?  
-       
-       
-       <Button style={{}}
-          
-            title="Loading . . . " 
-            onPress={()=> {}} />:
-       <Button style={{}}
-          
-            title={`₹${amountAfterDicount}    Place order`} onPress={() => {navigation.navigate(SCREEN_IDENTIFIER.Checkout.identifier as never)
-            Linking.openURL(`paytmmp://pay?pa=916306150790@paytm&pn=DrishtiAhuja&tn=Note&am=${amountAfterDicount}&cu=INR`).then(value => {
-              console.log(value)
-            }).catch(error => {console.log(error,"error")});
-            }} /> }
+          {isLoading || isTransaction ?
+            <Button style={{}}
+              title="Processing . . . "
+              onPress={() => { }} /> :
+            <Button style={{}}
+
+              title={`₹${amountAfterDicount}    Place order`} onPress={() => { sendCartDetails(paymentObject) }} />}
         </View>
       </View>
-      <PaymentModel visible={model} height={"100%"}  onModelClose={(value) => setModel(value)}/>
+      <PaymentModel visible={model} height={"100%"} onModelClose={(value) => setModel(value)} />
 
     </View>);
 }

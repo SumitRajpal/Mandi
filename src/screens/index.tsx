@@ -80,7 +80,7 @@ const SCREENS: any = {
 
 export type StackParamList = {
   Splash: undefined;
-  OrderHistoryDetails: undefined;
+  OrderHistoryDetails: {invoice_id:string};
   OrderHistory: undefined;
   Profile: undefined;
   Payment: undefined;

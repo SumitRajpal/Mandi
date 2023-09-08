@@ -102,7 +102,7 @@ const CartListModel = (props: IDefaultModel): JSX.Element => {
                                                 }} />
                                           </View>
                                           <ScrollView style={defaultStyles.container}>
-                                           { getCartData &&    <CartList  onResponse={(res) => {}}localCart={getCartData} product_id={Object.keys(getCartData) || []}/>}
+                                           { !!Object.keys(getCartData).length &&    <CartList  onResponse={(res) => {}}localCart={getCartData} product_ids={Object.keys(getCartData) || []}/>}
                                           </ScrollView>
                                           <Footer />
                                     </View>

@@ -3,18 +3,22 @@ import React, { useContext, useEffect, useState } from "react"
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import CartList from "src/components/Products/CartList";
 import { DefaultLabel } from "src/components";
-import { screenHeight, screenRatio } from "src/constants";
+import { SCREEN_IDENTIFIER, screenHeight, screenRatio } from "src/constants";
 import Icon from 'react-native-vector-icons/Entypo';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SIcon from 'react-native-vector-icons/Fontisto';
 import CheckoutFooter from "src/components/CheckoutFooter";
 import Header from "src/components/header";
 import { AuthContext } from "src/context/AuthProvider";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { StackParamList } from "..";
+import { useNavigation } from "@react-navigation/native";
 const Checkout = (): JSX.Element => {
       const { getCart } = useContext(AuthContext);
       const [getCartData, setCartData] = useState({});
       const [cartResponse, setCartResponse] = useState({});
-     
+      type StackNavigation = StackNavigationProp<StackParamList>;
+      const navigation = useNavigation<StackNavigation>();
       useEffect(() => {
             async function getData() {
                   const result = await getCart();
@@ -61,10 +65,10 @@ const Checkout = (): JSX.Element => {
                         <ScrollView style={defaultStyles.container}>
                               <Header title="Checkout" />
                               <View style={{ paddingHorizontal: 10 }}>
-                                   {getCartData &&  <CartList onResponse={(res) => {} }showBill localCart={getCartData} showSaving product_id={Object.keys(getCartData)} />}
+                                   {!!Object.keys(getCartData).length &&  <CartList onResponse={(res) => {} }showBill localCart={getCartData} showSaving product_ids={Object.keys(getCartData)} />}
                               </View>
                         </ScrollView>
-                        {getCartData &&  <CheckoutFooter localCart={getCartData}  product_id={Object.keys(getCartData)} />}
+                        {!!Object.keys(getCartData).length &&  <CheckoutFooter localCart={getCartData}  product_ids={Object.keys(getCartData)} />}
                   </SafeAreaView>
             </View>
       );
