@@ -11,6 +11,7 @@ import { api } from "src/api/http";
 import { TouchableOpacity } from "react-native";
 import FMIcon from 'react-native-vector-icons/FontAwesome6';
 import ProductSorting from "src/components/ProductSorting";
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
 const ProductList = (): JSX.Element => {
   const defaultStyles = StyleSheet.create({
@@ -74,7 +75,7 @@ const ProductList = (): JSX.Element => {
       getNextPageParam: (lastPage) => lastPage.nextPage
     }
   );
-  console.log(orderListData, hasNextPage, "has")
+
   const fetchMoreOrder = () => {
     if (hasNextPage) {
       fetchNextPage();
@@ -112,7 +113,29 @@ const ProductList = (): JSX.Element => {
 
           </View>
           <View style={{ flex: 9 }}>
-          
+       {   isLoading ? <View
+            style={{gap:20, flex:1,backgroundColor: COLORS.white, flexDirection:"row",paddingHorizontal:20 }}>
+            <View style={{flex:1}}>
+            <SkeletonPlaceholder  borderRadius={10} >
+              <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
+                <SkeletonPlaceholder.Item marginLeft={0}>
+                  <SkeletonPlaceholder.Item width={screenWidth/2.2} height={screenHeight/3.5} borderRadius={10} />
+                </SkeletonPlaceholder.Item>
+              </SkeletonPlaceholder.Item>
+
+            </SkeletonPlaceholder>
+            </View>
+            <View style={{flex:1}}>
+            <SkeletonPlaceholder  borderRadius={10} >
+              <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
+                <SkeletonPlaceholder.Item marginLeft={0}>
+                  <SkeletonPlaceholder.Item width={screenWidth/2.2} height={screenHeight/3.5} borderRadius={10} />
+                </SkeletonPlaceholder.Item>
+              </SkeletonPlaceholder.Item>
+
+            </SkeletonPlaceholder>
+            </View>
+          </View> :
             <FlatList
               data={ordersList}
               numColumns={2}
@@ -124,7 +147,7 @@ const ProductList = (): JSX.Element => {
               renderItem={({ item }) => item && <CartProduct data={item} />}
               ListFooterComponent={
                 <FlatListLoader isNext={isFetchingNextPage} />
-              } />
+              } />}
           </View>
         </View>
         <ProductSorting visible={sortVisible} />

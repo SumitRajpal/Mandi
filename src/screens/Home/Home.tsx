@@ -19,12 +19,14 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { StackParamList } from "..";
 import { AuthContext } from "src/context/AuthProvider";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import AddressModel from "src/components/AddressModel";
 
 const Home = (): JSX.Element => {
   type StackNavigation = StackNavigationProp<StackParamList>;
   const navigation = useNavigation<StackNavigation>();
   const { getCart } = useContext(AuthContext);
   const [getCartData, setCartData] = useState({});
+  const [address, setAddress] = useState(false);
 
   useEffect(() => {
     async function getData() {
@@ -71,16 +73,18 @@ const Home = (): JSX.Element => {
     <View style={styles.container} >
 
       <SafeAreaView style={styles.safearea}>
-      
-      
+
+
         <ScrollView
           stickyHeaderIndices={[1]}
           showsVerticalScrollIndicator={false} >
           <View style={styles.headerFlex}>
-            <View style={styles.headerDetails}>
+            <TouchableOpacity onPress={() => setAddress(!address)}>
+              <View style={styles.headerDetails}>
               <Text color={COLORS.text_black} size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.heavy}>Delivering in 19 min</Text>
               <Text color={COLORS.text_black} size={FONT_SIZE.large} isPoppins={true} weight={FONT_WEIGHT.regular3}>Home - 7/50 9 Tilak nagar KFC  </Text>
             </View>
+            </TouchableOpacity>
             <View style={styles.profileDetails}>
               <TouchableOpacity onPress={() => navigation.navigate(SCREEN_IDENTIFIER.Profile.identifier as never)}
               >
@@ -94,7 +98,8 @@ const Home = (): JSX.Element => {
           <ShopCategory />
           <ProductHorizontal horizontalTitle="Best Seller" />
         </ScrollView>
-        {!!Object.keys(getCartData)?.length && <Footer />}
+        <AddressModel visible={address} onModelClose={(value) => setAddress(value)} height={100}/>
+        {!!Object.keys(getCartData)?.length && <Footer  />}
       </SafeAreaView>
     </View>
   );

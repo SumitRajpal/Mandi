@@ -15,6 +15,7 @@ const WEB_SERVICES = {
   user: {
     signin: `${ApiConfig.url}users/signin`,
     getUser: `${ApiConfig.url}users`,
+    getAddress:`${ApiConfig.url}address`
   },
   products: {
     getProducts: `${ApiConfig.url}products`,

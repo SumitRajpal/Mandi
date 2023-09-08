@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, Linking, Modal, Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
-import { Button, Text } from "src/components";
+import { Button, DefaultLabel, Text } from "src/components";
 import { SCREEN_IDENTIFIER, screenHeight, screenRatio, screenWidth } from "src/constants";
 import ProductListItem from "./ProductListItem";
 import DefaultImage from "./DefaultImage";
@@ -81,6 +81,7 @@ const Footer = (): JSX.Element => {
     }
     getData();
     let total: number = 0;
+    cartObject = getCartData;
     Object.keys(getCartData)?.map(value => {
       total += cartObject[value]?.quantity;
     })
@@ -103,17 +104,13 @@ const Footer = (): JSX.Element => {
                   </View>
                 </View>
               </View>
-              <View style={{ flex: 1 }}>
-                <Text
-                  style={[defaultStyles.text]}
+              <View style={{ flex: 1,alignSelf:"center",alignItems:"center",alignContent:"center" }}>
+                <DefaultLabel
+                  title={`${totalItem} Items`}
                   size={FONT_SIZE.medium}
-                  isPoppins={true}
-                  numberOfLines={1}
                   weight={FONT_WEIGHT.medium}
-                  color={COLORS.text_black}
-                >
-                  {`${totalItem} Items`}
-                </Text>
+                />
+                  
               </View>
             </View>
           </TouchableOpacity>
@@ -124,7 +121,7 @@ const Footer = (): JSX.Element => {
             title="Next" onPress={() => { navigation.navigate(SCREEN_IDENTIFIER.Checkout.identifier as never) }} />
         </View>
       </View>
-      <CartListModel visible={model} height={"100%"} onModelClose={(value) => setModel(value)} />
+      <CartListModel visible={model} height={"100%"} onModelClose={(value) => { setModel(value);}} />
 
     </View>);
 }

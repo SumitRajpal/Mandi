@@ -10,6 +10,7 @@ import Header from "src/components/header";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { StackParamList } from "..";
 import { AuthContext } from "src/context/AuthProvider";
+import AddressList from "src/components/AddressList";
 
 const Address = (): JSX.Element => {
       const { setLoggedInUser } = useContext(AuthContext);
@@ -60,26 +61,7 @@ const Address = (): JSX.Element => {
                                     </View>
 
                               </View>
-                              <View style={{ paddingHorizontal: 10 }}>
-                                    <View style={defaultStyles.bill}>
-                                          <View style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, flex: 1, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "center", backgroundColor: COLORS.white, padding: 10 }}>
-                                                <View style={{ flex: 6, alignItems: "flex-start", alignContent: "center" }}>
-                                                      <DefaultLabel styles={{ color: COLORS.tertiaryGray }} weight={FONT_WEIGHT.medium} size={FONT_SIZE.large} title={"Other Information"} />
-                                                </View>
-                                          </View>
-
-                                          <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 10, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
-                                                <View style={{ flex: 2 }}>
-                                                      <FMIcon name="house-user" size={screenRatio * 14} color={COLORS.tertiaryGray} />
-                                                </View>
-                                                <View style={{ flex: 16, borderBottomWidth: 0, borderColor: COLORS.primaryGray }}>
-                                                      <DefaultLabel styles={{ color: COLORS.tertiaryGray, padding: 5 }} weight={FONT_WEIGHT.medium} size={FONT_SIZE.large} title={"Share the app"} />
-                                                </View>
-
-                                          </View>
-
-                                    </View>
-                              </View>
+                              <AddressList/>
                         </ScrollView>
                   </SafeAreaView>
             </View>
