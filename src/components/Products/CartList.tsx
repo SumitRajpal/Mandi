@@ -181,7 +181,7 @@ const CartList = (props: ICartList): JSX.Element => {
 
       const outOfStockCartList = useMemo(() => cartListData?.rows.filter((data: any) => data?.product_inventory?.quantity < localCart[data?.product_id]?.quantity), [cartListData, product_ids]);
 
-      const totalPrice = useMemo(() => cartListData?.rows?.reduce((partialSum: number, accumulator: any) => partialSum + (accumulator.price[0]?.price * localCart[accumulator?.product_ids]?.quantity), 0), [cartListData, product_ids]);
+      const totalPrice = useMemo(() => cartListData?.rows?.reduce((partialSum: number, accumulator: any) => partialSum + (accumulator.price[0]?.price * localCart[accumulator?.product_id]?.quantity), 0), [cartListData, product_ids]);
       const totalItem = useMemo(() => cartListData?.rows?.reduce((partialSum: number, accumulator: any) => (partialSum + localCart[accumulator?.product_id]?.quantity), 0), [cartListData, product_ids]);
 
       const amountAfterDicount = useMemo(() => cartListData?.rows?.reduce((partialSum: number, accumulator: any) =>
@@ -218,7 +218,7 @@ const CartList = (props: ICartList): JSX.Element => {
             {!!outOfStockCartList?.length && <View style={defaultStyle.outstock}>
                   <View style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, flex: 1, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "center", backgroundColor: COLORS.secondaryRed, padding: 10 }}>
                         <View style={{ flex: 6, alignItems: "flex-start", alignContent: "center" }}>
-                              <DefaultLabel styles={{ color: COLORS.primaryRed }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={"Sorry! 2 items are out of stock"} />
+                              <DefaultLabel styles={{ color: COLORS.primaryRed }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={`Sorry! ${outOfStockCartList?.length} items are out of stock`} />
                         </View>
                         <View style={{ flex: 2, alignItems: "flex-end", alignContent: "center", height: "100%" }}>
                               <Icon style={{ color: COLORS.tertiaryGray }} name="closecircle" size={20} color={COLORS.text_black} />

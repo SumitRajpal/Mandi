@@ -105,12 +105,12 @@ const ProductListItem = (props:IProductList): JSX.Element =>{
                   </View>
                   <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", alignContent: "space-between", gap: 1 }}>
                     <View style={{ flex: 3, flexWrap: "wrap", alignItems: "flex-start" }}>
-                      <DefaultLabel size={FONT_SIZE.regular} weight={FONT_WEIGHT.heavy} title={"₹105"} />
+                      <DefaultLabel size={FONT_SIZE.regular} weight={FONT_WEIGHT.heavy} title={`₹${(100-data?.product_offer?.discount)/100 * data?.price[0]?.price}`} />
                     </View>
                     <View style={{ flex: 1, flexWrap: "wrap", alignItems: "stretch" }}>
                       <DefaultLabel styles={{
                         textDecorationLine: 'line-through', textDecorationStyle: 'solid'
-                      }} size={FONT_SIZE.regular} weight={FONT_WEIGHT.roman} title={"₹150"} />
+                      }} size={FONT_SIZE.regular} weight={FONT_WEIGHT.roman} title={`₹${data?.price[0]?.price}`} />
                     </View>
                   </View>
                 </View>

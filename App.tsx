@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import KeyboardManager from 'react-native-keyboard-manager';
 import SplashScreen from 'react-native-splash-screen';
 import { LocalizationProvider } from 'src/context/LocalizationProvider';
+import { ProgressView } from 'src/components';
 
 
 LogBox.ignoreAllLogs(false);
@@ -38,7 +39,7 @@ function App(): JSX.Element {
     }
   });
   return (
-    <Suspense fallback>
+    <Suspense fallback={<ProgressView/>}>
       <LocalizationProvider>
       <AuthProvider>
       <QueryClientProvider client={queryClient}>

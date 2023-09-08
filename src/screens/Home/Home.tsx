@@ -91,34 +91,10 @@ const Home = (): JSX.Element => {
           </View>
           <View style={{ flex: 1, backgroundColor: COLORS.white, paddingVertical: 10 }}><DefaultSearchBar searchValue="" onChangeText={() => { }} /></View>
           <ProductHorizontal horizontalTitle="Order Again" />
-          <MapView
-          onMapReady={(ready => {
-            console.log(ready,"ready")
-          })}
-          key={"AIzaSyB-bilMkdAN1tu1k8GYTbTVSyLn4sOKjMo"}
-          style={{height:screenHeight/2.5,width:screenWidth}}
-          
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-  provider={PROVIDER_GOOGLE}
->
-<Marker
-          coordinate={{latitude:20.5937,longitude:78.9629}}
-          key={"AIzaSyB-bilMkdAN1tu1k8GYTbTVSyLn4sOKjMo"}
-          style={{height:screenHeight/2.5,width:screenWidth}}
-        
-/>
-
-</MapView>
           <ShopCategory />
-          
           <ProductHorizontal horizontalTitle="Best Seller" />
         </ScrollView>
-        {!!Object.keys(getCartData).length && <Footer />}
+        {!!Object.keys(getCartData)?.length && <Footer />}
       </SafeAreaView>
     </View>
   );
