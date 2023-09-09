@@ -24,9 +24,10 @@ import AddressModel from "src/components/AddressModel";
 const Home = (): JSX.Element => {
   type StackNavigation = StackNavigationProp<StackParamList>;
   const navigation = useNavigation<StackNavigation>();
-  const { getCart } = useContext(AuthContext);
+  const { getCart,getAuthAddress } = useContext(AuthContext);
   const [getCartData, setCartData] = useState({});
   const [address, setAddress] = useState(false);
+  const [currentAddress, setCurrentAddress] = useState<any>(null);
 
   useEffect(() => {
     async function getData() {
@@ -36,6 +37,15 @@ const Home = (): JSX.Element => {
     getData();
   }, [getCartData])
 
+
+  useEffect(() => {
+    getCurrentAddress();
+  }, [getAuthAddress()])
+
+  const getCurrentAddress  = (async () => {
+    const address = await getAuthAddress();
+    setCurrentAddress(`${address?.address_1 || ''},${address?.address_2 || ''},${address?.landmark || ''},${address?.pincode || ''}`)
+  }) 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -43,7 +53,7 @@ const Home = (): JSX.Element => {
     },
     safearea: {
       flex: 1,
-      paddingBottom: !!Object.keys(getCartData)?.length ? screenRatio * (screenHeight / 16) : 0,
+      paddingBottom: (!!Object.keys(getCartData)?.length) ? screenRatio * (screenHeight / 16) : 0,
       backgroundColor: COLORS.white
     },
     cart: { flex: 1, flexDirection: "row", flexWrap: "wrap", padding: 10 },
@@ -81,8 +91,8 @@ const Home = (): JSX.Element => {
           <View style={styles.headerFlex}>
             <TouchableOpacity onPress={() => setAddress(!address)}>
               <View style={styles.headerDetails}>
-              <Text color={COLORS.text_black} size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.heavy}>Delivering in 19 min</Text>
-              <Text color={COLORS.text_black} size={FONT_SIZE.large} isPoppins={true} weight={FONT_WEIGHT.regular3}>Home - 7/50 9 Tilak nagar KFC  </Text>
+              <Text numberOfLines={1} color={COLORS.text_black} size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.heavy}>Delivering in 19 min</Text>
+              <Text numberOfLines={1} color={COLORS.text_black} size={FONT_SIZE.large} isPoppins={true} weight={FONT_WEIGHT.regular3}>{currentAddress}</Text>
             </View>
             </TouchableOpacity>
             <View style={styles.profileDetails}>
@@ -98,7 +108,7 @@ const Home = (): JSX.Element => {
           <ShopCategory />
           <ProductHorizontal horizontalTitle="Best Seller" />
         </ScrollView>
-        <AddressModel visible={address} onModelClose={(value) => setAddress(value)} height={100}/>
+        <AddressModel visible={address} onModelClose={(value) => setAddress(value)} height={100} />
         {!!Object.keys(getCartData)?.length && <Footer  />}
       </SafeAreaView>
     </View>

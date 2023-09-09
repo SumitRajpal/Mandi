@@ -1,8 +1,8 @@
 import { FlatList, Platform, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import React, { useMemo } from "react"
+import React, { useContext, useMemo } from "react"
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { Button, DefaultLabel } from "src/components";
-import { WEB_SERVICES, screenHeight, screenRatio, screenWidth } from "src/constants";
+import { SCREEN_IDENTIFIER, STORAGE_KEYS, WEB_SERVICES, screenHeight, screenRatio, screenWidth } from "src/constants";
 import Icon from 'react-native-vector-icons/Entypo';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SIcon from 'react-native-vector-icons/Fontisto';
@@ -10,11 +10,14 @@ import Header from "src/components/header";
 import CartHistoryList from "src/components/Products/CartHistoryList";
 import { api } from "src/api/http";
 import { useQuery } from "@tanstack/react-query";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
+import { AuthContext } from "src/context/AuthProvider";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const OrderHistoryDetails = (): JSX.Element => {
+      const {setCart } = useContext(AuthContext);
         let route:any = useRoute();
-        console.log(route,"route")
+          const navigation = useNavigation();
       const defaultStyles = StyleSheet.create({
             container: {
                   flex: 1,
@@ -163,7 +166,7 @@ const OrderHistoryDetails = (): JSX.Element => {
                                                       <DefaultLabel styles={{ color: COLORS.tertiaryGray }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={"Delivered at"} />
                                                 </View>
                                                 <View style={{ flex: 4, alignItems: "flex-start" }}>
-                                                      <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={orderHistoryData?.invoice_payment?.mode} />
+                                                      <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={`${orderHistoryData?.invoice_address?.address_1}, ${orderHistoryData?.invoice_address?.address_2}, ${orderHistoryData?.invoice_address?.landmark}`} />
                                                 </View>
                                           </View>
                                           <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 5, gap:5,flexDirection: "column", justifyContent: "flex-start", alignContent: "flex-start", alignItems: "flex-start" }}>
@@ -180,7 +183,20 @@ const OrderHistoryDetails = (): JSX.Element => {
                         </ScrollView>
                        { !isLoading && <View style={{padding:screenRatio * 10}}>
                               <Button style={{}}
-                                    title="Reorder" onPress={() => console.log("")} />
+                                    title="Reorder" onPress={() => {
+                                          let  reorderObject:any = {};
+                                          orderHistoryData?.invoice_cart_details?.map((value:any) => {
+                                                reorderObject[value.product_id]={product_id:value?.product_id,quantity:value?.quantity}
+                                          })
+                                          AsyncStorage.removeItem(STORAGE_KEYS.cart_details).then(()=>{
+                                                setCart(reorderObject)
+                                                
+                                          }).finally(()=>{
+                                                navigation.navigate(SCREEN_IDENTIFIER.Checkout.identifier as never)
+                                          })
+                                          
+                                          }
+                                    } />
                         </View>}
                   </SafeAreaView>
             </View>

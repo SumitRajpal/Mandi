@@ -8,7 +8,9 @@ export interface AuthContextInterface {
   getCart: any,
   setCart: Dispatch<SetStateAction<any>>
   getModelState: any,
-  setModelState: Dispatch<SetStateAction<any>>
+  setModelState: Dispatch<SetStateAction<any>>,
+  getAuthAddress: any,
+  setAuthAddress: Dispatch<SetStateAction<any>>
 }
 const defaultState = {
   getLoggedInUser:  async () => {},
@@ -16,7 +18,9 @@ const defaultState = {
   getCart:  async () => {},
   setCart: async (value: any) => { },
   getModelState:  async () => {},
-  setModelState: async (value: any) => { }
+  setModelState: async (value: any) => { },
+  getAuthAddress:  async () => {},
+  setAuthAddress: async (value: any) => { },
 } as AuthContextInterface
 export const AuthContext = createContext(defaultState);
 type AuthProviderProps = { children: ReactNode }
@@ -24,6 +28,7 @@ type AuthProviderProps = { children: ReactNode }
 export default function AuthProvider({ children }: AuthProviderProps) {
   const [authDetails, setAuthDetails] = useState<any>(null);
   const [cartDetails, setCartDetails] = useState<any>(null);
+  const [address, setAddress] = useState<any>(null);
   const [model, setModel] = useState<boolean>(false);
 
   const setLoggedInUser = async (data: any) => {
@@ -43,6 +48,19 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     return {};
   };
   
+  const setAuthAddress = async (data: any) => {
+    const storage = await AsyncStorage.setItem(STORAGE_KEYS.user_address, JSON.stringify(data));
+  setAddress(storage)
+  console.log(address,storage,"-----------")
+  };
+  const getAuthAddress = async () => {
+    const result = await AsyncStorage.getItem(STORAGE_KEYS.user_address);
+    if (result) {
+      return JSON.parse(result);
+    }
+    return {};
+  };
+
   const setModelState = async (data: boolean) => {
     setModel(data)
   };
@@ -67,7 +85,9 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       setModelState,
       setCart,
       getCart,
-      getModelState
+      getModelState,
+      setAuthAddress,
+      getAuthAddress
     }),
     [
       authDetails

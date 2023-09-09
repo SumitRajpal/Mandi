@@ -12,7 +12,7 @@ export const getHeaders = async () => {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Methods': 'GET',
-    Authorization: result ? `Bearer ${result.accessToken}` : "",
+    Authorization: result ? `Bearer ${result?.accessToken}` : "",
   };
 };
 // RESPONSE HANDLE
@@ -53,7 +53,7 @@ type handleRequest = {
 }
 const handleRequest: any = async ({ requestConfig, checkAuth }: handleRequest) =>
   axios(requestConfig)
-    .then((response:any) => response)
+    .then((response: any) => response)
     .catch((error: any) => {
       if (error?.response?.status === 401) {
         logoutNavigation();
@@ -91,7 +91,7 @@ export const getHttp = async (url: any, body: any) => {
   try {
     const response = await api({
       url,
-      params:body,
+      params: body,
     });
     return onSuccess(response);
   } catch (err) {

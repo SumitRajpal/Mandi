@@ -1,11 +1,12 @@
-import React, { useMemo } from "react";
-import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
+import React, { useContext, useMemo } from "react";
+import { ActivityIndicator, FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 import { COLORS, FONT_SIZE, FONT_WEIGHT, WEB_SERVICES, screenRatio } from "src/constants";
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import DefaultLabel from "./DefaultLabel";
 import { api } from "src/api/http";
 import { useQuery } from "@tanstack/react-query";
 import FMIcon from 'react-native-vector-icons/FontAwesome6';
+import { AuthContext } from "src/context/AuthProvider";
 
 const defaultStyles = StyleSheet.create({
       container: {
@@ -13,8 +14,13 @@ const defaultStyles = StyleSheet.create({
             backgroundColor: COLORS.white
       },
 });
-
-const AddressList = () => {
+interface IAddressList {
+      
+      onAddressClose(value: boolean): any;
+}
+const AddressList = (props: IAddressList) => {
+      const { onAddressClose } = props;
+      const { setAuthAddress } = useContext(AuthContext);
       const fetchAppVersion = () => api({ url: WEB_SERVICES.user.getAddress });
       const { isLoading: isLoadingAppVersion, data: adddressDataList } =
             useQuery(["getAddress"],
@@ -50,16 +56,18 @@ const AddressList = () => {
                         showsHorizontalScrollIndicator={true}
                         keyExtractor={(item, index) => item?.id + index.toString()}
                         renderItem={({ item }) => item &&
-                              <View style={{ flex: 1, flexWrap: "wrap", flexDirection: "row", gap: 20, backgroundColor: COLORS.primaryGray, padding: 10, marginVertical: 5, borderRadius: 10 }}>
-                                    <View style={{ flex: 1.5 }}>
-                                          <View style={{ flex: 1, borderRadius: 15, padding: 10, backgroundColor: COLORS.primaryGray, height: screenRatio * 40, width: screenRatio * 40 }}>
-                                                <Icon name="house" size={screenRatio * 20} color={COLORS.tertiaryGray} />
+                              <TouchableOpacity onPress={() => { setAuthAddress(item); onAddressClose(true) }}>
+                                    <View style={{ flex: 1, flexWrap: "wrap", flexDirection: "row", gap: 20, backgroundColor: COLORS.primaryGray, padding: 10, marginVertical: 5, borderRadius: 10 }}>
+                                          <View style={{ flex: 1.5 }}>
+                                                <View style={{ flex: 1, borderRadius: 15, padding: 10, backgroundColor: COLORS.primaryGray, height: screenRatio * 40, width: screenRatio * 40 }}>
+                                                      <Icon name="house" size={screenRatio * 20} color={COLORS.tertiaryGray} />
+                                                </View>
+                                          </View>
+                                          <View style={{ flex: 9, alignItems: "flex-start", alignContent: "center", alignSelf: "center" }}>
+                                                <DefaultLabel weight={FONT_WEIGHT.light} size={FONT_SIZE.medium} title={`${item?.address_1 || ''},${item?.address_2 || ''},${item?.landmark || ''} ${item?.pincode || ''}`} />
                                           </View>
                                     </View>
-                                    <View style={{ flex: 9, alignItems: "flex-start", alignContent: "center", alignSelf: "center" }}>
-                                          <DefaultLabel weight={FONT_WEIGHT.light} size={FONT_SIZE.medium} title={`${item?.address_1 || ''},${item?.address_2 || ''},${item?.landmark || ''} ${item?.pincode || ''}`} />
-                                    </View>
-                              </View>}
+                              </TouchableOpacity>}
                   />
             </View>
       );

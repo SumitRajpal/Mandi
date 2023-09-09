@@ -30,8 +30,8 @@ const AddressModel = (props: IDefaultModel): JSX.Element => {
                         height: "auto",
                         position: "absolute",
                         bottom: 0,
-                        maxHeight: screenRatio* (screenHeight/2),
-                        minHeight:  screenRatio* (screenHeight/2),
+                        maxHeight: screenRatio * (screenHeight / 2),
+                        minHeight: screenRatio * (screenHeight / 2),
                         paddingHorizontal: screenRatio * 8,
                         width: screenWidth,
                         backgroundColor: COLORS.primaryWhite,
@@ -49,8 +49,8 @@ const AddressModel = (props: IDefaultModel): JSX.Element => {
                   modelParent: {
                         height: screenHeight,
                         bottom: 0,
-                        marginBottom:0 ,
-                        backgroundColor:COLORS.transparent
+                        marginBottom: 0,
+                        backgroundColor: COLORS.transparent
                   },
                   close: {
                         alignContent: "center",
@@ -89,7 +89,7 @@ const AddressModel = (props: IDefaultModel): JSX.Element => {
                                                 }} />
                                           </View>
                                           <ScrollView style={defaultStyles.container}>
-                                            <AddressList/>
+                                                <AddressList  onAddressClose={(value)=> {setModel(false);onModelClose(false)}}/>
                                           </ScrollView>
                                     </View>
                               </View>

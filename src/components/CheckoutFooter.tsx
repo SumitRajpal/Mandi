@@ -1,5 +1,5 @@
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { ActivityIndicator, Linking, Modal, Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { Button, Text } from "src/components";
@@ -12,6 +12,7 @@ import { StackParamList } from "src/screens";
 import { api } from "src/api/http";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthContext } from "src/context/AuthProvider";
 
 const defaultStyles = StyleSheet.create({
   footerContainer: {
@@ -75,8 +76,11 @@ interface ICheckoutFooter {
   localCart: any,
 }
 const CheckoutFooter = (props: ICheckoutFooter): JSX.Element => {
+  const { getLoggedInUser,getAuthAddress } = useContext(AuthContext);
   const { product_ids = [], localCart = {} } = props;
   const [model, setModel] = useState<boolean>(false);
+  const [addressId, setAddressId] = useState<string>();
+  const [userId, setUserId] = useState<string>();
   type StackNavigation = StackNavigationProp<StackParamList>;
   const navigation = useNavigation<StackNavigation>();
 
@@ -105,12 +109,22 @@ const CheckoutFooter = (props: ICheckoutFooter): JSX.Element => {
 
   useEffect(() => {
     refetch();
+    getAuthData();
   }, [product_ids, localCart])
+
+
+  const  getAuthData = (async () => {
+    const address = await getAuthAddress();
+    const userData = await getLoggedInUser();
+    setAddressId(address?.address_id);
+    setUserId(userData?.id)
+  })
   const amountAfterDicount = useMemo(() => cartListData?.rows?.reduce((partialSum: number, accumulator: any) => partialSum + ((100 - accumulator?.product_offer?.discount) / 100) * (accumulator.price[0]?.price * localCart[accumulator?.product_id]?.quantity), 0), [cartListData, product_ids]);
   const cartObject = useMemo(() => cartListData?.rows?.map((data: any) => { return { product_id: data?.product_id, weight: data?.weight, price_id: data.price[0]?.price_id, offer_id: data?.product_offer?.id, user_id: "a810d158-bb1b-4f55-b878-b403b0b79d2c", quantity: localCart[data?.product_id]?.quantity } }), [cartListData, product_ids]);
   const invoiceObject = {
     invoice_category: "USER_PURCHASE",
-    user_id: "a810d158-bb1b-4f55-b878-b403b0b79d2c",
+    user_id: userId,
+    address_id:addressId,
     grand_total: amountAfterDicount,
     status: "SUCCESS"
   }
