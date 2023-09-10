@@ -89,7 +89,7 @@ const AddressModel = (props: IDefaultModel): JSX.Element => {
                                                 }} />
                                           </View>
                                           <ScrollView style={defaultStyles.container}>
-                                                <AddressList  onAddressClose={(value)=> {setModel(false);onModelClose(false)}}/>
+                                                <AddressList isAddress={true} onAddressClose={(value)=> {setModel(false);onModelClose(false)}}/>
                                           </ScrollView>
                                     </View>
                               </View>

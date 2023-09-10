@@ -87,7 +87,7 @@ const Footer = (): JSX.Element => {
     })
     setTotalItem(total)
   }, [getCartData])
-
+  
   return (
     <View style={defaultStyles.footerContainer}>
       <View style={defaultStyles.footerFlex}>

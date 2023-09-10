@@ -1,6 +1,6 @@
 import { AuthContext } from "src/context/AuthProvider";
 import { api } from "src/api/http";
-import { Modal, StyleSheet, View, ScrollView, Platform, Keyboard } from "react-native";
+import { Modal, StyleSheet, View, ScrollView, Platform, Keyboard, FlatList } from "react-native";
 import React, { Component, useContext, useEffect, useState } from "react"
 import Toast from "react-native-simple-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -18,6 +18,7 @@ import Animated, { SensorType, interpolate, useAnimatedSensor, useAnimatedStyle 
 import Input from "src/components/Input";
 import Icon from 'react-native-vector-icons/AntDesign';
 import DefaultInput from "src/components/Input";
+import { DefaultCategory } from "src/components/Products/ShopCategory";
 
 const Login = (): JSX.Element => {
   const navigation = useNavigation();
@@ -34,7 +35,7 @@ const Login = (): JSX.Element => {
       flexDirection: 'row',
       flexWrap: 'wrap',
       padding: 0,
-      gap:5,
+      gap: 5,
       alignItems: "center",
       width: screenWidth,
 
@@ -50,12 +51,12 @@ const Login = (): JSX.Element => {
     logo: {
       alignItems: "center",
       padding: 10,
-      marginVertical: screenRatio * 10
+      marginBottom: screenRatio * 3
     },
     customImage: {
       flex: 1,
       backgroundColor: COLORS.secondaryWhite,
-      borderRadius:screenRatio * 20
+      borderRadius: screenRatio * 20
     },
     flexContent: {
       flex: 1,
@@ -107,7 +108,7 @@ const Login = (): JSX.Element => {
       alignContent: "center",
       alignSelf: "center",
       position: "absolute",
-      bottom: screenRatio *(screenHeight / 3.5)
+      bottom: screenRatio * (screenHeight / 3.5)
     }
   });
 
@@ -132,10 +133,10 @@ const Login = (): JSX.Element => {
 
   const onLogin = async () => {
     const checkUserData = {
-      phone:phone
-     }
-     setLoginModel(!loginModel)
-    navigation.navigate(SCREEN_IDENTIFIER.Otp.identifier,checkUserData)
+      phone: phone
+    }
+    setLoginModel(!loginModel)
+    navigation.navigate(SCREEN_IDENTIFIER.Otp.identifier, checkUserData)
   };
   // const HALF_PI = Math.PI / 2;
   // const IMAGE_OFFESET = 30;
@@ -149,53 +150,37 @@ const Login = (): JSX.Element => {
   //     left: roll * (IMAGE_OFFESET / 2)
   //   }
   // })
+
+  const categoryList = [{ image: "https://freepngimg.com/thumb/banana/26-banana-png-image-bananas-picture-download.png" },
+  { image: "https://freepngimg.com/thumb/tomato/6-tomato-png-image.png" },
+  { image: "https://freepngimg.com/thumb/kiwi/20-kiwi-png-image-fruit-kiwi-png-pictures-download.png" },
+  { image: "https://freepngimg.com/thumb/onion/1-2-onion-free-png-image.png" },
+  { image: "https://freepngimg.com/thumb/broccoli/12-broccoli-png-image-with-transparent-background.png" },
+  { image: "https://freepngimg.com/thumb/cucumber/11-cucumber-png-image-picture-download.png" },
+  { image: "https://freepngimg.com/thumb/carrot/1-carrot-png-image.png" },
+  { image: "https://freepngimg.com/thumb/potato/8-2-potato-png-pic.png" },
+  { image: "https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png" }]
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.container}>
-          <View style={styles.gridFlex}>
-            <View style={styles.flexContent}>
-              <DefaultImage imageUri={"https://freepngimg.com/thumb/banana/26-banana-png-image-bananas-picture-download.png"} />
-            </View>
-            <View style={styles.flexContent}>
-              <DefaultImage imageUri={"https://freepngimg.com/thumb/onion/1-2-onion-free-png-image.png"} />
-            </View>
-
-            <View style={styles.flexContent}>
-              <DefaultImage imageUri={"https://freepngimg.com/thumb/kiwi/20-kiwi-png-image-fruit-kiwi-png-pictures-download.png"} />
-            </View>
-
-          </View>
-          <View style={styles.gridFlex}>
-            <View style={styles.flexContent}>
-              <DefaultImage imageUri={"https://freepngimg.com/thumb/broccoli/12-broccoli-png-image-with-transparent-background.png"} />
-            </View>
-            <View style={styles.flexContent}>
-              <DefaultImage imageUri={"https://freepngimg.com/thumb/tomato/6-tomato-png-image.png"} />
-            </View>
-            <View style={styles.flexContent}>
-              <DefaultImage imageUri={"https://freepngimg.com/thumb/cucumber/11-cucumber-png-image-picture-download.png"} />
-            </View>
-
-          </View>
-          <View style={styles.gridFlex}>
-            <View style={styles.flexContent}>
-              <DefaultImage imageUri={"https://freepngimg.com/thumb/carrot/1-carrot-png-image.png"} />
-            </View>
-            <View style={styles.flexContent}>
-              <DefaultImage imageUri={"https://freepngimg.com/thumb/potato/8-2-potato-png-pic.png"} />
-            </View>
-            <View style={styles.flexContent}>
-              <DefaultImage imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
-            </View>
-
-          </View>
+          <FlatList
+            scrollEnabled={false}
+            data={categoryList}
+            numColumns={3}
+            contentContainerStyle={{marginVertical:screenRatio*20}}
+            showsHorizontalScrollIndicator={true}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => item && <DefaultCategory styles={{height: screenRatio * ( screenHeight / 10),
+            width: screenRatio * (screenWidth / 4.8)}} title={""} imageUri={item?.image} data={item} />}
+          />
           <View style={styles.logo}>
             <DefaultImage styles={styles.customImage} imageUri={"https://freepngimg.com/thumb/graphic_design/6-2-graphic-design-transparent.png"} />
           </View>
           <View style={styles.logo}>
             <Text size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.heavy}> Best app for daily grocery</Text>
           </View>
+
 
           <Button style={[styles.inputView, styles.margin]}
             title="Login"
@@ -233,7 +218,7 @@ const Login = (): JSX.Element => {
                   if (REGEX.phoneRegex.test(phone)) {
                     setPhone(phone);
                   }
-                  
+
                 }}
               />
               <Button style={[styles.inputView, styles.margin]}

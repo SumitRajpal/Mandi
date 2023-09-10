@@ -1,10 +1,10 @@
 const Environment = {
   dev: {
-    url: "http://192.168.9.101:3000/",
+    url: "https://evergreen-qxyw.onrender.com/",
     api_version: "v1"
   },
   prod: {
-    url: "http://192.168.9.100:3000/",
+    url: "https://evergreen-qxyw.onrender.com/",
     api_version: "v1"
   }
 };

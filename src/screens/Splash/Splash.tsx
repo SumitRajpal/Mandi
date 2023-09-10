@@ -26,7 +26,6 @@ const Splash= (): JSX.Element => {
       flex: 1.0,
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: COLORS.secondaryGreen
     },
   });
   // const shouldFetchProfile = permissionType?.includes(
@@ -92,7 +91,6 @@ const Splash= (): JSX.Element => {
 
   return (
     <View style ={styles.container} >
-      <Text>spand</Text>
       
     </View>
   );

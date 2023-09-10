@@ -15,11 +15,11 @@ const defaultStyles = StyleSheet.create({
       },
 });
 interface IAddressList {
-      
+      isAddress:boolean
       onAddressClose(value: boolean): any;
 }
 const AddressList = (props: IAddressList) => {
-      const { onAddressClose } = props;
+      const { onAddressClose,isAddress } = props;
       const { setAuthAddress } = useContext(AuthContext);
       const fetchAppVersion = () => api({ url: WEB_SERVICES.user.getAddress });
       const { isLoading: isLoadingAppVersion, data: adddressDataList } =
@@ -41,14 +41,14 @@ const AddressList = (props: IAddressList) => {
       );
       return (
             <View style={defaultStyles.container}>
-                  <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 20, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
+                 { isAddress && <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 20, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
                         <View style={{ flex: 2 }}>
                               <FMIcon name="plus" size={screenRatio * 20} color={COLORS.tertiaryGray} />
                         </View>
                         <View style={{ flex: 16, borderBottomWidth: 0, borderColor: COLORS.primaryGray }}>
                               <DefaultLabel styles={{ color: COLORS.tertiaryGray, padding: 5 }} weight={FONT_WEIGHT.medium} size={FONT_SIZE.large} title={"Add New Address"} />
                         </View>
-                  </View>
+                  </View>}
                   <FlatList
                         scrollEnabled={false}
                         data={addressList}
@@ -56,7 +56,7 @@ const AddressList = (props: IAddressList) => {
                         showsHorizontalScrollIndicator={true}
                         keyExtractor={(item, index) => item?.id + index.toString()}
                         renderItem={({ item }) => item &&
-                              <TouchableOpacity onPress={() => { setAuthAddress(item); onAddressClose(true) }}>
+                              <TouchableOpacity onPress={() => { if(isAddress) {setAuthAddress(item); onAddressClose(true)} }}>
                                     <View style={{ flex: 1, flexWrap: "wrap", flexDirection: "row", gap: 20, backgroundColor: COLORS.primaryGray, padding: 10, marginVertical: 5, borderRadius: 10 }}>
                                           <View style={{ flex: 1.5 }}>
                                                 <View style={{ flex: 1, borderRadius: 15, padding: 10, backgroundColor: COLORS.primaryGray, height: screenRatio * 40, width: screenRatio * 40 }}>

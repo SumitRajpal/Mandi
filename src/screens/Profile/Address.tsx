@@ -61,7 +61,7 @@ const Address = (): JSX.Element => {
                                     </View>
 
                               </View>
-                              <AddressList/>
+                              <AddressList isAddress={false} onAddressClose={()=> {}}/>
                         </ScrollView>
                   </SafeAreaView>
             </View>

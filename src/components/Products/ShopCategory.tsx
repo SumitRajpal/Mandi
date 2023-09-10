@@ -100,7 +100,7 @@ const ShopCategory = (): JSX.Element => {
 
                   <View style={{ flex: 1, flexDirection: "column", flexWrap: "wrap", justifyContent: "flex-start" }}>
                         <View style={{ flex: 1, alignItems: "flex-start", alignContent: "flex-start", padding: 10 }}>
-                              <Label size={FONT_SIZE.large} weight={FONT_WEIGHT.black} title="Category" />
+                              <DefaultLabel size={FONT_SIZE.large} weight={FONT_WEIGHT.black} title="Category" />
                         </View>
                   </View>
 
@@ -124,13 +124,13 @@ interface IDefaultImage {
       title: string,
       data: any
 }
-const DefaultCategory = (props: IDefaultImage): JSX.Element => {
+export const DefaultCategory = (props: IDefaultImage): JSX.Element => {
       const { styles, imageStyles, imageUri, title } = props
       type StackNavigation = StackNavigationProp<StackParamList>;
       const navigation = useNavigation<StackNavigation>();
       return (
 
-            <View style={{ flex: 1, alignItems: "center" }}>
+            <View style={{ flex: 1, alignItems: "center",padding:!!title? 0:10 }}>
 
                   <View style={[defaultStyles.parentContainer, styles]}>
 
@@ -146,9 +146,9 @@ const DefaultCategory = (props: IDefaultImage): JSX.Element => {
                               </View>
 
                         </View>
-                        <View style={defaultStyles.title}>
-                              <Label title={title} />
-                        </View>
+                      { !!title && <View style={defaultStyles.title}>
+                              <DefaultLabel size={FONT_SIZE.regular} title={title} />
+                        </View>}
 
                   </View>
 
@@ -156,23 +156,5 @@ const DefaultCategory = (props: IDefaultImage): JSX.Element => {
 
       );
 }
-interface ILABEL {
-      title: string
-      size?: number
-      weight?: number
-}
-const Label = (props: ILABEL) => {
-      const { title, size = FONT_SIZE.small, weight = FONT_WEIGHT.heavy } = props;
-      return (
-            <Text
-                  style={[defaultStyles.text]}
-                  size={size}
-                  isPoppins={true}
-                  weight={weight}
-                  color={COLORS.text_black}
-            >
-                  {title}
-            </Text>
-      );
-};
+
 export default ShopCategory;
