@@ -50,7 +50,7 @@ const Splash= (): JSX.Element => {
   }
  const moveToNext = async () => {
    const result = await getLoggedInUser();
-//  AsyncStorage.removeItem("cart_details")
+ //AsyncStorage.removeItem("cart_details")
     if (result) {
       moveToHome();
     } else {
@@ -80,7 +80,7 @@ const Splash= (): JSX.Element => {
           });
           
           if (version > localVersion) {
-            console.log(version , localVersion,)
+        
           } else {
             moveToNext();
           }

@@ -6,6 +6,7 @@ import Text from "./Text";
 import { screenHeight, screenRatio, screenWidth } from "src/constants";
 import DefaultImage from "./DefaultImage";
 import CartButton from "./CartButton";
+import { DefaultLabel } from ".";
 
 const defaultStyle = StyleSheet.create({
       container: {
@@ -89,11 +90,11 @@ const StockOutProductList = (props:IStockOut): JSX.Element =>
                   <View style={defaultStyle.textFlexContainer}>
                         <View style={defaultStyle.titleContainer}>
                               <View style={defaultStyle.titleDetails}>
-                                    <Label size={FONT_SIZE.regular} weight={FONT_WEIGHT.medium} title={data?.name} />
+                                    <DefaultLabel size={FONT_SIZE.regular} weight={FONT_WEIGHT.medium} title={data?.name} />
                               </View>
                               <View style={defaultStyle.titleExtraDetails}>
                                     <View style={{ flex: 1 }}>
-                                          <Label weight={FONT_WEIGHT.roman} title={"500 ml"} />
+                                          <DefaultLabel weight={FONT_WEIGHT.roman} title={"500 ml"} />
                                     </View>
                               </View>
                         </View>

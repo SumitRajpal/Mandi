@@ -69,7 +69,6 @@ const OrderHistory = (): JSX.Element => {
     [orderListData]
   );
 
-  console.log(ordersList, "order", orderListData)
   return (
     <View style={styles.container} >
       <SafeAreaView style={styles.safearea}>
@@ -150,9 +149,9 @@ const OrderHistory = (): JSX.Element => {
             onEndReached={fetchMoreOrder}
             contentContainerStyle={{ marginHorizontal: 5, paddingBottom: screenRatio * (screenHeight / 28) }}
             showsHorizontalScrollIndicator={true}
-            keyExtractor={(item, index) => item?.product_id + index.toString()}
+            keyExtractor={(item, index) => item?.invoice_id + index.toString()}
             onEndReachedThreshold={0.2}
-            renderItem={({ item }) => item && <OrderHistoryItems data={item} />}
+            renderItem={({ item }) => item && <OrderHistoryItems key={item?.invoice_id} data={item} />}
             ListFooterComponent={
               <FlatListLoader isNext={isFetchingNextPage} />
             } />}

@@ -27,8 +27,7 @@ interface NewCustomer {
 const Otp = (): JSX.Element => {
       const { setLoggedInUser } = useContext(AuthContext);
       const navigation = useNavigation();
-      const route = useRoute();
-      const queryClient = useQueryClient();
+      const route:any = useRoute();
       const [loginModel, setLoginModel] = useState(false);
       const [otp, setOtp] = useState("");
       const [time, setTime] = useState(59);
@@ -90,7 +89,7 @@ const Otp = (): JSX.Element => {
             {
                   onSuccess: (response: IUSERS) => {
                         setLoggedInUser(response);
-                        console.log(response)
+                     
                         navigation.dispatch(
                               CommonActions.reset({
                                     index: 0,
@@ -105,7 +104,7 @@ const Otp = (): JSX.Element => {
       );
       const onLogin = async () => {
             const params: any = {
-                  phone: "9125365642"
+                  phone: route.params?.phone
             };
             setLoginModel(!loginModel)
              await loginMutation.mutate(params);

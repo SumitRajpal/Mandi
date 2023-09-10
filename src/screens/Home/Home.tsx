@@ -59,7 +59,7 @@ const Home = (): JSX.Element => {
     cart: { flex: 1, flexDirection: "row", flexWrap: "wrap", padding: 10 },
     headerFlex: {
       flexDirection: 'row',
-      flexWrap: 'wrap',
+      flexWrap: 'nowrap',
       padding: 10,
       flex: 1
     },
@@ -67,8 +67,7 @@ const Home = (): JSX.Element => {
     headerDetails: {
       flex: 8,
       alignItems: "flex-start",
-      alignSelf: "center",
-      gap: 5
+      alignSelf: "center"
     },
 
     profileDetails: {
@@ -89,7 +88,7 @@ const Home = (): JSX.Element => {
             <TouchableOpacity onPress={() => setAddress(!address)}>
               <View style={styles.headerDetails}>
               <Text numberOfLines={1} color={COLORS.text_black} size={FONT_SIZE.extra_large} isPoppins={true} weight={FONT_WEIGHT.heavy}>Delivering in 19 min</Text>
-              <Text numberOfLines={1} color={COLORS.text_black} size={FONT_SIZE.large} isPoppins={true} weight={FONT_WEIGHT.regular3}>{currentAddress}</Text>
+              <Text style={{ overflow: "hidden"}} numberOfLines={2} color={COLORS.text_black} size={FONT_SIZE.large} isPoppins={true} weight={FONT_WEIGHT.regular3}>{currentAddress}</Text>
             </View>
             </TouchableOpacity>
             <View style={styles.profileDetails}>

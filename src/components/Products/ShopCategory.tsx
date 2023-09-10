@@ -110,8 +110,8 @@ const ShopCategory = (): JSX.Element => {
                               data={categoryList}
                               numColumns={4}
                               showsHorizontalScrollIndicator={true}
-                              keyExtractor={(item, index) => item?.id + index.toString()}
-                              renderItem={({ item }) => item && <DefaultCategory title={item?.name} imageUri={item?.image} data={item} />}
+                              keyExtractor={(item, index) => item?.category_id + index.toString()}
+                              renderItem={({ item }) => item && <DefaultCategory key={item.category_id} title={item?.name} imageUri={item?.image} data={item} />}
                         />
                   </View>
             </View>

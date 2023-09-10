@@ -82,7 +82,7 @@ const Footer = (): JSX.Element => {
     getData();
     let total: number = 0;
     cartObject = getCartData;
-    Object.keys(getCartData)?.map(value => {
+    Object.keys(getCartData || {})?.map(value => {
       total += cartObject[value]?.quantity;
     })
     setTotalItem(total)
@@ -96,12 +96,10 @@ const Footer = (): JSX.Element => {
             <View style={{ flex: 1, flexDirection: "row" }}>
               <View style={{ flex: 1, flexShrink: 1, padding: 0 }}>
                 <View style={{ flex: 1, gap: - (screenRatio * 10), padding: 5, flexDirection: "row", flexShrink: 1, paddingHorizontal: 20 }}>
-                  <View style={{ flex: 1, justifyContent: "center", alignItems: "center", alignContent: "center" }}>
-                    <DefaultImage styles={defaultStyles.image} imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
-                  </View>
-                  <View style={{ flex: 1, justifyContent: "center", alignItems: "center", alignContent: "center" }}>
-                    <DefaultImage styles={defaultStyles.image} imageUri={"https://freepngimg.com/thumb/strawberry/58-strawberry-png-images.png"} />
-                  </View>
+                 {Object.keys(cartObject).map((data) =>  <View style={{ flex: 1, justifyContent: "center", alignItems: "center", alignContent: "center" }}>
+                    <DefaultImage key={String(data)} styles={defaultStyles.image} imageUri={cartObject[data]?.image } />
+                  </View>)
+                 }
                 </View>
               </View>
               <View style={{ flex: 1,alignSelf:"center",alignItems:"center",alignContent:"center" }}>

@@ -12,33 +12,33 @@ import { TouchableOpacity } from "react-native";
 import FMIcon from 'react-native-vector-icons/FontAwesome6';
 import ProductSorting from "src/components/ProductSorting";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
+const defaultStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.white
+  },
 
+  cartText: {
+    flex: 1,
+    color: COLORS.primaryGreen,
+    letterSpacing: 1
+  },
+  cartFlex: {
+    flex:  1 ,
+    alignItems: "center",
+    flexDirection:"row",
+    width:screenRatio * (screenWidth/6),
+    height:"100%",
+    padding:screenRatio*6,
+    borderColor:COLORS.primaryGreen,
+    borderWidth:1,
+    borderRadius:screenRatio*6,
+    backgroundColor: COLORS.secondaryBlue,
+    justifyContent: "center"
+  },
+});
 const ProductList = (): JSX.Element => {
-  const defaultStyles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: COLORS.white
-    },
-
-    cartText: {
-      flex: 1,
-      color: COLORS.primaryGreen,
-      letterSpacing: 1
-    },
-    cartFlex: {
-      flex:  1 ,
-      alignItems: "center",
-      flexDirection:"row",
-      width:screenRatio * (screenWidth/6),
-      height:"100%",
-      padding:screenRatio*6,
-      borderColor:COLORS.primaryGreen,
-      borderWidth:1,
-      borderRadius:screenRatio*6,
-      backgroundColor: COLORS.secondaryBlue,
-      justifyContent: "center"
-    },
-  });
+  
   const [sortVisible,setSortVisible] = useState(false);
   const [searchOrderText, setSearchOrderText] = useState("");
   const fetchOrder = async ({ pageParam = 0 }) => {
@@ -144,14 +144,14 @@ const ProductList = (): JSX.Element => {
               showsHorizontalScrollIndicator={true}
               keyExtractor={(item, index) => item?.product_id + index.toString()}
               onEndReachedThreshold={0.2}
-              renderItem={({ item }) => item && <CartProduct data={item} />}
+              renderItem={({ item }) => item && <CartProduct key={item?.product_id} data={item} />}
               ListFooterComponent={
                 <FlatListLoader isNext={isFetchingNextPage} />
               } />}
           </View>
         </View>
         <ProductSorting visible={sortVisible} />
-        <Footer />
+        <Footer key={"footer"} />
       </SafeAreaView>
     </View>
   );

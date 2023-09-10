@@ -101,9 +101,9 @@ const ProductListItem = (props:IProductList): JSX.Element =>{
               }}>
                 <View style={{ flex: 1, flexDirection: "column", gap: 5 }}>
                   <View style={{ flex: 1 }}>
-                    <DefaultLabel weight={FONT_WEIGHT.roman} title={"500 ml"} />
+                    <DefaultLabel weight={FONT_WEIGHT.roman} title={`${data?.weight} ${data?.unit}`} />
                   </View>
-                  <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", alignContent: "space-between", gap: 1 }}>
+                  <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", alignContent: "flex-start", gap:0 }}>
                     <View style={{ flex: 3, flexWrap: "wrap", alignItems: "flex-start" }}>
                       <DefaultLabel size={FONT_SIZE.regular} weight={FONT_WEIGHT.heavy} title={`₹${(100-data?.product_offer?.discount)/100 * data?.price[0]?.price}`} />
                     </View>

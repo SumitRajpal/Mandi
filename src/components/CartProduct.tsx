@@ -1,12 +1,9 @@
 
-import React, { useState } from "react";
+import React from "react";
 import { Image, Modal, Platform, Pressable, StyleSheet, View } from "react-native";
-import Animated from "react-native-reanimated";
-import { AnimatedImage } from "react-native-reanimated/lib/typescript/reanimated2/component/Image";
 import { screenHeight, screenRatio, screenWidth } from "src/constants";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
-import {DefaultLabel, Text} from "src/components";
-import Icon from 'react-native-vector-icons/Entypo';
+import {DefaultLabel} from "src/components";
 import CartButton from "src/components/CartButton";
 
 const defaultStyles = StyleSheet.create({
@@ -100,7 +97,7 @@ const CartProduct = (props: IDefaultImage): JSX.Element => {
                         <DefaultLabel weight={FONT_WEIGHT.regular3} size={FONT_SIZE.medium} title={data?.name} />
                   </View>
                   <View style={{ flex: 1, flexWrap: "wrap", alignItems: "flex-start", justifyContent: "space-evenly" }}>
-                        <DefaultLabel weight={FONT_WEIGHT.regular3} size={FONT_SIZE.small} title={data?.weight} />
+                        <DefaultLabel weight={FONT_WEIGHT.regular3} size={FONT_SIZE.small} title={`${data?.weight} ${data?.unit}`} />
                   </View>
                   <View style={{ flex: 2.5, flexWrap: "wrap", alignItems: "center", justifyContent: "space-evenly" }}>
                         <View style={{ flex: 1, flexDirection: "row" }}>
@@ -115,7 +112,7 @@ const CartProduct = (props: IDefaultImage): JSX.Element => {
                                     </View>
                               </View>
                               <View style={{ flex: 4, flexWrap: "wrap",justifyContent:"center",alignContent:"center"  }}>
-                                    <CartButton data={data} />
+                                    <CartButton key={data?.product_id} data={data} />
                               </View>
                         </View>
                   

@@ -54,9 +54,9 @@ const AddressList = (props: IAddressList) => {
                         data={addressList}
                         numColumns={1}
                         showsHorizontalScrollIndicator={true}
-                        keyExtractor={(item, index) => item?.id + index.toString()}
+                        keyExtractor={(item, index) => item?.address_id + index.toString()}
                         renderItem={({ item }) => item &&
-                              <TouchableOpacity onPress={() => { if(isAddress) {setAuthAddress(item); onAddressClose(true)} }}>
+                              <TouchableOpacity key={item.address_id} onPress={() => { if(isAddress) {setAuthAddress(item); onAddressClose(true)} }}>
                                     <View style={{ flex: 1, flexWrap: "wrap", flexDirection: "row", gap: 20, backgroundColor: COLORS.primaryGray, padding: 10, marginVertical: 5, borderRadius: 10 }}>
                                           <View style={{ flex: 1.5 }}>
                                                 <View style={{ flex: 1, borderRadius: 15, padding: 10, backgroundColor: COLORS.primaryGray, height: screenRatio * 40, width: screenRatio * 40 }}>

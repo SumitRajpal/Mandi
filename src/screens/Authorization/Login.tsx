@@ -171,7 +171,7 @@ const Login = (): JSX.Element => {
             contentContainerStyle={{marginVertical:screenRatio*20}}
             showsHorizontalScrollIndicator={true}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => item && <DefaultCategory styles={{height: screenRatio * ( screenHeight / 10),
+            renderItem={({ item ,index}) => item && <DefaultCategory key={index} styles={{height: screenRatio * ( screenHeight / 10),
             width: screenRatio * (screenWidth / 4.8)}} title={""} imageUri={item?.image} data={item} />}
           />
           <View style={styles.logo}>

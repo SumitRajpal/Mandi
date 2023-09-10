@@ -160,7 +160,7 @@ const CartList = (props: ICartList): JSX.Element => {
             {
                   enabled: product_ids?.length > 0,
                   onError: () => {
-                        console.log("error", showBill, "cartlist")
+                        
                   },
                   onSuccess: (response: any) => {
 
@@ -232,9 +232,9 @@ const CartList = (props: ICartList): JSX.Element => {
                         data={outOfStockCartList}
                         numColumns={1}
                         showsHorizontalScrollIndicator={true}
-                        keyExtractor={(item, index) => item?.id + index.toString()}
+                        keyExtractor={(item, index) => item?.product_id + index.toString()}
                         renderItem={({ item }) => item && <View style={{ flex: 1, margin: 5 }}>
-                              <StockOutProductList data={item} />
+                              <StockOutProductList key={item?.product_id} data={item} />
                         </View>}
                   />
             </View>}
@@ -267,7 +267,7 @@ const CartList = (props: ICartList): JSX.Element => {
                               <DefaultLabel styles={{ color: COLORS.primaryBlue }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={"Your total savings"} />
                         </View>
                         <View style={{ flex: 2, alignItems: "flex-end", alignContent: "center", height: "100%" }}>
-                              <DefaultLabel styles={{ color: COLORS.primaryBlue }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={`₹${totalPrice - amountAfterDicount}`} />
+                              <DefaultLabel styles={{ color: COLORS.primaryBlue }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={`₹${Math.round(totalPrice - amountAfterDicount)}`} />
                         </View>
                   </View>
             </View>}
@@ -316,7 +316,7 @@ const CartList = (props: ICartList): JSX.Element => {
                               <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.medium} title={"Grand Total"} />
                         </View>
                         <View style={{ flex: 4, alignItems: "flex-end" }}>
-                              <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.medium} title={`${amountAfterDicount}`} />
+                              <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.medium} title={`${Math.round(amountAfterDicount)}`} />
                         </View>
                   </View>
 

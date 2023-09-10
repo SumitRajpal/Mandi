@@ -95,7 +95,7 @@ const HistoryListItem = (props:IProductList): JSX.Element =>{
               }}>
                 <View style={{ flex: 1, flexDirection: "column", gap: 5 }}>
                   <View style={{ flex: 1 }}>
-                    <DefaultLabel weight={FONT_WEIGHT.roman} title={`500 ml x ${data?.quantity}`} />
+                    <DefaultLabel weight={FONT_WEIGHT.roman} title={`${data?.cart_details_product?.weight} ${data?.cart_details_product?.unit} x ${data?.quantity}`} />
                   </View>
                   
                 </View>

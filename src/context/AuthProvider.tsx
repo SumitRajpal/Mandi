@@ -51,7 +51,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const setAuthAddress = async (data: any) => {
     const storage = await AsyncStorage.setItem(STORAGE_KEYS.user_address, JSON.stringify(data));
   setAddress(storage)
-  console.log(address,storage,"-----------")
   };
   const getAuthAddress = async () => {
     const result = await AsyncStorage.getItem(STORAGE_KEYS.user_address);

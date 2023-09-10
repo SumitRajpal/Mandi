@@ -186,7 +186,7 @@ const OrderHistoryDetails = (): JSX.Element => {
                                     title="Reorder" onPress={() => {
                                           let  reorderObject:any = {};
                                           orderHistoryData?.invoice_cart_details?.map((value:any) => {
-                                                reorderObject[value.product_id]={product_id:value?.product_id,quantity:value?.quantity}
+                                                reorderObject[value.product_id]={product_id:value?.product_id,quantity:value?.quantity,image:value?.cart_details_product?.image}
                                           })
                                           AsyncStorage.removeItem(STORAGE_KEYS.cart_details).then(()=>{
                                                 setCart(reorderObject)

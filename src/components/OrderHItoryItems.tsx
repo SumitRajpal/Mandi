@@ -71,7 +71,7 @@ const OrderHistoryItems = (props: IHistoryItems): JSX.Element => {
                   onSuccess: (response: any) => {
                         let reorderObject: any = {};
                         response?.invoice_cart_details?.map((value: any) => {
-                              reorderObject[value.product_id] = { product_id: value?.product_id, quantity: value?.quantity }
+                              reorderObject[value.product_id] = { product_id: value?.product_id, quantity: value?.quantity,image:value?.cart_details_product?.image }
                         })
                         AsyncStorage.removeItem(STORAGE_KEYS.cart_details).then(() => {
                               setCart(reorderObject)
@@ -122,9 +122,9 @@ const OrderHistoryItems = (props: IHistoryItems): JSX.Element => {
                                                             numColumns={5}
                                                             contentContainerStyle={{ marginHorizontal: 10 }}
                                                             showsHorizontalScrollIndicator={false}
-                                                            keyExtractor={(item, index) => item?.id + index.toString()}
+                                                            keyExtractor={(item, index) => item?.product_id + index.toString()}
                                                             renderItem={({ item }) => item &&
-                                                                  <DefaultImage styles={defaultStyles.image} imageUri={item?.cart_details_product?.image} />
+                                                                  <DefaultImage key={item?.product_id} styles={defaultStyles.image} imageUri={item?.cart_details_product?.image} />
                                                             }
                                                       />
                                                 </View>

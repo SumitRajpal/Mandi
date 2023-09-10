@@ -14,7 +14,6 @@ export const logoutNavigation = () => {
       // do nothing here
     }
    // logoutAPI();
-   console.log("logout me")
     navigationRef.dispatch(
       CommonActions.reset({
         index: 0,

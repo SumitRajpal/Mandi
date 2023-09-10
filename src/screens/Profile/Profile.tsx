@@ -1,5 +1,5 @@
 import { FlatList, Image, Platform, Pressable, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { DefaultLabel } from "src/components";
 import { SCREEN_IDENTIFIER, screenHeight, screenRatio } from "src/constants";
@@ -12,9 +12,11 @@ import { StackParamList } from "..";
 import { AuthContext } from "src/context/AuthProvider";
 
 const Profile = (): JSX.Element => {
-      const { setLoggedInUser } = useContext(AuthContext);
+      const { setLoggedInUser,getLoggedInUser } = useContext(AuthContext);
       type StackNavigation = StackNavigationProp<StackParamList>;
       const navigation = useNavigation<StackNavigation>();
+        const [profile,setProfile] = useState<any>(null);
+      
       const defaultStyles = StyleSheet.create({
             container: {
                   flex: 1,
@@ -46,6 +48,15 @@ const Profile = (): JSX.Element => {
             }
       });
 
+
+      useEffect(() => {
+            getUserProfile();
+      }, [])
+      const getUserProfile = (async () => {
+            const records = await getLoggedInUser();
+
+            setProfile(records);
+      }) 
       return (
             <View style={defaultStyles.container} >
                   <SafeAreaView style={defaultStyles.container}>
@@ -60,14 +71,14 @@ const Profile = (): JSX.Element => {
                                           <View style={{ flex: 1, justifyContent: "center", alignContent: "center", alignItems: "flex-start", paddingVertical: 5 }}>
 
                                                 <View style={{ flex: 1, borderBottomWidth: 0, borderColor: COLORS.primaryGray }}>
-                                                      <DefaultLabel styles={{ color: COLORS.tertiaryGray, padding: 10 }} weight={FONT_WEIGHT.medium} size={FONT_SIZE.xxxx_large} title={"Sumit Rajpal"} />
+                                                      <DefaultLabel styles={{ color: COLORS.tertiaryGray, padding: 10 }} weight={FONT_WEIGHT.medium} size={FONT_SIZE.xxxx_large} title={profile?.username} />
                                                 </View>
 
                                           </View>
                                           <View style={{ flex: 1, justifyContent: "center", alignContent: "flex-start", alignItems: "flex-start", paddingVertical: 5 }}>
 
                                                 <View style={{ flex: 1, borderBottomWidth: 0, borderColor: COLORS.primaryGray }}>
-                                                      <DefaultLabel styles={{ color: COLORS.tertiaryGray, padding: 10 }} weight={FONT_WEIGHT.medium} size={FONT_SIZE.extra_large} title={"9021394928"} />
+                                                      <DefaultLabel styles={{ color: COLORS.tertiaryGray, padding: 10 }} weight={FONT_WEIGHT.medium} size={FONT_SIZE.extra_large} title={profile?.phone} />
                                                 </View>
 
                                           </View>

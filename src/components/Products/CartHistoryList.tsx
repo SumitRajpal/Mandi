@@ -128,8 +128,8 @@ const CartHistoryList = (props:ICartHistoryList): JSX.Element => {
                               numColumns={1}
                               contentContainerStyle={{paddingHorizontal:5,}}
                               showsHorizontalScrollIndicator={true}
-                              keyExtractor={(item, index) => item?.id + index.toString()}
-                              renderItem={({ item }) => item && <View style={{flex:1, paddingVertical:5}}><HistoryListItem data={item}/></View>}
+                              keyExtractor={(item, index) => item?.product_id + index.toString()}
+                              renderItem={({ item }) => item && <View style={{flex:1, paddingVertical:5}}><HistoryListItem key={item?.product_id} data={item}/></View>}
                         />
                   </View>
 

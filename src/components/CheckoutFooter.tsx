@@ -98,7 +98,7 @@ const CheckoutFooter = (props: ICheckoutFooter): JSX.Element => {
     {
       enabled: product_ids.length > 0,
       onError: (error) => {
-        console.log("checkout footer", error)
+       
       },
       onSuccess: (response: any) => {
        
@@ -125,7 +125,7 @@ const CheckoutFooter = (props: ICheckoutFooter): JSX.Element => {
     invoice_category: "USER_PURCHASE",
     user_id: userId,
     address_id:addressId,
-    grand_total: amountAfterDicount,
+    grand_total: Math.round(amountAfterDicount),
     status: "SUCCESS"
   }
   const paymentObject = {
@@ -135,7 +135,7 @@ const CheckoutFooter = (props: ICheckoutFooter): JSX.Element => {
       "type": "CREDIT",
       "mode": "UPI",
       "status": "SUCCESS",
-      "amount": amountAfterDicount,
+      "amount": Math.round(amountAfterDicount),
       "note": "got ihfhtrht"
 
     }
@@ -149,11 +149,11 @@ const CheckoutFooter = (props: ICheckoutFooter): JSX.Element => {
       }),
     {
       onSuccess: (response: any) => {
-        console.log(response)
+  
         // navigation.navigate(SCREEN_IDENTIFIER.Checkout.identifier as never)
-        // Linking.openURL(`paytmmp://pay?pa=916306150790@paytm&pn=DrishtiAhuja&tn=Note&am=${amountAfterDicount}&cu=INR`).then(value => {
-        //   console.log(value)
-        // }).catch(error => { console.log(error, "error") });
+         Linking.openURL(`paytmmp://pay?pa=916306150790@paytm&pn=DrishtiAhuja&tn=Note&am=${amountAfterDicount}&cu=INR`).then(value => {
+       
+         }).catch(error => { console.log(error, "error") });
         AsyncStorage.removeItem("cart_details")
         navigation.navigate(SCREEN_IDENTIFIER.Home.identifier as never)
       },
@@ -198,7 +198,7 @@ const CheckoutFooter = (props: ICheckoutFooter): JSX.Element => {
               onPress={() => { }} /> :
             <Button style={{}}
 
-              title={`₹${amountAfterDicount}    Place order`} onPress={() => { sendCartDetails(paymentObject) }} />}
+              title={`₹${Math.round(amountAfterDicount)}    Place order`} onPress={() => { sendCartDetails(paymentObject) }} />}
         </View>
       </View>
       <PaymentModel visible={model} height={"100%"} onModelClose={(value) => setModel(value)} />
