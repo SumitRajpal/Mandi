@@ -1,31 +1,23 @@
-import { FlatList, Platform, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import React, { useContext, useEffect, useState } from "react"
-import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
-import CartList from "src/components/Products/CartList";
-import { DefaultLabel } from "src/components";
-import { SCREEN_IDENTIFIER, screenHeight, screenRatio } from "src/constants";
-import Icon from 'react-native-vector-icons/Entypo';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import SIcon from 'react-native-vector-icons/Fontisto';
-import CheckoutFooter from "src/components/CheckoutFooter";
-import Header from "src/components/header";
-import { AuthContext } from "src/context/AuthProvider";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { StackParamList } from "..";
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import React, { useMemo } from "react";
+import { Platform, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import CheckoutFooter from "src/components/CheckoutFooter";
+import CartList from "src/components/Products/CartList";
+import Header from "src/components/header";
+import { screenHeight } from "src/constants";
+import { COLORS } from "src/constants/font";
+import { CartStore } from "src/context/AuthProvider";
+import { StackParamList } from "..";
 const Checkout = (): JSX.Element => {
-      const { getCart } = useContext(AuthContext);
-      const [getCartData, setCartData] = useState({});
-      const [cartResponse, setCartResponse] = useState({});
+      
+      const cart = CartStore((state:any) => state.cart )
+      const { cartObject } = CartStore((state) => {
+            return { cartObject: state.cart };
+        });
       type StackNavigation = StackNavigationProp<StackParamList>;
       const navigation = useNavigation<StackNavigation>();
-      useEffect(() => {
-            async function getData() {
-                  const result = await getCart();
-                  setCartData(result)
-            }
-            getData();
-      }, [getCartData]);
+  
       const defaultStyles = StyleSheet.create({
             container: {
                   flex: 1,
@@ -59,16 +51,19 @@ const Checkout = (): JSX.Element => {
             }
       });
 
+      const cartMemo = useMemo(() => cart, [cart]);
+      console.log(cartMemo,"memo,checkout")
+
       return (
             <View style={defaultStyles.container} >
                   <SafeAreaView style={defaultStyles.container}>
                         <ScrollView style={defaultStyles.container}>
                               <Header title="Checkout" />
                               <View style={{ paddingHorizontal: 10 }}>
-                                    {!!Object.keys(getCartData).length && <CartList onResponse={(res) => { }} showBill localCart={getCartData} showSaving product_ids={Object.keys(getCartData)} />}
+                                    {!!Object.keys(cartMemo)?.length && <CartList onResponse={(res) => { }} showBill localCart={cartMemo} showSaving product_ids={Object.keys(cartMemo)} />}
                               </View>
                         </ScrollView>
-                        {!!Object.keys(getCartData).length && <CheckoutFooter localCart={getCartData} product_ids={Object.keys(getCartData)} />}
+                        {!!Object.keys(cartMemo)?.length && <CheckoutFooter localCart={cartMemo} product_ids={Object.keys(cartMemo)} />}
                   </SafeAreaView>
             </View>
       );

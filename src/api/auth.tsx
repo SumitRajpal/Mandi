@@ -8,7 +8,7 @@ async function login(username:String, password:String) {
     password,
     username
   };
-  const result = await postHttp(WEB_SERVICES.auth.login, params);
+  const result = await postHttp(WEB_SERVICES.auth.signin, params);
   return result;
 }
 

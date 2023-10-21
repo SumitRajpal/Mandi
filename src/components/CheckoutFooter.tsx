@@ -108,7 +108,6 @@ const CheckoutFooter = (props: ICheckoutFooter): JSX.Element => {
   );
 
   useEffect(() => {
-    refetch();
     getAuthData();
   }, [product_ids, localCart])
 
@@ -119,7 +118,11 @@ const CheckoutFooter = (props: ICheckoutFooter): JSX.Element => {
     setAddressId(address?.address_id);
     setUserId(userData?.id)
   })
-  const amountAfterDicount = useMemo(() => cartListData?.rows?.reduce((partialSum: number, accumulator: any) => partialSum + ((100 - accumulator?.product_offer?.discount) / 100) * (accumulator.price[0]?.price * localCart[accumulator?.product_id]?.quantity), 0), [cartListData, product_ids]);
+  const stockList = useMemo(() => cartListData?.rows.filter((data: any) =>
+            data?.product_inventory?.quantity >= localCart[data?.product_id]?.quantity
+
+      ), [cartListData, product_ids]);
+  const amountAfterDicount = useMemo(() => stockList?.reduce((partialSum: number, accumulator: any) => partialSum + ((100 - accumulator?.product_offer?.discount) / 100) * (accumulator.price[0]?.price * localCart[accumulator?.product_id]?.quantity), 0), [cartListData, product_ids]);
   const cartObject = useMemo(() => cartListData?.rows?.map((data: any) => { return { product_id: data?.product_id, weight: data?.weight, price_id: data.price[0]?.price_id, offer_id: data?.product_offer?.id, user_id: "a810d158-bb1b-4f55-b878-b403b0b79d2c", quantity: localCart[data?.product_id]?.quantity } }), [cartListData, product_ids]);
   const invoiceObject = {
     invoice_category: "USER_PURCHASE",
@@ -151,9 +154,9 @@ const CheckoutFooter = (props: ICheckoutFooter): JSX.Element => {
       onSuccess: (response: any) => {
   
         // navigation.navigate(SCREEN_IDENTIFIER.Checkout.identifier as never)
-         Linking.openURL(`paytmmp://pay?pa=916306150790@paytm&pn=DrishtiAhuja&tn=Note&am=${amountAfterDicount}&cu=INR`).then(value => {
+        //  Linking.openURL(`paytmmp://pay?pa=916306150790@paytm&pn=DrishtiAhuja&tn=Note&am=${amountAfterDicount}&cu=INR`).then(value => {
        
-         }).catch(error => { console.log(error, "error") });
+        //  }).catch(error => { console.log(error, "error") });
         AsyncStorage.removeItem("cart_details")
         navigation.navigate(SCREEN_IDENTIFIER.Home.identifier as never)
       },

@@ -1,41 +1,33 @@
-import { FlatList, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { useContext, useEffect, useState } from "react"
-import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
-import { api } from "src/api/http";
-import { SCREEN_IDENTIFIER, WEB_SERVICES, screenHeight, screenRatio, screenWidth } from "src/constants";
-import { useQuery } from "@tanstack/react-query";
-import ProgressView from "src/components/ProgressView";
-import { Button, Text } from "src/components";
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Footer from "src/components/footer";
-import DefaultCategory from "src/components/DefaultCategory";
-import DefaultSearchBar from "src/components/DefaultSearchBar";
-import ShopCategory from "src/components/Products/ShopCategory";
-import CartProduct from "src/components/CartProduct";
-import ProductListItem from "src/components/ProductListItem";
-import ProductHorizontal from "src/components/Products/ProductHorizontal";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { StackParamList } from "..";
-import { AuthContext } from "src/context/AuthProvider";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import React, { useContext, useEffect, useMemo, useState } from "react";
+import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Text } from "src/components";
 import AddressModel from "src/components/AddressModel";
+import DefaultSearchBar from "src/components/DefaultSearchBar";
+import ProductHorizontal from "src/components/Products/ProductHorizontal";
+import ShopCategory from "src/components/Products/ShopCategory";
+import Footer from "src/components/footer";
+import { SCREEN_IDENTIFIER, screenHeight, screenRatio } from "src/constants";
+import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
+import { AuthContext } from "src/context/AuthProvider";
+
+import { CartStore } from "src/context/AuthProvider";
+import { useShallow } from "zustand/react/shallow";
+import { StackParamList } from "..";
 
 const Home = (): JSX.Element => {
   type StackNavigation = StackNavigationProp<StackParamList>;
   const navigation = useNavigation<StackNavigation>();
-  const { getCart,getAuthAddress } = useContext(AuthContext);
-  const [getCartData, setCartData] = useState({});
+  const {getAuthAddress } = useContext(AuthContext);
+  const cart = CartStore(useShallow((state:any) => state.cart))
   const [address, setAddress] = useState(false);
+  
   const [currentAddress, setCurrentAddress] = useState<any>(null);
 
-  useEffect(() => {
-    async function getData() {
-      const result = await getCart();
-      setCartData(result)
-    }
-    getData();
-  }, [getCartData])
+  const cartMemo = useMemo(() => cart, [cart]);
+console.log(cartMemo,"memo,home")
 
 
   useEffect(() => {
@@ -53,7 +45,7 @@ const Home = (): JSX.Element => {
     },
     safearea: {
       flex: 1,
-      paddingBottom: (!!Object.keys(getCartData)?.length) ? screenRatio * (screenHeight / 16) : 0,
+      paddingBottom: (!!Object.keys(cartMemo)?.length) ? screenRatio * (screenHeight / 16) : 0,
       backgroundColor: COLORS.white
     },
     cart: { flex: 1, flexDirection: "row", flexWrap: "wrap", padding: 10 },
@@ -105,7 +97,7 @@ const Home = (): JSX.Element => {
           <ProductHorizontal horizontalTitle="Best Seller" />
         </ScrollView>
         <AddressModel visible={address} onModelClose={(value) => setAddress(value)} height={100} />
-        {!!Object.keys(getCartData)?.length && <Footer  />}
+        {!!Object.keys(cartMemo)?.length && <Footer  />}
       </SafeAreaView>
     </View>
   );

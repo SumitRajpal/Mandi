@@ -1,15 +1,14 @@
 
-import React, { ReactNode, useContext, useEffect, useState } from "react";
-import { Image, Modal, Platform, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useMemo, useState } from "react";
+import { Modal, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import GestureRecognizer from "react-native-swipe-gestures";
+import Icon from 'react-native-vector-icons/AntDesign';
+import { Button, DefaultLabel } from "src/components";
+import DefaultImage from "src/components/DefaultImage";
+import CartList from "src/components/Products/CartList";
 import { screenHeight, screenRatio, screenWidth } from "src/constants";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
-import { Button, DefaultLabel } from "src/components";
-import Icon from 'react-native-vector-icons/AntDesign';
-import CartList from "src/components/Products/CartList";
-import GestureRecognizer from "react-native-swipe-gestures";
-import { AuthContext } from "src/context/AuthProvider";
-import DefaultImage from "src/components/DefaultImage";
-
+import { CartStore } from "src/context/AuthProvider";
 
 const defaultStyles = StyleSheet.create(
       {
@@ -105,31 +104,23 @@ interface IDefaultModel {
       onModelClose(value: boolean): any;
 }
 const CartListModel = (props: IDefaultModel): JSX.Element => {
-      const { getCart } = useContext(AuthContext);
+      const cart = CartStore((state:any) => state.cart)
       const { styles, visible, height, onModelClose } = props
       const [isModel, setModel] = useState(false);
-      const [getCartData, setCartData] = useState({});
-      const [totalItem, setTotalItem] = useState({});
-      var cartObject: any = getCartData || {}
+      const totalCartItem = CartStore((state: any) => state.totalCartItem)
 
-      useEffect(() => {
-
-            async function getData() {
-                  const result = await getCart();
-                  setCartData(result)
-            }
-            getData();
-            let total: number = 0;
-            cartObject = getCartData;
-            Object.keys(getCartData)?.map(value => {
-                  total += cartObject[value]?.quantity;
-            })
-            setTotalItem(total)
-      }, [getCartData]);
-      useEffect(() => {
+     
+  const {cartObject} = CartStore((state) => {
+      return {cartObject: state.cart}
+    })
+      const cartMemo = useMemo(() => cart, [cart]);
+      
+      useEffect( () => {
             setModel(visible)
 
       }, [visible]);
+    
+          console.log(cartMemo,"memo list model")
       return (
             <GestureRecognizer config={{
                   velocityThreshold: 0.5,
@@ -156,7 +147,7 @@ const CartListModel = (props: IDefaultModel): JSX.Element => {
                                                 }} />
                                           </View>
                                           <ScrollView style={defaultStyles.container}>
-                                                {!!Object.keys(getCartData).length && <CartList onResponse={(res) => { }} localCart={getCartData} product_ids={Object.keys(getCartData) || []} />}
+                                                {!!Object.keys(cartMemo)?.length && <CartList onResponse={(res) => { }} localCart={cartMemo} product_ids={Object.keys(cartMemo) || []} />}
                                           </ScrollView>
 
                                     </View>
@@ -168,15 +159,15 @@ const CartListModel = (props: IDefaultModel): JSX.Element => {
                                                       <View style={{ flex: 1, flexDirection: "row" }}>
                                                             <View style={{ flex: 1, flexShrink: 1, padding: 0 }}>
                                                                   <View style={{ flex: 1, gap: - (screenRatio * 10), padding: 5, flexDirection: "row", flexShrink: 1, paddingHorizontal: 20 }}>
-                                                                        {Object.keys(cartObject).map((data) => <View style={{ flex: 1, justifyContent: "center", alignItems: "center", alignContent: "center" }}>
-                                                                              <DefaultImage key={String(data)} styles={defaultStyles.image} imageUri={cartObject[data]?.image} />
+                                                                        {Object.keys(cartMemo)?.map((data) => <View key={data}  style={{ flex: 1, justifyContent: "center", alignItems: "center", alignContent: "center" }}>
+                                                                              <DefaultImage key={String(data)} styles={defaultStyles.image} imageUri={cartMemo[data]?.image} />
                                                                         </View>)
                                                                         }
                                                                   </View>
                                                             </View>
                                                             <View style={{ flex: 1, alignSelf: "center", alignItems: "center", alignContent: "center" }}>
                                                                   <DefaultLabel
-                                                                        title={`${totalItem} Items`}
+                                                                        title={`${totalCartItem()} Items`}
                                                                         size={FONT_SIZE.medium}
                                                                         weight={FONT_WEIGHT.medium}
                                                                   />

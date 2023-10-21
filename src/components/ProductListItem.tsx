@@ -1,12 +1,11 @@
 
 import React from "react";
-import { ActivityIndicator, Modal, StyleSheet, View } from "react-native";
-import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
-import Text from "./Text";
-import { screenHeight, screenRatio, screenWidth } from "src/constants";
-import DefaultImage from "src/components/DefaultImage";
+import { StyleSheet, View } from "react-native";
 import CartButton from "src/components/CartButton";
+import DefaultImage from "src/components/DefaultImage";
 import DefaultLabel from "src/components/DefaultLabel";
+import { screenRatio } from "src/constants";
+import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 
 const defaultStyle = StyleSheet.create({
   container: {
@@ -25,7 +24,7 @@ const defaultStyle = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     borderWidth: 2,
-    padding:screenRatio *2,
+    padding: screenRatio * 2,
     borderColor: COLORS.primaryGray,
     borderRadius: 10
   },
@@ -70,17 +69,15 @@ const defaultStyle = StyleSheet.create({
   }
 });
 
-/**
- * ProgressView is Function Component to render indicator modal
- * @property {bool} visible - show modal
- */
+
 interface IProductList {
-  data?:any
+  data?: any
 }
 
-const ProductListItem = (props:IProductList): JSX.Element =>{
-  const {data} = props;
-  return (<View style={defaultStyle.container}>
+const ProductListItem = (props: IProductList): JSX.Element => {
+  const { data } = props;
+  return (
+  <View style={defaultStyle.container}>
     <View style={defaultStyle.parent}>
       <View style={defaultStyle.imageFlexContainer}>
         <DefaultImage styles={defaultStyle.imageContainer} imageUri={data?.image} />
@@ -89,7 +86,7 @@ const ProductListItem = (props:IProductList): JSX.Element =>{
       <View style={defaultStyle.textFlexContainer}>
         <View style={defaultStyle.titleContainer}>
           <View style={defaultStyle.titleDetails}>
-            <DefaultLabel  size={FONT_SIZE.medium} weight={FONT_WEIGHT.heavy} title={data?.name} />
+            <DefaultLabel size={FONT_SIZE.medium} weight={FONT_WEIGHT.heavy} title={data?.name} />
           </View>
           <View style={defaultStyle.titleExtraDetails}>
             <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", alignContent: "flex-start", justifyContent: "center" }}>
@@ -103,9 +100,9 @@ const ProductListItem = (props:IProductList): JSX.Element =>{
                   <View style={{ flex: 1 }}>
                     <DefaultLabel weight={FONT_WEIGHT.roman} title={`${data?.weight} ${data?.unit}`} />
                   </View>
-                  <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", alignContent: "flex-start", gap:0 }}>
+                  <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", alignContent: "flex-start", gap: 0 }}>
                     <View style={{ flex: 3, flexWrap: "wrap", alignItems: "flex-start" }}>
-                      <DefaultLabel size={FONT_SIZE.regular} weight={FONT_WEIGHT.heavy} title={`₹${(100-data?.product_offer?.discount)/100 * data?.price[0]?.price}`} />
+                      <DefaultLabel size={FONT_SIZE.regular} weight={FONT_WEIGHT.heavy} title={`₹${(100 - data?.product_offer?.discount) / 100 * data?.price[0]?.price}`} />
                     </View>
                     <View style={{ flex: 1, flexWrap: "wrap", alignItems: "stretch" }}>
                       <DefaultLabel styles={{
@@ -121,7 +118,7 @@ const ProductListItem = (props:IProductList): JSX.Element =>{
                 alignContent: "center",
                 justifyContent: "flex-end"
               }}>
-                <CartButton data={data} />
+                <CartButton key={data?.product_id} data={data} />
               </View>
             </View>
           </View>
@@ -133,4 +130,4 @@ const ProductListItem = (props:IProductList): JSX.Element =>{
 
 
 
-export default ProductListItem;
+export default React.memo(ProductListItem);

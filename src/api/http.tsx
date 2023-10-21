@@ -83,6 +83,7 @@ export const api = async (
   if (params) {
     requestConfig.params = params;
   }
+  
   const response = await handleRequest({ requestConfig, checkAuth });
   return response?.data || {};
 };

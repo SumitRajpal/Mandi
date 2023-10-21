@@ -1,10 +1,10 @@
 
 import React from "react";
-import { Image, Modal, Platform, Pressable, StyleSheet, View } from "react-native";
+import { Image, Platform, StyleSheet, View } from "react-native";
+import { DefaultLabel } from "src/components";
+import CartButton from "src/components/CartButton";
 import { screenHeight, screenRatio, screenWidth } from "src/constants";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
-import {DefaultLabel} from "src/components";
-import CartButton from "src/components/CartButton";
 
 const defaultStyles = StyleSheet.create({
       container: {
@@ -76,7 +76,7 @@ const CartProduct = (props: IDefaultImage): JSX.Element => {
       const { styles, imageStyles,data } = props
       const discountedPrice  = data?.price[0]?.price * (100 - data?.product_offer?.discount) / 100 || 0
       return (
-            <View style={[defaultStyles.container, styles]}>
+            <View key={data?.product_id} style={[defaultStyles.container, styles]}>
                   { data?.product_offer?.type ==="PERCENTAGE" ?  
                   <View style={[defaultStyles.offer]}>
                   <DefaultLabel weight={FONT_WEIGHT.heavy} size={FONT_SIZE.small} title={`${data?.product_offer?.discount}%`} />
@@ -121,4 +121,4 @@ const CartProduct = (props: IDefaultImage): JSX.Element => {
 }
 
 
-export default CartProduct;
+export default React.memo(CartProduct);

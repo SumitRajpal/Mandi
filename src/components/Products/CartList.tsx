@@ -1,12 +1,12 @@
 
-import React, { ReactNode, useEffect, useMemo, useState } from "react";
-import { ActivityIndicator, FlatList, Modal, Platform, ScrollView, StyleSheet, View } from "react-native";
+import React, { ReactNode, useEffect, useMemo } from "react";
+import { FlatList, Platform, StyleSheet, View } from "react-native";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import ProductListItem from "src/components/ProductListItem";
 import Icon from 'react-native-vector-icons/AntDesign';
 import StockOutProductList from "src/components/StockOutProductList";
 import { DefaultLabel } from "src/components";
-import { WEB_SERVICES, screenHeight, screenRatio, screenWidth } from "src/constants";
+import { WEB_SERVICES, screenHeight, screenWidth } from "src/constants";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "src/api/http";
 import EIcon from 'react-native-vector-icons/Entypo';
@@ -160,7 +160,7 @@ const CartList = (props: ICartList): JSX.Element => {
             {
                   enabled: product_ids?.length > 0,
                   onError: () => {
-                        
+
                   },
                   onSuccess: (response: any) => {
 
@@ -170,159 +170,160 @@ const CartList = (props: ICartList): JSX.Element => {
       );
 
       useEffect(() => {
-            refetch;
-      }, [localCart, product_ids, showSaving])
-
+         //   refetch();
+      }, [product_ids, showSaving])
+      useEffect(() => {
+              refetch();
+         }, [])
 
       const stockList = useMemo(() => cartListData?.rows.filter((data: any) =>
-            data?.product_inventory?.quantity > localCart[data?.product_id]?.quantity
+            data?.product_inventory?.quantity >= localCart[data?.product_id]?.quantity
 
       ), [cartListData, product_ids]);
 
       const outOfStockCartList = useMemo(() => cartListData?.rows.filter((data: any) => data?.product_inventory?.quantity < localCart[data?.product_id]?.quantity), [cartListData, product_ids]);
 
-      const totalPrice = useMemo(() => cartListData?.rows?.reduce((partialSum: number, accumulator: any) => partialSum + (accumulator.price[0]?.price * localCart[accumulator?.product_id]?.quantity), 0), [cartListData, product_ids]);
-      const totalItem = useMemo(() => cartListData?.rows?.reduce((partialSum: number, accumulator: any) => (partialSum + localCart[accumulator?.product_id]?.quantity), 0), [cartListData, product_ids]);
-
-      const amountAfterDicount = useMemo(() => cartListData?.rows?.reduce((partialSum: number, accumulator: any) =>
+      const totalPrice = useMemo(() => stockList?.reduce((partialSum: number, accumulator: any) => partialSum + (accumulator.price[0]?.price * localCart[accumulator?.product_id]?.quantity), 0), [cartListData, product_ids]);
+      const totalItem = useMemo(() => stockList?.reduce((partialSum: number, accumulator: any) => (partialSum + localCart[accumulator?.product_id]?.quantity), 0), [cartListData, product_ids]);
+      const amountAfterDicount = useMemo(() => stockList?.reduce((partialSum: number, accumulator: any) =>
             partialSum + ((100 - accumulator?.product_offer?.discount) / 100) * (accumulator.price[0]?.price * localCart[accumulator?.product_id]?.quantity), 0),
             [cartListData, product_ids]);
 
       useMemo(() => onResponse(stockList), [cartListData, product_ids]);
       return (
-          <View style={{flex:1}}>
-          { isLoading ?  <View
-            style={{ flex:1,backgroundColor: COLORS.white, paddingVertical: 10 }}>
-            <SkeletonPlaceholder  borderRadius={4} >
-              <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
-                
-                <SkeletonPlaceholder.Item marginLeft={20}>
-                  <SkeletonPlaceholder.Item width={screenWidth/1.2} height={40} borderRadius={10} />
+            <View style={{ flex: 1 }}>
+                  {isLoading ? <View
+                        style={{ flex: 1, backgroundColor: COLORS.white, paddingVertical: 10 }}>
+                        <SkeletonPlaceholder borderRadius={4} >
+                              <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
 
-                  <SkeletonPlaceholder.Item flexDirection="column" alignItems="flex-start">
-                  <SkeletonPlaceholder.Item marginTop={10} marginHorizontal={10} width={60} height={60} borderRadius={10} />
-                  <SkeletonPlaceholder.Item marginTop={10} marginHorizontal={10} width={60} height={60} borderRadius={10} />
-                  <SkeletonPlaceholder.Item marginTop={10} marginHorizontal={10} width={60} height={60} borderRadius={10} />
-                  <SkeletonPlaceholder.Item marginTop={10} marginHorizontal={10} width={60} height={60} borderRadius={10} />
-                </SkeletonPlaceholder.Item>
+                                    <SkeletonPlaceholder.Item marginLeft={20}>
+                                          <SkeletonPlaceholder.Item width={screenWidth / 1.2} height={40} borderRadius={10} />
 
-                  <SkeletonPlaceholder.Item marginTop={10} width={screenWidth / 1.26} height={30} />
+                                          <SkeletonPlaceholder.Item flexDirection="column" alignItems="flex-start">
+                                                <SkeletonPlaceholder.Item marginTop={10} marginHorizontal={10} width={60} height={60} borderRadius={10} />
+                                                <SkeletonPlaceholder.Item marginTop={10} marginHorizontal={10} width={60} height={60} borderRadius={10} />
+                                                <SkeletonPlaceholder.Item marginTop={10} marginHorizontal={10} width={60} height={60} borderRadius={10} />
+                                                <SkeletonPlaceholder.Item marginTop={10} marginHorizontal={10} width={60} height={60} borderRadius={10} />
+                                          </SkeletonPlaceholder.Item>
 
-                </SkeletonPlaceholder.Item>
-              </SkeletonPlaceholder.Item>
+                                          <SkeletonPlaceholder.Item marginTop={10} width={screenWidth / 1.26} height={30} />
 
-            </SkeletonPlaceholder>
-            
-          </View> :
-      <View style={{ flex: 1, marginTop: 10 }}>
-            {!!outOfStockCartList?.length && <View style={defaultStyle.outstock}>
-                  <View style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, flex: 1, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "center", backgroundColor: COLORS.secondaryRed, padding: 10 }}>
-                        <View style={{ flex: 6, alignItems: "flex-start", alignContent: "center" }}>
-                              <DefaultLabel styles={{ color: COLORS.primaryRed }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={`Sorry! ${outOfStockCartList?.length} items are out of stock`} />
-                        </View>
-                        <View style={{ flex: 2, alignItems: "flex-end", alignContent: "center", height: "100%" }}>
-                              <Icon style={{ color: COLORS.tertiaryGray }} name="closecircle" size={20} color={COLORS.text_black} />
+                                    </SkeletonPlaceholder.Item>
+                              </SkeletonPlaceholder.Item>
 
-                        </View>
-                  </View>
+                        </SkeletonPlaceholder>
+
+                  </View> :
+                        <View style={{ flex: 1, marginTop: 10 }}>
+                              {!!outOfStockCartList?.length && <View style={defaultStyle.outstock}>
+                                    <View style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, flex: 1, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "center", backgroundColor: COLORS.secondaryRed, padding: 10 }}>
+                                          <View style={{ flex: 6, alignItems: "flex-start", alignContent: "center" }}>
+                                                <DefaultLabel styles={{ color: COLORS.primaryRed }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={`Sorry! ${outOfStockCartList?.length} items are out of stock`} />
+                                          </View>
+                                          <View style={{ flex: 2, alignItems: "flex-end", alignContent: "center", height: "100%" }}>
+                                                <Icon style={{ color: COLORS.tertiaryGray }} name="closecircle" size={20} color={COLORS.text_black} />
+
+                                          </View>
+                                    </View>
 
 
-                  <FlatList
-                        scrollEnabled={false}
-                        data={outOfStockCartList}
-                        numColumns={1}
-                        showsHorizontalScrollIndicator={true}
-                        keyExtractor={(item, index) => item?.product_id + index.toString()}
-                        renderItem={({ item }) => item && <View style={{ flex: 1, margin: 5 }}>
-                              <StockOutProductList key={item?.product_id} data={item} />
+                                    <FlatList
+                                          scrollEnabled={false}
+                                          data={outOfStockCartList}
+                                          numColumns={1}
+                                          showsHorizontalScrollIndicator={true}
+                                          keyExtractor={(item, index) => item?.product_id + index.toString()}
+                                          renderItem={({ item }) => item && <View key={item?.product_id} style={{ flex: 1, margin: 5 }}>
+                                                <StockOutProductList key={item?.product_id} data={item} />
+                                          </View>}
+                                    />
+                              </View>}
+
+
+                              {!!stockList?.length && <View style={defaultStyle.cart}>
+                                    <View style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, flex: 1, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "center", backgroundColor: COLORS.secondaryBlue, padding: 10 }}>
+                                          <View style={{ flex: 6, alignItems: "flex-start", alignContent: "center" }}>
+                                                <DefaultLabel styles={{ color: COLORS.primaryGreen }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={"Cart"} />
+                                          </View>
+                                          <View style={{ flex: 2, alignItems: "flex-end", alignContent: "center", height: "100%" }}>
+                                                <DefaultLabel styles={{ color: COLORS.primaryGreen }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={`₹${amountAfterDicount}`} />
+                                          </View>
+                                    </View>
+                                    <FlatList
+                                          scrollEnabled={false}
+                                          data={stockList}
+                                          numColumns={1}
+                                          showsHorizontalScrollIndicator={true}
+                                          keyExtractor={(item, index) => item?.product_id + index.toString()}
+                                          renderItem={({ item }) => item && <View key={item?.product_id} style={{ flex: 1, margin: 5 }}>
+                                                <ProductListItem key={item?.product_id} data={item} />
+                                          </View>}
+                                    />
+
+                              </View>}
+                              {showSaving && <View style={defaultStyle.savings}>
+                                    <View style={{ borderRadius: 10, flex: 1, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "center", backgroundColor: COLORS.tertiaryBlue, padding: 10 }}>
+                                          <View style={{ flex: 6, alignItems: "flex-start", alignContent: "center" }}>
+                                                <DefaultLabel styles={{ color: COLORS.primaryBlue }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={"Your total savings"} />
+                                          </View>
+                                          <View style={{ flex: 2, alignItems: "flex-end", alignContent: "center", height: "100%" }}>
+                                                <DefaultLabel styles={{ color: COLORS.primaryBlue }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={`₹${Math.round(totalPrice - amountAfterDicount)}`} />
+                                          </View>
+                                    </View>
+                              </View>}
+                              {showBill && <View style={defaultStyles.bill} >
+                                    <View style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, flex: 1, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "center", backgroundColor: COLORS.white, padding: 10 }}>
+                                          <View style={{ flex: 6, alignItems: "flex-start", alignContent: "center" }}>
+                                                <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={"Bill Details"} />
+                                          </View>
+                                    </View>
+                                    <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 5, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
+                                          <View style={{ flex: 1 }}>
+                                                <EIcon name="news" size={12} color={COLORS.tertiaryGray} />
+                                          </View>
+                                          <View style={{ flex: 16 }}>
+                                                <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={"Item Total"} />
+                                          </View>
+                                          <View style={{ flex: 4, alignItems: "flex-end" }}>
+                                                <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={totalItem} />
+                                          </View>
+                                    </View>
+                                    <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 5, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
+                                          <View style={{ flex: 1 }}>
+                                                <MIcon name="bike-fast" size={12} color={COLORS.tertiaryGray} />
+                                          </View>
+                                          <View style={{ flex: 16 }}>
+                                                <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={"Delivery Charges"} />
+                                          </View>
+                                          <View style={{ flex: 4, alignItems: "flex-end" }}>
+                                                <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={"0"} />
+                                          </View>
+                                    </View>
+                                    <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 5, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
+                                          <View style={{ flex: 1 }}>
+                                                <SIcon name="shopping-bag" size={12} color={COLORS.tertiaryGray} />
+                                          </View>
+                                          <View style={{ flex: 16 }}>
+                                                <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={"Packing charges"} />
+                                          </View>
+                                          <View style={{ flex: 4, alignItems: "flex-end" }}>
+                                                <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={"0"} />
+                                          </View>
+                                    </View>
+                                    <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 10, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
+
+                                          <View style={{ flex: 16 }}>
+                                                <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.medium} title={"Grand Total"} />
+                                          </View>
+                                          <View style={{ flex: 4, alignItems: "flex-end" }}>
+                                                <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.medium} title={`${Math.round(amountAfterDicount)}`} />
+                                          </View>
+                                    </View>
+
+                              </View>}
                         </View>}
-                  />
-            </View>}
-
-
-            {!!stockList?.length && <View style={defaultStyle.cart}>
-                  <View style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, flex: 1, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "center", backgroundColor: COLORS.secondaryBlue, padding: 10 }}>
-                        <View style={{ flex: 6, alignItems: "flex-start", alignContent: "center" }}>
-                              <DefaultLabel styles={{ color: COLORS.primaryGreen }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={"Cart"} />
-                        </View>
-                        <View style={{ flex: 2, alignItems: "flex-end", alignContent: "center", height: "100%" }}>
-                              <DefaultLabel styles={{ color: COLORS.primaryGreen }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={`₹${amountAfterDicount}`} />
-                        </View>
-                  </View>
-                  <FlatList
-                        scrollEnabled={false}
-                        data={stockList}
-                        numColumns={1}
-                        showsHorizontalScrollIndicator={true}
-                        keyExtractor={(item, index) => item?.id + index.toString()}
-                        renderItem={({ item }) => item && <View style={{ flex: 1, margin: 5 }}>
-                              <ProductListItem data={item} />
-                        </View>}
-                  />
-
-            </View>}
-            {showSaving && <View style={defaultStyle.savings}>
-                  <View style={{ borderRadius: 10, flex: 1, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "center", backgroundColor: COLORS.tertiaryBlue, padding: 10 }}>
-                        <View style={{ flex: 6, alignItems: "flex-start", alignContent: "center" }}>
-                              <DefaultLabel styles={{ color: COLORS.primaryBlue }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={"Your total savings"} />
-                        </View>
-                        <View style={{ flex: 2, alignItems: "flex-end", alignContent: "center", height: "100%" }}>
-                              <DefaultLabel styles={{ color: COLORS.primaryBlue }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={`₹${Math.round(totalPrice - amountAfterDicount)}`} />
-                        </View>
-                  </View>
-            </View>}
-            {showBill && <View style={defaultStyles.bill} >
-                  <View style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, flex: 1, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "center", backgroundColor: COLORS.white, padding: 10 }}>
-                        <View style={{ flex: 6, alignItems: "flex-start", alignContent: "center" }}>
-                              <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.large} title={"Bill Details"} />
-                        </View>
-                  </View>
-                  <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 5, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
-                        <View style={{ flex: 1 }}>
-                              <EIcon name="news" size={12} color={COLORS.tertiaryGray} />
-                        </View>
-                        <View style={{ flex: 16 }}>
-                              <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={"Item Total"} />
-                        </View>
-                        <View style={{ flex: 4, alignItems: "flex-end" }}>
-                              <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={totalItem} />
-                        </View>
-                  </View>
-                  <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 5, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
-                        <View style={{ flex: 1 }}>
-                              <MIcon name="bike-fast" size={12} color={COLORS.tertiaryGray} />
-                        </View>
-                        <View style={{ flex: 16 }}>
-                              <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={"Delivery Charges"} />
-                        </View>
-                        <View style={{ flex: 4, alignItems: "flex-end" }}>
-                              <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={"0"} />
-                        </View>
-                  </View>
-                  <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 5, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
-                        <View style={{ flex: 1 }}>
-                              <SIcon name="shopping-bag" size={12} color={COLORS.tertiaryGray} />
-                        </View>
-                        <View style={{ flex: 16 }}>
-                              <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={"Packing charges"} />
-                        </View>
-                        <View style={{ flex: 4, alignItems: "flex-end" }}>
-                              <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.roman} size={FONT_SIZE.medium} title={"0"} />
-                        </View>
-                  </View>
-                  <View style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 10, flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
-
-                        <View style={{ flex: 16 }}>
-                              <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.medium} title={"Grand Total"} />
-                        </View>
-                        <View style={{ flex: 4, alignItems: "flex-end" }}>
-                              <DefaultLabel styles={{ color: COLORS.text_black }} weight={FONT_WEIGHT.heavy} size={FONT_SIZE.medium} title={`${Math.round(amountAfterDicount)}`} />
-                        </View>
-                  </View>
-
-            </View>}
-      </View>}
-      </View>
+            </View>
       )
 }
 export default CartList;

@@ -103,4 +103,4 @@ const Label = (props: ILABEL) => {
             </Text>
       );
 };
-export default DefaultCategory;
+export default React.memo(DefaultCategory);

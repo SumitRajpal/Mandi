@@ -1,11 +1,10 @@
 
 import React from "react";
-import { ActivityIndicator, Modal, StyleSheet, View } from "react-native";
-import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
-import { screenHeight, screenRatio, screenWidth } from "src/constants";
+import { StyleSheet, View } from "react-native";
 import DefaultImage from "src/components/DefaultImage";
-import CartButton from "src/components/CartButton";
 import DefaultLabel from "src/components/DefaultLabel";
+import { screenRatio } from "src/constants";
+import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 
 const defaultStyle = StyleSheet.create({
   container: {

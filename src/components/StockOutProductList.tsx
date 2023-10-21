@@ -2,11 +2,9 @@
 import React from "react";
 import { ActivityIndicator, Modal, StyleSheet, View } from "react-native";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
-import Text from "./Text";
-import { screenHeight, screenRatio, screenWidth } from "src/constants";
-import DefaultImage from "./DefaultImage";
-import CartButton from "./CartButton";
-import { DefaultLabel } from ".";
+import {  screenRatio } from "src/constants";
+import DefaultImage from "src/components/DefaultImage";
+import { DefaultLabel } from "src/components";
 
 const defaultStyle = StyleSheet.create({
       container: {
@@ -21,8 +19,8 @@ const defaultStyle = StyleSheet.create({
 
       imageContainer: {
             backgroundColor: COLORS. secondaryWhite,
-            height: screenRatio * 40,
-            width: screenRatio * 40,
+            height: screenRatio * 50,
+            width: screenRatio * 50,
             justifyContent: "center",
             borderWidth: 2,
             padding:screenRatio * 3,
@@ -31,7 +29,7 @@ const defaultStyle = StyleSheet.create({
       },
 
       imageFlexContainer: {
-            flex: 1,
+            flex: 1.5,
             height:"auto",
             flexWrap: "wrap",
             alignItems: "center",
@@ -91,11 +89,13 @@ const StockOutProductList = (props:IStockOut): JSX.Element =>
                         <View style={defaultStyle.titleContainer}>
                               <View style={defaultStyle.titleDetails}>
                                     <DefaultLabel size={FONT_SIZE.regular} weight={FONT_WEIGHT.medium} title={data?.name} />
+                                    <DefaultLabel size={FONT_SIZE.small} weight={FONT_WEIGHT.roman} title={`* Currently available ${data?.product_inventory?.quantity}`} />
                               </View>
                               <View style={defaultStyle.titleExtraDetails}>
                                     <View style={{ flex: 1 }}>
-                                          <DefaultLabel weight={FONT_WEIGHT.roman} title={"500 ml"} />
+                                          <DefaultLabel weight={FONT_WEIGHT.roman} title={`${data?.weight} ${data?.unit}`} />
                                     </View>
+                                     
                               </View>
                         </View>
                   </View>
@@ -108,21 +108,7 @@ interface ILABEL {
       size?: number
       weight?: number
 }
-const Label = (props: ILABEL) => {
-      const { title, styles, size = FONT_SIZE.medium, weight = FONT_WEIGHT.heavy } = props;
-      return (
-            <Text
-                  style={[defaultStyle.text, styles]}
-                  size={size}
-                  isPoppins={true}
-                  numberOfLines={2}
-                  weight={weight}
-                  color={COLORS.text_black}
-            >
-                  {title}
-            </Text>
-      );
-};
+
 
 
 export default StockOutProductList;
