@@ -1,3 +1,4 @@
+import { useIsFocused } from "@react-navigation/native"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import React, { useMemo, useState } from "react"
 import {
@@ -14,6 +15,7 @@ import { DefaultLabel, DefaultSearchBar, FlatListLoader } from "src/components"
 import CartProduct from "src/components/CartProduct"
 import ProductSorting from "src/components/ProductSorting"
 import Footer from "src/components/footer"
+
 import {
   PAGINATION_SIZE,
   WEB_SERVICES,
@@ -49,16 +51,12 @@ const defaultStyles = StyleSheet.create({
   },
 })
 const ProductList = (): JSX.Element => {
-  const cart = CartStore((state: any) => state.cart)
+  const {getCartStore, totalCartItem} = CartStore((state: any) => state)
+
   const [sortVisible, setSortVisible] = useState(false)
   const [searchOrderText, setSearchOrderText] = useState("")
-  const { cartObject } = CartStore((state) => {
-    return { cartObject: state.cart };
-});
 
-const cartMemo = useMemo(() => cart, [cart]);
-console.log(cartMemo,"memo")
-  
+  const cartMemo = useMemo(() => getCartStore(), [getCartStore()])
   const fetchOrder = async ({pageParam = 0}) => {
     const data = await api({
       url: WEB_SERVICES.products.getProducts,
@@ -74,8 +72,7 @@ console.log(cartMemo,"memo")
       nextPage: data?.last === false ? data.number + 1 : null,
     }
   }
-  
-  
+  const isFocused = useIsFocused()
   const {
     isLoading,
     data: orderListData,
@@ -100,9 +97,16 @@ console.log(cartMemo,"memo")
   }
 
   const ordersList = useMemo(
-    () => orderListData?.pages?.flatMap((page) => page?.response?.content),
-    [orderListData],
+    () =>
+      orderListData?.pages?.flatMap((page) =>
+        page?.response?.content.map((original: any) => ({
+          ...original,
+          ...getCartStore()[original.product_id],
+        })),
+      ),
+    [orderListData, getCartStore()],
   )
+
   return (
     <View style={defaultStyles.container}>
       <SafeAreaView style={defaultStyles.container}>
@@ -212,13 +216,17 @@ console.log(cartMemo,"memo")
                   marginHorizontal: 5,
                   paddingBottom: screenRatio * (screenHeight / 28),
                 }}
-                showsHorizontalScrollIndicator={true}
+                showsHorizontalScrollIndicator={false}
                 keyExtractor={(item, index) =>
                   item?.product_id + index.toString()
                 }
+                extraData={useIsFocused()}
                 onEndReachedThreshold={0.2}
                 renderItem={({item}) =>
-                  item && <CartProduct key={item?.product_id} data={item} />
+                  item &&
+                  isFocused && (
+                    <CartProduct key={item?.product_id} data={item} />
+                  )
                 }
                 ListFooterComponent={
                   <FlatListLoader isNext={isFetchingNextPage} />
@@ -228,7 +236,7 @@ console.log(cartMemo,"memo")
           </View>
         </View>
         <ProductSorting visible={sortVisible} />
-        {!!Object.keys(cartMemo)?.length && <Footer key={"footer"} />}
+        {!!totalCartItem() && <Footer key={"footer"} />}
       </SafeAreaView>
     </View>
   )

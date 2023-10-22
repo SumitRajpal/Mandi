@@ -104,16 +104,16 @@ interface IDefaultModel {
       onModelClose(value: boolean): any;
 }
 const CartListModel = (props: IDefaultModel): JSX.Element => {
-      const cart = CartStore((state:any) => state.cart)
+     
+  const {getCartStore,totalCartItem} = CartStore((state:any) => state)
       const { styles, visible, height, onModelClose } = props
       const [isModel, setModel] = useState(false);
-      const totalCartItem = CartStore((state: any) => state.totalCartItem)
 
      
   const {cartObject} = CartStore((state) => {
       return {cartObject: state.cart}
     })
-      const cartMemo = useMemo(() => cart, [cart]);
+      const cartMemo = useMemo(() => getCartStore(), [getCartStore()]);
       
       useEffect( () => {
             setModel(visible)

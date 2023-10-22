@@ -37,6 +37,7 @@ export const CartStore = create<any>()(
   persist(
     (set, get) => ({
       cart: {},
+      getCartStore : () => get().cart,
       totalCartItem:() => Object.values(get().cart)?.reduce((sum: number, key: any) => 
       sum + key?.quantity
    , 0) || 0,

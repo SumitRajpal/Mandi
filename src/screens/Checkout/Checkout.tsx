@@ -10,11 +10,8 @@ import { COLORS } from "src/constants/font";
 import { CartStore } from "src/context/AuthProvider";
 import { StackParamList } from "..";
 const Checkout = (): JSX.Element => {
-      
-      const cart = CartStore((state:any) => state.cart )
-      const { cartObject } = CartStore((state) => {
-            return { cartObject: state.cart };
-        });
+      const {getCartStore} = CartStore((state:any) => state)
+
       type StackNavigation = StackNavigationProp<StackParamList>;
       const navigation = useNavigation<StackNavigation>();
   
@@ -51,7 +48,7 @@ const Checkout = (): JSX.Element => {
             }
       });
 
-      const cartMemo = useMemo(() => cart, [cart]);
+      const cartMemo = useMemo(() => getCartStore(), [getCartStore()]);
       console.log(cartMemo,"memo,checkout")
 
       return (

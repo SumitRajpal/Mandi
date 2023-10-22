@@ -67,20 +67,15 @@ const defaultStyles = StyleSheet.create({
  */
 
 const Footer = (): JSX.Element => {
-  const cart = CartStore((state: any) => state.cart)
-  const totalCartItem = CartStore((state: any) => state.totalCartItem)
+ 
+
+  const {getCartStore,totalCartItem} = CartStore((state:any) => state)
 
   const [model, setModel] = useState<boolean>(false)
   const navigation = useNavigation()
 
-  const {cartObject} = CartStore((state) => {
-    return {cartObject: state.cart}
-  })
-
-  const cartMemo = useMemo(() => cart, [cart])
+  const cartMemo = useMemo(() => getCartStore(), [getCartStore()]);
  
- 
-  console.log(cartMemo, "footer","----total")
 
   return (
     <View style={defaultStyles.footerContainer}>

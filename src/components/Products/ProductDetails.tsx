@@ -1,11 +1,8 @@
-import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
-import React, { } from "react"
-import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Footer from "src/components/footer";
-import CartProduct from "src/components/CartProduct";
-import { screenHeight } from "src/constants";
+import React from "react";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import { DefaultSearchBar } from "src/components";
+import Footer from "src/components/footer";
+import { COLORS } from "src/constants/font";
 
 const ProductList = (): JSX.Element => {
       const styles = StyleSheet.create({
@@ -26,7 +23,7 @@ const ProductList = (): JSX.Element => {
                         </View>
 
 
-                        <Footer />
+                        <Footer key={"footer"}/>
                   </SafeAreaView>
             </View>
       );

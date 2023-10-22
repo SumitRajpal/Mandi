@@ -14,22 +14,16 @@ import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 import { AuthContext } from "src/context/AuthProvider";
 
 import { CartStore } from "src/context/AuthProvider";
-import { useShallow } from "zustand/react/shallow";
 import { StackParamList } from "..";
 
 const Home = (): JSX.Element => {
   type StackNavigation = StackNavigationProp<StackParamList>;
   const navigation = useNavigation<StackNavigation>();
   const {getAuthAddress } = useContext(AuthContext);
-  const cart = CartStore(useShallow((state:any) => state.cart))
+  const {totalCartItem,getCartStore} = CartStore((state:any) => state)
   const [address, setAddress] = useState(false);
-  
   const [currentAddress, setCurrentAddress] = useState<any>(null);
-
-  const cartMemo = useMemo(() => cart, [cart]);
-console.log(cartMemo,"memo,home")
-
-
+  const cartMemo = useMemo(() => getCartStore(), [getCartStore(),totalCartItem()]);
   useEffect(() => {
     getCurrentAddress();
   }, [getAuthAddress()])
@@ -45,7 +39,7 @@ console.log(cartMemo,"memo,home")
     },
     safearea: {
       flex: 1,
-      paddingBottom: (!!Object.keys(cartMemo)?.length) ? screenRatio * (screenHeight / 16) : 0,
+      paddingBottom: totalCartItem() ? screenRatio * (screenHeight / 16) : 0,
       backgroundColor: COLORS.white
     },
     cart: { flex: 1, flexDirection: "row", flexWrap: "wrap", padding: 10 },
@@ -97,7 +91,7 @@ console.log(cartMemo,"memo,home")
           <ProductHorizontal horizontalTitle="Best Seller" />
         </ScrollView>
         <AddressModel visible={address} onModelClose={(value) => setAddress(value)} height={100} />
-        {!!Object.keys(cartMemo)?.length && <Footer  />}
+        {!!totalCartItem() && <Footer key={"footer"} />}
       </SafeAreaView>
     </View>
   );

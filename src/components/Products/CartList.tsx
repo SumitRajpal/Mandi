@@ -1,18 +1,18 @@
 
-import React, { ReactNode, useEffect, useMemo } from "react";
-import { FlatList, Platform, StyleSheet, View } from "react-native";
-import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
-import ProductListItem from "src/components/ProductListItem";
-import Icon from 'react-native-vector-icons/AntDesign';
-import StockOutProductList from "src/components/StockOutProductList";
-import { DefaultLabel } from "src/components";
-import { WEB_SERVICES, screenHeight, screenWidth } from "src/constants";
 import { useQuery } from "@tanstack/react-query";
-import { api } from "src/api/http";
-import EIcon from 'react-native-vector-icons/Entypo';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import SIcon from 'react-native-vector-icons/Fontisto';
+import React, { useEffect, useMemo } from "react";
+import { FlatList, Platform, StyleSheet, View } from "react-native";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
+import Icon from 'react-native-vector-icons/AntDesign';
+import EIcon from 'react-native-vector-icons/Entypo';
+import SIcon from 'react-native-vector-icons/Fontisto';
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { api } from "src/api/http";
+import { DefaultLabel } from "src/components";
+import ProductListItem from "src/components/ProductListItem";
+import StockOutProductList from "src/components/StockOutProductList";
+import { WEB_SERVICES, screenHeight, screenWidth } from "src/constants";
+import { COLORS, FONT_SIZE, FONT_WEIGHT } from "src/constants/font";
 
 
 const defaultStyle = StyleSheet.create({
@@ -169,9 +169,7 @@ const CartList = (props: ICartList): JSX.Element => {
             }
       );
 
-      useEffect(() => {
-         //   refetch();
-      }, [product_ids, showSaving])
+      
       useEffect(() => {
               refetch();
          }, [])

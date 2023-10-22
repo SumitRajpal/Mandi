@@ -67,15 +67,15 @@ interface ICartButton {
 }
 const CartButton = (props: ICartButton): JSX.Element => {
   const {setCart} = useContext(AuthContext)
-  const cart = CartStore((state: any) => state.cart)
+  const {getCartStore} = CartStore((state:any) => state)
   const {data} = props || {}
   const {product_id} = data ?? {}
-  const [quantity, setQuantity] = useState(cart[product_id]?.quantity || 0)
-  const cartMemo = useMemo(() => cart, [cart]);
+  const [quantity, setQuantity] = useState(getCartStore()[product_id]?.quantity || 0)
+  const cartMemo = useMemo(() => getCartStore(), [getCartStore()]);
   console.log(cartMemo,"main button")
   
   useEffect(() => {
-    setQuantity(cart[product_id]?.quantity || 0)
+    setQuantity(cartMemo[product_id]?.quantity || 0)
   }, [cartMemo, quantity])
 
   const cartStyle = StyleSheet.create({
@@ -100,12 +100,12 @@ const CartButton = (props: ICartButton): JSX.Element => {
               color={COLORS.text_black}
               onPress={() => {
                 if (quantity - 1 === 0) {
-                  let tempCart = cart
+                  let tempCart = getCartStore()
                   delete tempCart[product_id]
                   setCart(tempCart)
                   setQuantity(quantity - 1)
                 } else {
-                  let tempCart = cart
+                  let tempCart = getCartStore()
                   tempCart[product_id] = {
                     product_id: data.product_id,
                     quantity: quantity - 1,
@@ -133,7 +133,7 @@ const CartButton = (props: ICartButton): JSX.Element => {
               color={COLORS.text_black}
               onPress={() => {
                 if (quantity < data?.product_inventory?.quantity) {
-                  let tempCart = cart
+                  let tempCart = getCartStore()
                   tempCart[product_id] = {
                     product_id: data.product_id,
                     quantity: quantity + 1,
@@ -153,7 +153,7 @@ const CartButton = (props: ICartButton): JSX.Element => {
           disabled={!!!data?.product_inventory?.quantity}
           style={{flex: 1}}
           onPress={() => {
-            let tempCart = cart
+            let tempCart = getCartStore()
             tempCart[product_id] = {
               product_id: data.product_id,
               quantity: quantity + 1,
